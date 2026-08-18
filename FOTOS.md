@@ -8,7 +8,7 @@ certo, com a descrição do que entra ali. O layout já está correto sem elas.
 
 | # | Arquivo | Onde aparece | Proporção | O que fotografar |
 |---|---------|--------------|-----------|------------------|
-| 1 | `hero.jpg` | Hero, tela cheia | Larga, 16:10+ | Terno bem cortado em um homem, ou Carlos ajustando uma lapela. **Precisa ter área escura à esquerda** — o texto fica por cima. |
+| 1 | `hero.jpg` ✅ **slot ativo** | Hero, tela cheia | Larga, 16:10+ | Homem de terno ajustando a gravata, ateliê ao fundo, **vazio escuro à esquerda**. Crop ancorado à direita. Mínimo 1920px de largura. |
 | 2 | `oficio-1.jpg` ✅ **já ativado** | Seção "O ofício" — **fundo claro** | Vertical 2:3 (cropada) | Carlos marcando o tecido com a régua, moldes ao fundo. Crop ancorado à esquerda. |
 | 3 | `oficio-2.jpg` ✅ **já ativado** | Seção "O ofício" — **fundo claro** | Vertical 2:3 (cropada) | Interior do ateliê: Carlos ao lado do provador, prateleiras de tecido. |
 | 4 | `galeria-destaque.jpg` | Galeria, ocupa 2 linhas | Vertical 2:3 | **A melhor foto que você tiver.** Homem de terno completo, corpo inteiro. |
@@ -20,7 +20,8 @@ certo, com a descrição do que entra ali. O layout já está correto sem elas.
 
 ## Status
 
-**Fotos 2 e 3 estão no ar.** ✅ Faltam 7.
+**Fotos 2 e 3 estão no ar.** ✅ O slot do **hero** também já está ativo,
+faltando só salvar `public/fotos/hero.jpg`. Depois dele, faltam 6.
 
 ### A extensão importa
 

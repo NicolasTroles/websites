@@ -23,22 +23,34 @@ export function Hero() {
       >
         <Foto
           // FOTO 1 — hero
+          src="/fotos/hero.jpg"
           guia="Foto larga e escura: terno bem cortado em um homem, ou o Carlos ajustando uma lapela. Precisa ter área escura à esquerda para o texto ficar legível."
-          alt="Terno sob medida confeccionado por Carlos Simões"
+          alt="Homem vestindo terno sob medida ajustando a gravata em um ateliê de alfaiataria"
           aspect="paisagem"
           priority
+          // Ancorado à direita: em telas estreitas o crop come a lateral
+          // esquerda (que é o vazio escuro) e nunca corta o homem de terno.
+          foco="direita"
           sizes="100vw"
           className="h-full w-full !aspect-auto"
         />
       </div>
 
-      {/* Camada 2: véu que garante contraste do texto sobre qualquer foto. */}
+      {/*
+       * Camada 2: véu de contraste.
+       *
+       * Medido sobre a foto real: a média da metade esquerda é bem escura,
+       * mas o abajur aceso cai justamente na faixa do título e derruba o
+       * contraste do dourado para ~1.3:1. Por isso o véu é forte até 55% da
+       * largura (cobrindo o abajur) e só depois abre, preservando o homem
+       * de terno e a madeira do ateliê à direita.
+       */}
       <div
-        className="absolute inset-0 bg-gradient-to-r from-ink via-ink/80 to-ink/25"
+        className="absolute inset-0 bg-gradient-to-r from-ink via-ink/92 via-55% to-transparent"
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/50"
+        className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/45"
         aria-hidden="true"
       />
 
@@ -48,7 +60,7 @@ export function Hero() {
         className="relative mx-auto w-full max-w-7xl px-5 pb-28 pt-28 sm:px-8"
       >
         <div className="max-w-2xl">
-          <p className="brand-caps animate-fade-up text-[10px] text-brass sm:text-[11px]">
+          <p className="brand-caps animate-fade-up text-[10px] text-silver sm:text-[11px]">
             {site.marcaLoja} · {site.cidade}, {site.estado}
           </p>
 

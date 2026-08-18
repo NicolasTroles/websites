@@ -102,14 +102,8 @@ export function Oficio() {
           </Reveal>
 
           <Reveal delay={120}>
-            {/*
-             * Lado a lado, ambas em 2:3 com crop.
-             *
-             * A foto da mesa é 4:3 deitada, então perde ~25% de cada lado nesse
-             * slot. `foco` decide qual metade sobra: ancorando à esquerda,
-             * preservamos Carlos e os moldes e sacrificamos só o tecido vazio
-             * da direita — em vez de perder um pedaço de cada ponta.
-             */}
+            {/* Lado a lado, ambas em 2:3. As duas fotos já são verticais,
+                então o crop tira só ~6% de cada lado. */}
             <div className="grid grid-cols-2 gap-4">
               <Foto
                 // FOTO 2 — mesa de corte
@@ -118,7 +112,6 @@ export function Oficio() {
                 alt="Carlos Simões marcando um tecido azul com régua de alfaiate sobre a mesa de corte, com moldes de papel pendurados ao fundo"
                 aspect="alto"
                 tom="claro"
-                foco="esquerda"
                 sizes="(max-width: 1024px) 50vw, 25vw"
                 className="mt-10"
               />
