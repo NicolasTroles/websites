@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Compensa o header fixo ao pular por âncora. */
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    /* O site abre e fecha escuro; as seções claras pintam o próprio fundo. */
+    @apply bg-ink text-bone antialiased;
+    /* Evita o scroll horizontal que o parallax pode causar em telas estreitas. */
+    overflow-x: hidden;
+  }
+
+  /*
+   * Foco visível para navegação por teclado.
+   * `outline` com currentColor funciona nos dois fundos sem precisar de
+   * variante por seção — o anel herda a cor do texto local.
+   */
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    @apply bg-brass text-ink;
+  }
+}
+
+@layer utilities {
+  /* Título de seção com o espaçamento largo do letreiro da fachada. */
+  .brand-caps {
+    @apply font-sans uppercase tracking-brand;
+  }
+
+  /* Textura de tecido em CSS puro. Variante para cada fundo. */
+  .weave {
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.018) 0px,
+        rgba(255, 255, 255, 0.018) 1px,
+        transparent 1px,
+        transparent 4px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        rgba(255, 255, 255, 0.018) 0px,
+        rgba(255, 255, 255, 0.018) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+  }
+
+  .weave-light {
+    background-image:
+      repeating-linear-gradient(
+        45deg,
+        rgba(42, 35, 32, 0.03) 0px,
+        rgba(42, 35, 32, 0.03) 1px,
+        transparent 1px,
+        transparent 4px
+      ),
+      repeating-linear-gradient(
+        -45deg,
+        rgba(42, 35, 32, 0.03) 0px,
+        rgba(42, 35, 32, 0.03) 1px,
+        transparent 1px,
+        transparent 4px
+      );
+  }
+}
+
+/*
+ * Desliga todo o movimento quando o usuário pede menos animação.
+ * O parallax também é desativado no JS; isto é a rede de segurança do CSS.
+ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

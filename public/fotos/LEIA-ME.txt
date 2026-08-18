@@ -1,0 +1,15 @@
+Salve as fotos aqui com estes nomes exatos.
+
+JÁ ATIVADAS no código — só falta o arquivo:
+  oficio-1.jpg   Carlos marcando o tecido com a régua
+  oficio-2.jpg   Interior do ateliê, Carlos ao lado do provador
+
+Enquanto o arquivo não existir, o site mostra o marcador tracejado
+com o caminho esperado escrito nele. Nunca aparece imagem quebrada.
+
+ANTES DE SALVAR: comprima em squoosh.app, alvo < 400 KB por foto.
+
+VIU UM RETÂNGULO COLORIDO LISO (verde/vermelho/azul/teal)?
+É cache de imagem antigo do Next. Pare o servidor e rode:
+  rm -rf .next/cache
+Depois suba de novo e recarregue com Cmd+Shift+R.
