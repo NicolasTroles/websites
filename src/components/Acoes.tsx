@@ -16,7 +16,7 @@ export function BotaoWhatsApp({ className }: { className?: string }) {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className={`${BASE} bg-brass text-ink hover:bg-brassDeep hover:text-bone active:scale-[0.98] ${className ?? ''}`}
+      className={`${BASE} bg-platinum text-ink hover:bg-platinumDeep hover:text-bone active:scale-[0.98] ${className ?? ''}`}
     >
       <MessageCircle className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
       Falar no WhatsApp
@@ -34,8 +34,8 @@ export function BotaoTelefone({
 }) {
   const cores =
     tom === 'claro'
-      ? 'border-sandLine text-cocoa hover:border-brassDeep hover:bg-sandDeep'
-      : 'border-line text-bone hover:border-brass hover:bg-elevated';
+      ? 'border-sandLine text-cocoa hover:border-platinumDeep hover:bg-sandDeep'
+      : 'border-line text-bone hover:border-platinum hover:bg-elevated';
   return (
     <a
       href={`tel:${site.telefoneLink}`}
@@ -63,7 +63,7 @@ export function BarraContatoMobile() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex min-h-12 flex-1 items-center justify-center gap-2 bg-brass text-[12px] brand-caps text-ink active:scale-[0.98]"
+          className="flex min-h-12 flex-1 items-center justify-center gap-2 bg-platinum text-[12px] brand-caps text-ink active:scale-[0.98]"
         >
           <MessageCircle className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
           WhatsApp

@@ -66,7 +66,7 @@ export function SectionDivider({
       <span
         className={`h-px w-16 bg-gradient-to-r from-transparent sm:w-24 ${claro ? 'to-sandLine' : 'to-line'}`}
       />
-      <TopHat className={`h-5 w-5 ${claro ? 'text-brassDeep' : 'text-brass'}`} />
+      <TopHat className={`h-5 w-5 ${claro ? 'text-platinumDeep' : 'text-platinum'}`} />
       <span
         className={`h-px w-16 bg-gradient-to-l from-transparent sm:w-24 ${claro ? 'to-sandLine' : 'to-line'}`}
       />

@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, Scissors, Shirt, Quote } from 'lucide-react';
+import { Briefcase, Scissors, Shirt, Quote } from 'lucide-react';
 import { depoimentos, processo, servicos, site } from '@/config/site.config';
 import { useParallax } from '@/lib/useParallax';
 import { SectionDivider, SuitSilhouette } from './Brand';
@@ -9,9 +9,9 @@ import { Reveal } from './Reveal';
 
 const ICONES = {
   suit: Shirt,
+  briefcase: Briefcase,
   shirt: Shirt,
   scissors: Scissors,
-  calendar: Calendar,
 } as const;
 
 /**
@@ -36,7 +36,7 @@ function TituloSecao({
   return (
     <div className={centro ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl'}>
       <p
-        className={`brand-caps text-[10px] ${claro ? 'text-brassDeep' : 'text-brass'}`}
+        className={`brand-caps text-[10px] ${claro ? 'text-platinumDeep' : 'text-platinum'}`}
       >
         {etiqueta}
       </p>
@@ -60,7 +60,7 @@ function TituloSecao({
   );
 }
 
-/** Seção 2 — CLARA. A história do ofício, com fotos do Carlos trabalhando. */
+/** Seção 2 — CLARA. A história do ofício, com fotos da Figueiredo trabalhando. */
 export function Oficio() {
   const marca = useParallax<HTMLDivElement>(0.12);
 
@@ -87,11 +87,11 @@ export function Oficio() {
               titulo="Cada peça começa numa conversa."
               descricao="Alfaiataria não é medir e entregar. É entender como você se move, onde vai usar a peça e o que ela precisa dizer por você. Só depois vêm a fita métrica, o giz e a tesoura."
             />
-            <div className="mt-10 space-y-6 border-l-2 border-brass/50 pl-7">
+            <div className="mt-10 space-y-6 border-l-2 border-platinum/50 pl-7">
               <p className="max-w-prose leading-relaxed text-cocoaSoft">
-                No centro de Curitiba, {site.nome} mantém o ofício de alfaiate e
-                camiseiro do jeito que ele foi ensinado: molde exclusivo, corte à
-                mão e provas até o caimento ficar exato.
+                Em Pineville, {site.nome} mantém o ofício de alfaiataria do
+                jeito que ele foi ensinado: medida tirada à mão, corte
+                exclusivo e provas até o caimento ficar exato.
               </p>
               <p className="max-w-prose leading-relaxed text-cocoaSoft">
                 É um trabalho lento por escolha. O resultado é uma peça que
@@ -102,24 +102,24 @@ export function Oficio() {
           </Reveal>
 
           <Reveal delay={120}>
-            {/* Lado a lado, ambas em 2:3. As duas fotos já são verticais,
-                então o crop tira só ~6% de cada lado. */}
+            {/* Lado a lado, ambas em 2:3. Fotos importadas do site da
+                Figueiredo — servem de exemplo até termos fotos próprias. */}
             <div className="grid grid-cols-2 gap-4">
               <Foto
-                // FOTO 2 — mesa de corte
+                // FOTO 2 — tirada de medidas
                 src="/fotos/oficio-1.jpg"
-                guia="Carlos trabalhando: mãos cortando tecido, marcando com régua."
-                alt="Carlos Simões marcando um tecido azul com régua de alfaiate sobre a mesa de corte, com moldes de papel pendurados ao fundo"
+                guia="Equipe da Figueiredo tirando medidas de um cliente."
+                alt="Alfaiate da Figueiredo tirando medidas de um cliente com fita métrica, no ateliê"
                 aspect="alto"
                 tom="claro"
                 sizes="(max-width: 1024px) 50vw, 25vw"
                 className="mt-10"
               />
               <Foto
-                // FOTO 3 — interior do ateliê
+                // FOTO 3 — interior da loja
                 src="/fotos/oficio-2.jpg"
-                guia="Interior do ateliê: Carlos recebendo, prateleiras de tecido e provador."
-                alt="Carlos Simões no interior do seu ateliê, ao lado do provador, com prateleiras de tecidos e gravatas ao fundo"
+                guia="Interior da loja: corredor com peças penduradas e provador ao fundo."
+                alt="Interior da Alfaiataria Figueiredo, corredor com roupas penduradas e provador ao fundo"
                 aspect="alto"
                 tom="claro"
                 sizes="(max-width: 1024px) 50vw, 25vw"
@@ -155,7 +155,7 @@ export function Servicos() {
               <Reveal key={servico.titulo} delay={i * 80}>
                 <article className="group h-full bg-sand p-9 transition-colors duration-300 hover:bg-sandDeep sm:p-11">
                   <Icone
-                    className="h-6 w-6 text-brassDeep"
+                    className="h-6 w-6 text-platinumDeep"
                     strokeWidth={1.5}
                     aria-hidden="true"
                   />
@@ -184,7 +184,7 @@ export function Galeria() {
           <TituloSecao
             etiqueta="Trabalhos"
             titulo="Peças que saíram daqui."
-            descricao="Substitua por fotos reais das peças do Carlos. Fotos em pessoas convertem muito mais do que peças no cabide."
+            descricao="Fotos importadas do site da Figueiredo, usadas de exemplo até termos um ensaio próprio das peças."
             tom="escuro"
           />
         </Reveal>
@@ -194,8 +194,9 @@ export function Galeria() {
           <Reveal className="lg:row-span-2">
             <Foto
               // FOTO 4 — destaque
-              guia="DESTAQUE vertical: homem de terno completo, corpo inteiro, em pé. A melhor foto que você tiver."
-              alt="Terno completo sob medida"
+              src="/fotos/galeria-destaque.jpg"
+              guia="DESTAQUE vertical: peça completa, corpo inteiro, em pé. A melhor foto que você tiver."
+              alt="Blazers sob medida em manequins, na Alfaiataria Figueiredo"
               aspect="alto"
               className="h-full"
             />
@@ -203,32 +204,36 @@ export function Galeria() {
           <Reveal delay={80}>
             <Foto
               // FOTO 5
-              guia="Detalhe de lapela, botão ou casa de botão feita à mão."
-              alt="Detalhe de lapela de terno sob medida"
+              src="/fotos/galeria-jaqueta.jpg"
+              guia="Detalhe de jaqueta ou uniforme personalizado."
+              alt="Jaquetas personalizadas penduradas no ateliê da Alfaiataria Figueiredo"
               aspect="quadrado"
             />
           </Reveal>
           <Reveal delay={160}>
             <Foto
               // FOTO 6
-              guia="Camisa sob medida: colarinho e punho em destaque."
-              alt="Camisa sob medida"
+              src="/fotos/galeria-medidas.jpg"
+              guia="Tirada de medidas: detalhe das mãos e da fita métrica."
+              alt="Detalhe da tirada de medidas de um cliente na Alfaiataria Figueiredo"
               aspect="quadrado"
             />
           </Reveal>
           <Reveal delay={240}>
             <Foto
               // FOTO 7
-              guia="Terno de casamento: noivo ou padrinhos."
-              alt="Traje de casamento sob medida"
+              src="/fotos/galeria-uniformes.jpg"
+              guia="Uniformes para equipes, em lote."
+              alt="Jaquetas de uniforme empresarial produzidas pela Alfaiataria Figueiredo"
               aspect="paisagem"
             />
           </Reveal>
           <Reveal delay={320}>
             <Foto
               // FOTO 8
-              guia="Tecidos: rolos ou cartela de amostras, luz lateral."
-              alt="Tecidos disponíveis na alfaiataria"
+              src="/fotos/galeria-social.jpg"
+              guia="Trajes sociais prontos, em manequim ou cabide."
+              alt="Blazers sociais sob medida da Alfaiataria Figueiredo"
               aspect="paisagem"
             />
           </Reveal>
@@ -253,8 +258,9 @@ export function Processo() {
         >
           <Foto
             // FOTO 9 — faixa parallax
+            src="/fotos/faixa-loja.jpg"
             guia="Foto larga e atmosférica: interior da alfaiataria, arara de ternos, ou a mesa de corte. Serve de respiro entre seções."
-            alt="Interior da alfaiataria de Carlos Simões"
+            alt="Interior da Alfaiataria Figueiredo, corredor com roupas penduradas"
             aspect="paisagem"
             sizes="100vw"
             className="h-full w-full !aspect-auto"
@@ -279,7 +285,7 @@ export function Processo() {
               <Reveal key={etapa.numero} delay={i * 80}>
                 <li className="h-full bg-sand p-9">
                   <span
-                    className="font-display text-5xl text-brass/60"
+                    className="font-display text-5xl text-platinum/60"
                     aria-hidden="true"
                   >
                     {etapa.numero}
@@ -314,7 +320,7 @@ export function Depoimentos() {
             <Reveal key={i} delay={i * 90}>
               <figure className="flex h-full flex-col border border-sandLine bg-sandDeep p-9">
                 <Quote
-                  className="h-6 w-6 text-brassDeep"
+                  className="h-6 w-6 text-platinumDeep"
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />

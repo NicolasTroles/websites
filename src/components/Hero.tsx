@@ -24,7 +24,7 @@ export function Hero() {
         <Foto
           // FOTO 1 — hero
           src="/fotos/hero.jpg"
-          guia="Foto larga e escura: terno bem cortado em um homem, ou o Carlos ajustando uma lapela. Precisa ter área escura à esquerda para o texto ficar legível."
+          guia="Foto larga e escura: terno bem cortado em um homem, ou alguém da Figueiredo ajustando uma lapela. Precisa ter área escura à esquerda para o texto ficar legível."
           alt="Homem vestindo terno sob medida ajustando a gravata em um ateliê de alfaiataria"
           aspect="paisagem"
           priority
@@ -70,13 +70,13 @@ export function Hero() {
           >
             O terno que
             <br />
-            <span className="italic text-brass">veste você</span>
+            <span className="italic text-platinum">veste você</span>
             <br />
             e mais ninguém.
           </h1>
 
           <div
-            className="mt-8 h-px w-24 origin-left animate-draw-line bg-brass"
+            className="mt-8 h-px w-24 origin-left animate-draw-line bg-platinum"
             style={{ animationDelay: '360ms' }}
             aria-hidden="true"
           />
@@ -85,9 +85,9 @@ export function Hero() {
             className="mt-8 max-w-prose animate-fade-up text-[17px] leading-relaxed text-silver"
             style={{ animationDelay: '260ms' }}
           >
-            Alfaiataria tradicional no centro de Curitiba. Ternos e camisas
-            cortados à mão sobre as suas medidas, com o cuidado de quem faz isso
-            há décadas.
+            Trajes sociais, uniformes empresariais e reformas em Pineville,
+            Pinhais. Peças pensadas sobre as suas medidas, com o cuidado de
+            quem faz isso há anos.
           </p>
 
           <div
@@ -103,7 +103,7 @@ export function Hero() {
       <a
         href="#oficio"
         aria-label="Ver mais"
-        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-brass transition-colors hover:text-bone md:block"
+        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-platinum transition-colors hover:text-bone md:block"
       >
         <ChevronDown className="h-6 w-6 animate-bounce" strokeWidth={1.5} />
       </a>

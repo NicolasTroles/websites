@@ -87,7 +87,7 @@ export function Foto({
           </p>
           {falhou && src && (
             <code
-              className={`mt-3 block break-all text-[11px] ${claro ? 'text-brassDeep' : 'text-brass'}`}
+              className={`mt-3 block break-all text-[11px] ${claro ? 'text-platinumDeep' : 'text-platinum'}`}
             >
               public{src}
             </code>

@@ -1,40 +1,40 @@
 /**
  * Fonte única de verdade do site. Trocar dados aqui, nunca dentro dos componentes.
  *
- * Itens marcados com CONFIRMAR foram levantados de diretórios online e da foto
- * da fachada, mas não puderam ser validados no Google Maps (a página de
- * avaliações é renderizada por JavaScript e não pôde ser lida).
+ * Nome, endereço e telefone extraídos de alfaiatariafigueiredo.guiapinhais.com.br.
+ * Itens marcados com CONFIRMAR não estavam publicados nessa página e precisam
+ * ser validados com a Figueiredo antes de publicar.
  */
 
 export const site = {
-  /** Nome no letreiro interno da fachada. */
-  nome: 'Carlos Simões',
-  sobrenomeMarca: 'Alfaiate Camiseiro',
-  /** Marca maior no letreiro superior da loja. */
-  marcaLoja: 'Cavalieri Moda',
-  cidade: 'Curitiba',
+  /** Nome no letreiro/logo da loja. */
+  nome: 'Figueiredo',
+  sobrenomeMarca: 'Alfaiataria',
+  /** Marca completa, como aparece no site de origem. */
+  marcaLoja: 'Alfaiataria Figueiredo',
+  cidade: 'Pinhais',
   estado: 'PR',
 
-  /** Confirmado em duas fontes: letreiro da fachada + diretório Bendito Guia. */
-  telefone: '+55 41 99930-2624',
-  telefoneLink: '+554199302624',
-  whatsapp: '5541999302624',
+  /** Confirmado no site oficial: alfaiatariafigueiredo.guiapinhais.com.br. */
+  telefone: '+55 41 99875-1324',
+  telefoneLink: '+5541998751324',
+  whatsapp: '5541998751324',
   whatsappMensagem:
-    'Olá! Vim pelo site e gostaria de saber mais sobre alfaiataria sob medida.',
+    'Olá! Vim pelo site e gostaria de saber mais sobre trajes sob medida e uniformes personalizados.',
 
   endereco: {
-    // CONFIRMAR: a fachada mostra o número 58; o diretório registra 263.
-    // Provável que 58 seja o número da porta e 263 o do edifício. Checar com o Carlos.
-    logradouro: 'Alameda Dr. Carlos de Carvalho, 263',
-    bairro: 'Centro',
-    cidade: 'Curitiba',
+    /** Confirmado no site oficial. */
+    logradouro: 'R. Genoveva Forlepa Kopka, 219',
+    bairro: 'Pineville',
+    cidade: 'Pinhais',
     estado: 'PR',
-    cep: '80410-180',
+    cep: '83320-560',
     /** Usado no embed do mapa e no botão "traçar rota". */
-    queryMaps: 'Carlos Simões Alfaiate, Alameda Dr. Carlos de Carvalho, Centro, Curitiba - PR',
+    queryMaps:
+      'Alfaiataria Figueiredo, R. Genoveva Forlepa Kopka, 219, Pineville, Pinhais - PR',
   },
 
-  /** CONFIRMAR horários com o Carlos antes de publicar. */
+  /** CONFIRMAR horários com a Figueiredo — não estavam publicados no site de origem. */
   horarios: [
     { dias: 'Segunda a sexta', horas: '09h às 18h' },
     { dias: 'Sábado', horas: '09h às 13h' },
@@ -48,37 +48,37 @@ export const site = {
   },
 
   seo: {
-    titulo: 'Carlos Simões Alfaiate | Ternos e camisas sob medida em Curitiba',
+    titulo: 'Alfaiataria Figueiredo | Trajes sob medida e uniformes em Pinhais',
     descricao:
-      'Alfaiataria tradicional no centro de Curitiba. Ternos, camisas sob medida e ajustes finos executados à mão por Carlos Simões. Agende sua prova pelo WhatsApp.',
-    url: 'https://carlos-alfaiate.vercel.app', // CONFIRMAR domínio final
+      'Alfaiataria Figueiredo, em Pineville, Pinhais/PR. Trajes sociais, uniformes empresariais, camisetas, polos, jaquetas e reformas em geral. Agende pelo WhatsApp.',
+    url: 'https://alfaiataria-figueiredo.vercel.app', // CONFIRMAR domínio final
   },
 } as const;
 
 export const servicos = [
   {
     icone: 'suit' as const,
-    titulo: 'Ternos sob medida',
+    titulo: 'Trajes sociais',
     descricao:
-      'Do corte do tecido ao último ponto. Cada peça é modelada a partir das suas medidas, com provas intermediárias até o caimento ficar exato.',
+      'Ternos e trajes formais sob medida, para o dia a dia, cerimônias ou o ambiente de trabalho. Corte e caimento ajustados ao seu corpo.',
+  },
+  {
+    icone: 'briefcase' as const,
+    titulo: 'Uniformes empresariais personalizados',
+    descricao:
+      'Fardamento sob medida para equipes, com identidade visual da empresa. Do orçamento em lote à entrega padronizada para todo o time.',
   },
   {
     icone: 'shirt' as const,
-    titulo: 'Camisas sob medida',
+    titulo: 'Camisetas, polos e jaquetas',
     descricao:
-      'Colarinho, punho e comprimento definidos por você. O ofício de camiseiro que dá nome à casa, com tecidos escolhidos peça a peça.',
+      'Peças personalizadas com bordado ou estampa da sua marca, para uso corporativo, promocional ou esportivo.',
   },
   {
     icone: 'scissors' as const,
-    titulo: 'Ajustes e reformas',
+    titulo: 'Reformas em geral',
     descricao:
-      'Aquele terno que nunca serviu direito pode voltar a servir. Barras, cintura, ombros e mangas ajustados com precisão de alfaiataria.',
-  },
-  {
-    icone: 'calendar' as const,
-    titulo: 'Trajes para ocasião',
-    descricao:
-      'Casamento, formatura ou cerimônia. Planejamos o traje com antecedência para que ele esteja pronto, provado e impecável na data.',
+      'Ajustes de barra, cintura, ombros e mangas. Aquela peça que nunca serviu direito pode voltar a vestir bem.',
   },
 ];
 
@@ -117,7 +117,7 @@ export const depoimentos = [
   {
     texto: 'EXEMPLO — substituir por avaliação real do Google.',
     autor: 'Nome do cliente',
-    contexto: 'Terno de casamento',
+    contexto: 'Uniforme da equipe',
   },
   {
     texto: 'EXEMPLO — substituir por avaliação real do Google.',
@@ -127,7 +127,7 @@ export const depoimentos = [
   {
     texto: 'EXEMPLO — substituir por avaliação real do Google.',
     autor: 'Nome do cliente',
-    contexto: 'Camisas sob medida',
+    contexto: 'Traje social sob medida',
   },
 ];
 

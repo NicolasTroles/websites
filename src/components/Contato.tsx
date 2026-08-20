@@ -19,7 +19,7 @@ export function Contato() {
         {/* Coluna de informações */}
         <div className="px-5 py-24 sm:px-8 sm:py-32 lg:pr-16">
           <Reveal>
-            <p className="brand-caps text-[10px] text-brassDeep">Contato</p>
+            <p className="brand-caps text-[10px] text-platinumDeep">Contato</p>
             <h2 className="mt-5 font-display text-[clamp(2rem,5vw,3.4rem)] font-normal leading-[1.08] text-cocoa">
               Venha tomar
               <br />
@@ -35,7 +35,7 @@ export function Contato() {
             <div className="mt-12 space-y-8">
               <div className="flex gap-5">
                 <MapPin
-                  className="mt-0.5 h-5 w-5 shrink-0 text-brassDeep"
+                  className="mt-0.5 h-5 w-5 shrink-0 text-platinumDeep"
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
@@ -53,7 +53,7 @@ export function Contato() {
                     href={mapsUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-4 inline-flex min-h-11 items-center gap-2 brand-caps text-[11px] text-brassDeep underline decoration-sandLine underline-offset-[6px] transition-colors hover:decoration-brassDeep"
+                    className="mt-4 inline-flex min-h-11 items-center gap-2 brand-caps text-[11px] text-platinumDeep underline decoration-sandLine underline-offset-[6px] transition-colors hover:decoration-platinumDeep"
                   >
                     <Navigation className="h-3.5 w-3.5" strokeWidth={2} aria-hidden="true" />
                     Traçar rota
@@ -63,7 +63,7 @@ export function Contato() {
 
               <div className="flex gap-5">
                 <Phone
-                  className="mt-0.5 h-5 w-5 shrink-0 text-brassDeep"
+                  className="mt-0.5 h-5 w-5 shrink-0 text-platinumDeep"
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
@@ -71,7 +71,7 @@ export function Contato() {
                   <h3 className="brand-caps text-[10px] text-cocoaSoft">Telefone</h3>
                   <a
                     href={`tel:${site.telefoneLink}`}
-                    className="mt-3 inline-flex min-h-11 items-center font-display text-2xl text-cocoa transition-colors hover:text-brassDeep"
+                    className="mt-3 inline-flex min-h-11 items-center font-display text-2xl text-cocoa transition-colors hover:text-platinumDeep"
                   >
                     {site.telefone}
                   </a>
@@ -80,7 +80,7 @@ export function Contato() {
 
               <div className="flex gap-5">
                 <Clock
-                  className="mt-0.5 h-5 w-5 shrink-0 text-brassDeep"
+                  className="mt-0.5 h-5 w-5 shrink-0 text-platinumDeep"
                   strokeWidth={1.5}
                   aria-hidden="true"
                 />
@@ -112,7 +112,7 @@ export function Contato() {
         <div className="relative min-h-[24rem] border-t border-sandLine lg:min-h-full lg:border-l lg:border-t-0">
           <iframe
             src={mapsEmbedUrl}
-            title={`Mapa: ${site.nome} Alfaiate, ${site.endereco.logradouro}`}
+            title={`Mapa: ${site.marcaLoja}, ${site.endereco.logradouro}`}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             allowFullScreen

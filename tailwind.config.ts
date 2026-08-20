@@ -28,10 +28,10 @@ const config: Config = {
         cocoaSoft: '#5C5147', // texto secundário no claro
 
         /* Acento único, usado com parcimônia em ambos os fundos. */
-        // brass só sobre fundo escuro (6.1:1). Sobre o bege ele cai para 2.6:1,
-        // então texto dourado no claro usa obrigatoriamente brassDeep (5.4:1).
-        brass: '#B08D57',
-        brassDeep: '#785B31',
+        // platinum só sobre fundo escuro (8.8:1). Sobre o bege ele cai para 1.9:1,
+        // então texto prateado no claro usa obrigatoriamente platinumDeep (5.7:1).
+        platinum: '#ABB1B8',
+        platinumDeep: '#585D62',
       },
       fontFamily: {
         display: ['var(--font-display)', 'Georgia', 'serif'],

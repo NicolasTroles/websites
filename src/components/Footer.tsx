@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import { Instagram, Facebook } from 'lucide-react';
 import { site } from '@/config/site.config';
-import { TopHat } from './Brand';
 
 export function Footer() {
   const ano = new Date().getFullYear();
@@ -10,17 +10,13 @@ export function Footer() {
     <footer className="border-t border-line bg-ink py-16 text-bone">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
-          <div className="flex items-center gap-3">
-            <TopHat className="h-8 w-8 text-brass" />
-            <div>
-              <p className="brand-caps text-xs text-bone">
-                {site.nome}
-              </p>
-              <p className="mt-1.5 font-sans text-[9px] uppercase tracking-[0.24em] text-muted">
-                {site.sobrenomeMarca}
-              </p>
-            </div>
-          </div>
+          <Image
+            src="/logo-figueiredo.png"
+            alt="Alfaiataria Figueiredo"
+            width={593}
+            height={155}
+            className="h-9 w-auto"
+          />
 
           {temRedes && (
             <div className="flex gap-2">
@@ -51,9 +47,7 @@ export function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-line pt-8 text-center text-[13px] text-muted md:flex-row md:justify-between md:text-left">
-          <p>
-            © {ano} {site.nome} {site.sobrenomeMarca} · {site.marcaLoja}
-          </p>
+          <p>© {ano} {site.marcaLoja}</p>
           <p>
             {site.endereco.logradouro} — {site.endereco.bairro},{' '}
             {site.endereco.cidade}/{site.endereco.estado}
