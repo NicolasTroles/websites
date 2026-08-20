@@ -74,7 +74,7 @@ export function Hero() {
                 // termos uma foto real da loja — ver FOTOS.md.
                 src="/fotos/hero.jpg"
                 guia="Foto vertical ou quadrada: a fachada da loja, a prateleira de latas coloridas ou a máquina de mistura em funcionamento."
-                alt="Pintor aplicando tinta branca na parede com rolo, demarcada com fita crepe"
+                alt="Latas de tinta coloridas com pincéis e rolo sobre papel kraft"
                 aspect="alto"
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"

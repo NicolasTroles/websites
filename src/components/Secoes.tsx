@@ -114,7 +114,7 @@ export function Loja() {
                 // FOTO 3 — placeholder profissional (banco de imagens).
                 src="/fotos/loja-2.jpg"
                 guia="Interior da loja: prateleiras de latas, catálogo de cores e balcão de atendimento."
-                alt="Latas de tinta coloridas com pincéis e rolo sobre papel kraft"
+                alt="Pintor aplicando tinta branca na parede com rolo, demarcada com fita crepe"
                 aspect="alto"
                 sizes="(max-width: 1024px) 50vw, 25vw"
                 className="rounded-2xl"
