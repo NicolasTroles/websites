@@ -1,43 +1,45 @@
 /**
  * Fonte única de verdade do site. Trocar dados aqui, nunca dentro dos componentes.
  *
- * Itens marcados com CONFIRMAR foram levantados de diretórios online e da foto
- * da fachada, mas não puderam ser validados no Google Maps (a página de
- * avaliações é renderizada por JavaScript e não pôde ser lida).
+ * Nome, endereço, telefone, horário e avaliações confirmados na ficha do
+ * Google Maps ("Marciel Tintas em Campo Largo", 5,0 · 14 avaliações).
  */
 
 export const site = {
-  /** Nome no letreiro interno da fachada. */
-  nome: 'Carlos Simões',
-  sobrenomeMarca: 'Alfaiate Camiseiro',
-  /** Marca maior no letreiro superior da loja. */
-  marcaLoja: 'Cavalieri Moda',
-  cidade: 'Curitiba',
+  /** Nome no letreiro/logo da loja. */
+  nome: 'Marciel',
+  sobrenomeMarca: 'Tintas',
+  /** Marca completa, como aparece na ficha do Google Maps. */
+  marcaLoja: 'Marciel Tintas',
+  cidade: 'Campo Largo',
   estado: 'PR',
 
-  /** Confirmado em duas fontes: letreiro da fachada + diretório Bendito Guia. */
-  telefone: '+55 41 99930-2624',
-  telefoneLink: '+554199302624',
-  whatsapp: '5541999302624',
+  /** Confirmado na ficha do Google Maps. */
+  telefone: '+55 41 99683-9808',
+  telefoneLink: '+5541996839808',
+  whatsapp: '5541996839808',
   whatsappMensagem:
-    'Olá! Vim pelo site e gostaria de saber mais sobre alfaiataria sob medida.',
+    'Olá! Vim pelo site e gostaria de saber mais sobre tintas e produtos para pintura.',
 
   endereco: {
-    // CONFIRMAR: a fachada mostra o número 58; o diretório registra 263.
-    // Provável que 58 seja o número da porta e 263 o do edifício. Checar com o Carlos.
-    logradouro: 'Alameda Dr. Carlos de Carvalho, 263',
+    /** Confirmado na ficha do Google Maps. */
+    logradouro: 'R. Prof. João Batista Vallões, 1032',
     bairro: 'Centro',
-    cidade: 'Curitiba',
+    cidade: 'Campo Largo',
     estado: 'PR',
-    cep: '80410-180',
+    cep: '83601-110',
     /** Usado no embed do mapa e no botão "traçar rota". */
-    queryMaps: 'Carlos Simões Alfaiate, Alameda Dr. Carlos de Carvalho, Centro, Curitiba - PR',
+    queryMaps:
+      'Marciel Tintas em Campo Largo, R. Prof. João Batista Vallões, 1032, Centro, Campo Largo - PR',
   },
 
-  /** CONFIRMAR horários com o Carlos antes de publicar. */
+  /**
+   * Confirmado na ficha do Google Maps. A loja fecha para almoço das 11h30
+   * às 11h50 de segunda a sexta.
+   */
   horarios: [
-    { dias: 'Segunda a sexta', horas: '09h às 18h' },
-    { dias: 'Sábado', horas: '09h às 13h' },
+    { dias: 'Segunda a sexta', horas: '08h às 11h30 e 11h50 às 18h' },
+    { dias: 'Sábado', horas: '08h às 13h' },
     { dias: 'Domingo', horas: 'Fechado' },
   ],
 
@@ -47,87 +49,71 @@ export const site = {
     facebook: '',
   },
 
+  /** Confirmado na ficha do Google Maps. */
+  avaliacaoGoogle: {
+    nota: 5.0,
+    total: 14,
+  },
+
   seo: {
-    titulo: 'Carlos Simões Alfaiate | Ternos e camisas sob medida em Curitiba',
+    titulo: 'Marciel Tintas | Tintas e materiais para pintura em Campo Largo',
     descricao:
-      'Alfaiataria tradicional no centro de Curitiba. Ternos, camisas sob medida e ajustes finos executados à mão por Carlos Simões. Agende sua prova pelo WhatsApp.',
-    url: 'https://carlos-alfaiate.vercel.app', // CONFIRMAR domínio final
+      'Marciel Tintas, no Centro de Campo Largo/PR. Tintas imobiliárias, automotivas, texturas e acessórios para pintura, com mistura de cores na hora. Nota 5,0 no Google. Atendimento pelo WhatsApp.',
+    url: 'https://marciel-tintas.vercel.app', // CONFIRMAR domínio final
   },
 } as const;
 
 export const servicos = [
   {
-    icone: 'suit' as const,
-    titulo: 'Ternos sob medida',
+    icone: 'palette' as const,
+    titulo: 'Mistura de cores na hora',
     descricao:
-      'Do corte do tecido ao último ponto. Cada peça é modelada a partir das suas medidas, com provas intermediárias até o caimento ficar exato.',
+      'Máquina de mistura computadorizada, com milhares de cores disponíveis. Você escolhe o tom certo e leva pronto para usar.',
   },
   {
-    icone: 'shirt' as const,
-    titulo: 'Camisas sob medida',
+    icone: 'home' as const,
+    titulo: 'Tintas imobiliárias',
     descricao:
-      'Colarinho, punho e comprimento definidos por você. O ofício de camiseiro que dá nome à casa, com tecidos escolhidos peça a peça.',
+      'Látex, acrílicas, texturas e vernizes para paredes internas, externas, madeira e metal. Das principais marcas do mercado.',
   },
   {
-    icone: 'scissors' as const,
-    titulo: 'Ajustes e reformas',
+    icone: 'car' as const,
+    titulo: 'Tintas automotivas',
     descricao:
-      'Aquele terno que nunca serviu direito pode voltar a servir. Barras, cintura, ombros e mangas ajustados com precisão de alfaiataria.',
+      'Linha completa para funilaria e repintura automotiva, com produtos e catálogo de cores para todo tipo de veículo.',
   },
   {
-    icone: 'calendar' as const,
-    titulo: 'Trajes para ocasião',
+    icone: 'wrench' as const,
+    titulo: 'Ferramentas e acessórios',
     descricao:
-      'Casamento, formatura ou cerimônia. Planejamos o traje com antecedência para que ele esteja pronto, provado e impecável na data.',
+      'Rolos, pincéis, fitas, lixas e todo o material de preparação de superfície para o serviço sair bem-feito.',
   },
 ];
 
 export const processo = [
   {
     numero: '01',
-    titulo: 'Conversa e escolha do tecido',
+    titulo: 'Você traz a ideia',
     descricao:
-      'Entendemos a ocasião, o seu estilo e o orçamento. Você vê e sente os tecidos disponíveis antes de decidir.',
+      'Uma foto do ambiente, um pedaço de referência ou só a cor que está na cabeça. A equipe ajuda a decidir com calma.',
   },
   {
     numero: '02',
-    titulo: 'Medidas',
+    titulo: 'Escolha da cor certa',
     descricao:
-      'Mais de vinte medidas tiradas à mão, considerando postura e proporções. É isso que separa sob medida de tamanho padrão.',
+      'Catálogo com milhares de tons e amostras físicas para ver a cor na luz real, antes de fechar a lata.',
   },
   {
     numero: '03',
-    titulo: 'Corte e montagem',
+    titulo: 'Mistura computadorizada',
     descricao:
-      'O molde é feito exclusivamente para você e o tecido é cortado à mão. A peça é montada e alinhavada para a primeira prova.',
+      'A tinta é preparada na hora, na máquina, com a mesma fórmula sempre que você precisar repetir a cor.',
   },
   {
     numero: '04',
-    titulo: 'Provas e entrega',
+    titulo: 'Pronto para usar',
     descricao:
-      'Uma ou mais provas para acertar cada detalhe. A peça só sai da alfaiataria quando o caimento está exato.',
-  },
-];
-
-/**
- * SUBSTITUIR pelos depoimentos reais do Google Maps.
- * Não publique com estes textos de exemplo.
- */
-export const depoimentos = [
-  {
-    texto: 'EXEMPLO — substituir por avaliação real do Google.',
-    autor: 'Nome do cliente',
-    contexto: 'Terno de casamento',
-  },
-  {
-    texto: 'EXEMPLO — substituir por avaliação real do Google.',
-    autor: 'Nome do cliente',
-    contexto: 'Ajuste de terno',
-  },
-  {
-    texto: 'EXEMPLO — substituir por avaliação real do Google.',
-    autor: 'Nome do cliente',
-    contexto: 'Camisas sob medida',
+      'Você sai com a tinta, os acessórios certos e as dicas de aplicação para o resultado durar.',
   },
 ];
 

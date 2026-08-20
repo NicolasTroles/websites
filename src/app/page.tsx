@@ -3,13 +3,7 @@ import { Contato } from '@/components/Contato';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
-import {
-  Depoimentos,
-  Galeria,
-  Oficio,
-  Processo,
-  Servicos,
-} from '@/components/Secoes';
+import { Galeria, Loja, Processo, Servicos } from '@/components/Secoes';
 
 export default function Home() {
   return (
@@ -17,11 +11,10 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <Oficio />
+        <Loja />
         <Servicos />
         <Galeria />
         <Processo />
-        <Depoimentos />
         <Contato />
       </main>
       <Footer />

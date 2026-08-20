@@ -6,32 +6,25 @@ const config: Config = {
     extend: {
       colors: {
         /*
-         * Duas famílias que se alternam ao longo da página.
-         *
-         * O escuro é preto-amarronzado, nunca preto neutro: preto puro lê como
-         * tecnologia, e alfaiataria precisa de calor. Referência tirada do CSS
-         * da Alfaiataria Estravagância (#0F0D0D) e do LV Alfaiataria.
+         * Site majoritariamente branco: parede recém-pintada, não uma lata
+         * fechada. O escuro vira acento pontual, não mais fundo padrão.
          */
-        ink: '#12100E', // fundo escuro, quente
-        surface: '#1B1815', // cards sobre o escuro
-        elevated: '#242019',
-        line: '#332E28', // divisores no escuro
-        silver: '#BFB6A8', // texto secundário no escuro
-        muted: '#8C8377',
-        bone: '#F7F3EC', // texto principal no escuro (creme, não branco)
+        ink: '#1C1B19', // texto principal e títulos (quase preto, com calor)
+        slate: '#5C594F', // texto secundário (7:1 sobre branco)
+        muted: '#8C887C', // texto terciário — só para texto grande/decorativo (3.5:1)
+        line: '#E8E6DF', // divisores e bordas sobre branco
+        offwhite: '#F7F6F2', // fundo alternado, branco levemente quente
 
-        /* Família clara: carrega a maior parte do site. */
-        sand: '#F2EDE4', // fundo claro
-        sandDeep: '#E7DFD2', // cards sobre o claro
-        sandLine: '#D6CCBB', // divisores no claro
-        cocoa: '#2A2320', // texto principal no claro
-        cocoaSoft: '#5C5147', // texto secundário no claro
-
-        /* Acento único, usado com parcimônia em ambos os fundos. */
-        // brass só sobre fundo escuro (6.1:1). Sobre o bege ele cai para 2.6:1,
-        // então texto dourado no claro usa obrigatoriamente brassDeep (5.4:1).
-        brass: '#B08D57',
-        brassDeep: '#785B31',
+        /*
+         * Cor única da marca: azul petróleo — nome real de cor de tinta no
+         * Brasil. Mais saturada que antes porque agora carrega o site
+         * (botões, ícones, a faixa cheia do "Como funciona"), não só um
+         * detalhe sobre fundo escuro. Passa 4.5:1 nos dois sentidos sobre
+         * branco (texto sobre branco e texto branco sobre ela).
+         */
+        petroleo: '#0B7285',
+        petroleoDeep: '#084F5C', // hover, texto pequeno, faixa de destaque
+        petroleoTint: '#E4F1F2', // fundo clarinho para badges e cards da marca
       },
       fontFamily: {
         display: ['var(--font-display)', 'Georgia', 'serif'],

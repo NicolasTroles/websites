@@ -1,15 +1,15 @@
 /**
- * Marcas do site, redesenhadas em SVG a partir dos símbolos da fachada da loja
- * (cartola e silhueta de terno com gravata). Vetor próprio, não traçado da foto:
- * escala limpo do favicon 32px até a marca d'água de 800px do parallax.
+ * Marcas do site: um monograma "M" em forma de pincelada e uma gota de tinta,
+ * desenhados em SVG próprio. Substituem a logo real da loja até ela ser
+ * fornecida — ver FOTOS.md.
  */
 
 type IconProps = {
   className?: string;
 };
 
-/** Cartola — logo principal, usada no header e no favicon. */
-export function TopHat({ className }: IconProps) {
+/** Gota de tinta — ícone principal, usado no header, rodapé e favicon. */
+export function PaintDrop({ className }: IconProps) {
   return (
     <svg
       viewBox="0 0 64 64"
@@ -18,22 +18,36 @@ export function TopHat({ className }: IconProps) {
       aria-hidden="true"
       focusable="false"
     >
-      {/* copa */}
       <path
-        d="M20 8h24l2.5 34H17.5L20 8Z"
+        d="M32 6C32 6 14 30.5 14 42.5C14 53.27 22.06 60 32 60C41.94 60 50 53.27 50 42.5C50 30.5 32 6 32 6Z"
         fill="currentColor"
       />
-      {/* faixa da copa. currentColor + opacidade funciona sobre qualquer fundo,
-          diferente de um preto cravado, que sumiria no bege. */}
-      <path d="M18.4 33h27.2l.5 7H17.9l.5-7Z" fill="currentColor" opacity="0.35" />
-      {/* aba */}
-      <ellipse cx="32" cy="45" rx="27" ry="6.5" fill="currentColor" />
+      {/* brilho: sugere líquido, não um ícone genérico de "gota d'água" */}
+      <path
+        d="M23 40C23 34 27 28 30.5 25"
+        stroke="var(--drop-highlight, #FFFFFF)"
+        strokeOpacity="0.45"
+        strokeWidth="3"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
 
-/** Silhueta de terno com gravata — elemento decorativo do parallax. */
-export function SuitSilhouette({ className }: IconProps) {
+/** Wordmark completo: gota + nome, para o header e o rodapé. */
+export function Wordmark({ className }: IconProps) {
+  return (
+    <span className={`inline-flex items-center gap-3 ${className ?? ''}`}>
+      <PaintDrop className="h-6 w-6 text-petroleo sm:h-7 sm:w-7" />
+      <span className="brand-caps text-[15px] leading-none text-ink sm:text-base">
+        Marciel <span className="text-petroleo">Tintas</span>
+      </span>
+    </span>
+  );
+}
+
+/** Rolo de pintura — elemento decorativo do parallax, marca d'água nas seções. */
+export function RollerSilhouette({ className }: IconProps) {
   return (
     <svg
       viewBox="0 0 64 80"
@@ -42,34 +56,12 @@ export function SuitSilhouette({ className }: IconProps) {
       aria-hidden="true"
       focusable="false"
     >
-      {/* lapela esquerda */}
-      <path d="M26 4 8 16v60h12l4-46 2-26Z" fill="currentColor" />
-      {/* lapela direita */}
-      <path d="M38 4l18 12v60H44l-4-46-2-26Z" fill="currentColor" />
-      {/* gravata */}
-      <path d="M32 6l5 6-3 6 4 26-6 8-6-8 4-26-3-6 5-6Z" fill="currentColor" />
+      {/* cabo */}
+      <rect x="29" y="30" width="6" height="46" rx="2" fill="currentColor" />
+      {/* suporte em L */}
+      <path d="M32 30V14h14" stroke="currentColor" strokeWidth="6" strokeLinecap="round" />
+      {/* rolo */}
+      <rect x="38" y="4" width="20" height="20" rx="10" fill="currentColor" />
     </svg>
-  );
-}
-
-/** Divisor de seção: fio + cartola centralizada, no lugar de uma linha reta. */
-export function SectionDivider({
-  className,
-  tom = 'escuro',
-}: IconProps & { tom?: 'claro' | 'escuro' }) {
-  const claro = tom === 'claro';
-  return (
-    <div
-      className={`flex items-center justify-center gap-5 ${className ?? ''}`}
-      aria-hidden="true"
-    >
-      <span
-        className={`h-px w-16 bg-gradient-to-r from-transparent sm:w-24 ${claro ? 'to-sandLine' : 'to-line'}`}
-      />
-      <TopHat className={`h-5 w-5 ${claro ? 'text-brassDeep' : 'text-brass'}`} />
-      <span
-        className={`h-px w-16 bg-gradient-to-l from-transparent sm:w-24 ${claro ? 'to-sandLine' : 'to-line'}`}
-      />
-    </div>
   );
 }

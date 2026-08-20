@@ -1,112 +1,89 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
 import { site } from '@/config/site.config';
 import { useParallax } from '@/lib/useParallax';
 import { BotaoTelefone, BotaoWhatsApp } from './Acoes';
 import { Foto } from './Foto';
 
 export function Hero() {
-  // A foto de fundo se move mais devagar que a página: é isso que cria a profundidade.
-  const fundo = useParallax<HTMLDivElement>(0.18);
+  // A foto se move um pouco mais devagar que a página: profundidade sutil, sem exagero.
+  const foto = useParallax<HTMLDivElement>(0.08);
 
   return (
     <section
       id="topo"
-      className="relative flex min-h-dvh items-center overflow-hidden"
+      className="relative overflow-hidden bg-white pb-20 pt-32 sm:pb-28 sm:pt-40"
     >
-      {/* Camada 1: foto de fundo em parallax. Escala 110% para não revelar bordas. */}
-      <div
-        ref={fundo.ref}
-        className="absolute inset-0 scale-110 will-change-transform"
-        style={{ transform: `translate3d(0, ${fundo.offset}px, 0) scale(1.1)` }}
-      >
-        <Foto
-          // FOTO 1 — hero
-          src="/fotos/hero.jpg"
-          guia="Foto larga e escura: terno bem cortado em um homem, ou o Carlos ajustando uma lapela. Precisa ter área escura à esquerda para o texto ficar legível."
-          alt="Homem vestindo terno sob medida ajustando a gravata em um ateliê de alfaiataria"
-          aspect="paisagem"
-          priority
-          // Ancorado à direita: em telas estreitas o crop come a lateral
-          // esquerda (que é o vazio escuro) e nunca corta o homem de terno.
-          foco="direita"
-          sizes="100vw"
-          className="h-full w-full !aspect-auto"
-        />
-      </div>
+      <div id="conteudo" className="mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+          {/* Coluna de texto */}
+          <div>
+            <p className="brand-caps animate-fade-up text-[10px] text-petroleoDeep sm:text-[11px]">
+              {site.marcaLoja} · {site.cidade}, {site.estado}
+            </p>
 
-      {/*
-       * Camada 2: véu de contraste.
-       *
-       * Medido sobre a foto real: a média da metade esquerda é bem escura,
-       * mas o abajur aceso cai justamente na faixa do título e derruba o
-       * contraste do dourado para ~1.3:1. Por isso o véu é forte até 55% da
-       * largura (cobrindo o abajur) e só depois abre, preservando o homem
-       * de terno e a madeira do ateliê à direita.
-       */}
-      <div
-        className="absolute inset-0 bg-gradient-to-r from-ink via-ink/92 via-55% to-transparent"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/45"
-        aria-hidden="true"
-      />
+            <h1
+              className="mt-7 animate-fade-up font-display text-[clamp(2.6rem,6vw,4.6rem)] font-normal leading-[1.02] text-ink"
+              style={{ animationDelay: '120ms' }}
+            >
+              A tinta que
+              <br />
+              <span className="italic text-petroleo">acerta a cor</span>
+              <br />
+              de primeira.
+            </h1>
 
-      {/* Camada 3: conteúdo. */}
-      <div
-        id="conteudo"
-        className="relative mx-auto w-full max-w-7xl px-5 pb-28 pt-28 sm:px-8"
-      >
-        <div className="max-w-2xl">
-          <p className="brand-caps animate-fade-up text-[10px] text-silver sm:text-[11px]">
-            {site.marcaLoja} · {site.cidade}, {site.estado}
-          </p>
+            <div
+              className="mt-8 h-1 w-24 origin-left animate-draw-line bg-petroleo"
+              style={{ animationDelay: '360ms' }}
+              aria-hidden="true"
+            />
 
-          <h1
-            className="mt-7 animate-fade-up font-display text-[clamp(2.6rem,8vw,5.2rem)] font-normal leading-[0.98] text-bone"
-            style={{ animationDelay: '120ms' }}
-          >
-            O terno que
-            <br />
-            <span className="italic text-brass">veste você</span>
-            <br />
-            e mais ninguém.
-          </h1>
+            <p
+              className="mt-8 max-w-prose animate-fade-up text-[17px] leading-relaxed text-slate"
+              style={{ animationDelay: '260ms' }}
+            >
+              Tintas imobiliárias e automotivas, mistura de cor na hora e
+              acessórios de pintura, com atendimento de quem entende do
+              assunto, em Campo Largo.
+            </p>
 
-          <div
-            className="mt-8 h-px w-24 origin-left animate-draw-line bg-brass"
-            style={{ animationDelay: '360ms' }}
-            aria-hidden="true"
-          />
+            <div
+              className="mt-11 flex animate-fade-up flex-col gap-3 sm:flex-row"
+              style={{ animationDelay: '400ms' }}
+            >
+              <BotaoWhatsApp />
+              <BotaoTelefone />
+            </div>
+          </div>
 
-          <p
-            className="mt-8 max-w-prose animate-fade-up text-[17px] leading-relaxed text-silver"
-            style={{ animationDelay: '260ms' }}
-          >
-            Alfaiataria tradicional no centro de Curitiba. Ternos e camisas
-            cortados à mão sobre as suas medidas, com o cuidado de quem faz isso
-            há décadas.
-          </p>
-
-          <div
-            className="mt-11 flex animate-fade-up flex-col gap-3 sm:flex-row"
-            style={{ animationDelay: '400ms' }}
-          >
-            <BotaoWhatsApp />
-            <BotaoTelefone className="hidden sm:inline-flex" />
+          {/* Coluna da foto */}
+          <div className="relative">
+            {/* Forma decorativa: a única "mancha" de cor da dobra inicial. */}
+            <div
+              className="absolute -right-6 -top-6 h-full w-full rounded-[2rem] bg-petroleoTint sm:-right-8 sm:-top-8"
+              aria-hidden="true"
+            />
+            <div
+              ref={foto.ref}
+              className="relative will-change-transform"
+              style={{ transform: `translate3d(0, ${foto.offset}px, 0)` }}
+            >
+              <Foto
+                // FOTO 1 — hero. Placeholder profissional (banco de imagens) até
+                // termos uma foto real da loja — ver FOTOS.md.
+                src="/fotos/hero.jpg"
+                guia="Foto vertical ou quadrada: a fachada da loja, a prateleira de latas coloridas ou a máquina de mistura em funcionamento."
+                alt="Pintor aplicando tinta branca na parede com rolo, demarcada com fita crepe"
+                aspect="alto"
+                priority
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                className="rounded-[2rem] shadow-xl shadow-ink/10"
+              />
+            </div>
           </div>
         </div>
       </div>
-
-      <a
-        href="#oficio"
-        aria-label="Ver mais"
-        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-brass transition-colors hover:text-bone md:block"
-      >
-        <ChevronDown className="h-6 w-6 animate-bounce" strokeWidth={1.5} />
-      </a>
     </section>
   );
 }

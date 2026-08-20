@@ -23,17 +23,17 @@ export const metadata: Metadata = {
   title: site.seo.titulo,
   description: site.seo.descricao,
   keywords: [
-    'alfaiate curitiba',
-    'terno sob medida curitiba',
-    'camisa sob medida curitiba',
-    'alfaiataria centro curitiba',
-    'ajuste de terno curitiba',
+    'loja de tintas campo largo',
+    'tintas campo largo pr',
+    'mistura de cores campo largo',
+    'tinta automotiva campo largo',
+    'tinta imobiliária campo largo',
   ],
   openGraph: {
     title: site.seo.titulo,
     description: site.seo.descricao,
     url: site.seo.url,
-    siteName: `${site.nome} ${site.sobrenomeMarca}`,
+    siteName: site.marcaLoja,
     locale: 'pt_BR',
     type: 'website',
   },
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0A0A0A',
+  themeColor: '#0B7285',
   width: 'device-width',
   initialScale: 1,
   // Sem maximumScale: bloquear zoom quebra a acessibilidade.
@@ -53,8 +53,8 @@ export const viewport: Viewport = {
  */
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'ClothingStore',
-  name: `${site.nome} ${site.sobrenomeMarca}`,
+  '@type': 'HardwareStore',
+  name: site.marcaLoja,
   description: site.seo.descricao,
   telephone: site.telefone,
   url: site.seo.url,
@@ -66,20 +66,32 @@ const jsonLd = {
     postalCode: site.endereco.cep,
     addressCountry: 'BR',
   },
+  // A loja fecha para almoço das 11h30 às 11h50, por isso são dois blocos por dia útil.
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:00',
+      opens: '08:00',
+      closes: '11:30',
+    },
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '11:50',
       closes: '18:00',
     },
     {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: 'Saturday',
-      opens: '09:00',
+      opens: '08:00',
       closes: '13:00',
     },
   ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: site.avaliacaoGoogle.nota,
+    reviewCount: site.avaliacaoGoogle.total,
+  },
 };
 
 export default function RootLayout({
@@ -96,7 +108,7 @@ export default function RootLayout({
         />
         <a
           href="#conteudo"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-bone focus:px-5 focus:py-3 focus:text-sm focus:text-ink"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-ink focus:px-5 focus:py-3 focus:text-sm focus:text-white"
         >
           Pular para o conteúdo
         </a>

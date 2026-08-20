@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   html {
@@ -14,15 +14,14 @@
   }
 
   body {
-    /* O site abre e fecha escuro; as seções claras pintam o próprio fundo. */
-    @apply bg-ink text-bone antialiased;
+    @apply bg-white text-ink antialiased;
     /* Evita o scroll horizontal que o parallax pode causar em telas estreitas. */
     overflow-x: hidden;
   }
 
   /*
    * Foco visível para navegação por teclado.
-   * `outline` com currentColor funciona nos dois fundos sem precisar de
+   * `outline` com currentColor funciona em qualquer fundo sem precisar de
    * variante por seção — o anel herda a cor do texto local.
    */
   :focus-visible {
@@ -31,48 +30,49 @@
   }
 
   ::selection {
-    @apply bg-brass text-ink;
+    @apply bg-petroleo text-white;
   }
 }
 
 @layer utilities {
-  /* Título de seção com o espaçamento largo do letreiro da fachada. */
+  /* Título de seção com o espaçamento largo de um rótulo de lata de tinta. */
   .brand-caps {
     @apply font-sans uppercase tracking-brand;
   }
 
-  /* Textura de tecido em CSS puro. Variante para cada fundo. */
+  /* Textura de parede lisa em CSS puro, para a faixa colorida (fundo petróleo). */
   .weave {
     background-image:
       repeating-linear-gradient(
         45deg,
-        rgba(255, 255, 255, 0.018) 0px,
-        rgba(255, 255, 255, 0.018) 1px,
+        rgba(255, 255, 255, 0.05) 0px,
+        rgba(255, 255, 255, 0.05) 1px,
         transparent 1px,
         transparent 4px
       ),
       repeating-linear-gradient(
         -45deg,
-        rgba(255, 255, 255, 0.018) 0px,
-        rgba(255, 255, 255, 0.018) 1px,
+        rgba(255, 255, 255, 0.05) 0px,
+        rgba(255, 255, 255, 0.05) 1px,
         transparent 1px,
         transparent 4px
       );
   }
 
+  /* Mesma textura, versão sutil para fundo branco/offwhite. */
   .weave-light {
     background-image:
       repeating-linear-gradient(
         45deg,
-        rgba(42, 35, 32, 0.03) 0px,
-        rgba(42, 35, 32, 0.03) 1px,
+        rgba(28, 27, 25, 0.03) 0px,
+        rgba(28, 27, 25, 0.03) 1px,
         transparent 1px,
         transparent 4px
       ),
       repeating-linear-gradient(
         -45deg,
-        rgba(42, 35, 32, 0.03) 0px,
-        rgba(42, 35, 32, 0.03) 1px,
+        rgba(28, 27, 25, 0.03) 0px,
+        rgba(28, 27, 25, 0.03) 1px,
         transparent 1px,
         transparent 4px
       );

@@ -19,8 +19,8 @@ type FotoProps = {
   aspect?: 'retrato' | 'paisagem' | 'quadrado' | 'alto';
   /** Marque true apenas na foto do hero, para ela carregar primeiro. */
   priority?: boolean;
-  /** Fundo onde a moldura está, para o marcador ficar legível. */
-  tom?: 'escuro' | 'claro';
+  /** Fundo onde a moldura está — 'marca' é a faixa cheia de azul petróleo. */
+  tom?: 'claro' | 'marca';
   /**
    * Que parte da foto preservar quando o crop cortar.
    * A moldura tem proporção fixa e a imagem é cortada para preenchê-la
@@ -51,7 +51,7 @@ export function Foto({
   guia,
   aspect = 'retrato',
   priority = false,
-  tom = 'escuro',
+  tom = 'claro',
   foco = 'centro',
   className,
   sizes = '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw',
@@ -60,34 +60,34 @@ export function Foto({
   // de imagem quebrada do navegador na página.
   const [falhou, setFalhou] = useState(false);
 
-  const claro = tom === 'claro';
-  const fundo = claro ? 'bg-sandDeep' : 'bg-surface';
+  const marca = tom === 'marca';
+  const fundo = marca ? 'bg-petroleoDeep' : 'bg-offwhite';
   const moldura = `relative overflow-hidden ${fundo} ${ASPECTOS[aspect]} ${className ?? ''}`;
 
   if (!src || falhou) {
     return (
       <div
-        className={`${moldura} ${claro ? 'weave-light border-sandLine' : 'weave border-line'} grid place-items-center border border-dashed`}
+        className={`${moldura} ${marca ? 'weave border-white/25' : 'weave-light border-line'} grid place-items-center border border-dashed`}
       >
         <div className="max-w-[85%] px-5 py-6 text-center">
           <Camera
-            className={`mx-auto h-7 w-7 ${claro ? 'text-cocoaSoft' : 'text-muted'}`}
+            className={`mx-auto h-7 w-7 ${marca ? 'text-white/70' : 'text-muted'}`}
             strokeWidth={1.5}
             aria-hidden="true"
           />
           <p
-            className={`brand-caps mt-4 text-[10px] ${claro ? 'text-cocoaSoft' : 'text-muted'}`}
+            className={`brand-caps mt-4 text-[10px] ${marca ? 'text-white/70' : 'text-muted'}`}
           >
             {falhou ? 'Arquivo não encontrado' : 'Foto aqui'}
           </p>
           <p
-            className={`mt-2 text-sm leading-relaxed ${claro ? 'text-cocoa' : 'text-silver'}`}
+            className={`mt-2 text-sm leading-relaxed ${marca ? 'text-white/90' : 'text-slate'}`}
           >
             {guia}
           </p>
           {falhou && src && (
             <code
-              className={`mt-3 block break-all text-[11px] ${claro ? 'text-brassDeep' : 'text-brass'}`}
+              className={`mt-3 block break-all text-[11px] ${marca ? 'text-white' : 'text-petroleoDeep'}`}
             >
               public{src}
             </code>

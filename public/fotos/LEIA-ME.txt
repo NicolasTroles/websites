@@ -1,16 +1,21 @@
-Salve as fotos aqui. A EXTENSÃO PRECISA SER .jpg — um .png ou .heic
-com o nome certo continua aparecendo como "arquivo não encontrado".
+Todos os 8 slots já têm fotos temporárias de banco de imagens (Pexels,
+licença livre). Troque pelas fotos reais da loja salvando por cima com o
+mesmo nome. A EXTENSÃO PRECISA SER .jpg — um .png ou .heic com o nome certo
+continua aparecendo como "arquivo não encontrado".
 
-FALTA AGORA:
-  hero.jpg    <- a imagem do banner (homem de terno, vazio escuro à esquerda)
-
-JÁ NO AR:
-  oficio-1.jpg   Carlos marcando o tecido com a régua
-  oficio-2.jpg   Interior do ateliê
+ARQUIVOS (ver FOTOS.md na raiz do projeto para detalhes):
+  hero.jpg                 <- imagem do banner (fachada, prateleira ou máquina de mistura)
+  loja-1.jpg                <- máquina de mistura ou equipe preparando tinta
+  loja-2.jpg                <- interior da loja
+  galeria-destaque.jpg      <- melhor foto disponível, vertical
+  galeria-cores.jpg         <- catálogo de cores / cartelas
+  galeria-mistura.jpg       <- detalhe da mistura de tinta
+  galeria-prateleira.jpg    <- prateleiras de latas
+  galeria-balcao.jpg        <- balcão de atendimento
 
 CONVERTER PNG -> JPG (macOS, sem instalar nada):
   cd public/fotos
-  sips -s format jpeg -s formatOptions 82 SEUARQUIVO.png --out hero.jpg
+  sips -s format jpeg -s formatOptions 82 SEUARQUIVO.png --out nome.jpg
   rm SEUARQUIVO.png
 
 O hero é a maior imagem do site: mantenha 1920px ou mais de largura.
