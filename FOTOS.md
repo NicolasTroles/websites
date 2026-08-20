@@ -5,16 +5,16 @@ Todos os slots já estão preenchidos com fotos temporárias de banco de imagens
 só para o layout não ficar vazio. **Troque pelas fotos reais da loja assim
 que possível**, salvando o arquivo com o mesmo nome em `public/fotos/`.
 
-| #   | Arquivo                  | Onde aparece                          | Proporção     |
-| --- | ------------------------- | -------------------------------------- | ------------- |
-| 1   | `hero.jpg`                | Hero, coluna da foto                   | Vertical 2:3  |
-| 2   | `loja-1.jpg`               | Seção "A loja"                         | Vertical 2:3  |
-| 3   | `loja-2.jpg`               | Seção "A loja"                         | Vertical 2:3  |
-| 4   | `galeria-destaque.jpg`     | Galeria, ocupa 2 linhas                | Vertical 2:3  |
-| 5   | `galeria-cores.jpg`        | Galeria                                | Quadrada      |
-| 6   | `galeria-mistura.jpg`      | Galeria                                | Quadrada      |
-| 7   | `galeria-prateleira.jpg`   | Galeria                                | Larga 16:10   |
-| 8   | `galeria-balcao.jpg`       | Galeria                                | Larga 16:10   |
+| #   | Arquivo                  | Onde aparece            | Proporção    |
+| --- | ------------------------ | ----------------------- | ------------ |
+| 1   | `hero.jpg`               | Hero, coluna da foto    | Vertical 2:3 |
+| 2   | `loja-1.jpg`             | Seção "A loja"          | Vertical 2:3 |
+| 3   | `loja-2.jpg`             | Seção "A loja"          | Vertical 2:3 |
+| 4   | `galeria-destaque.jpg`   | Galeria, ocupa 2 linhas | Vertical 2:3 |
+| 5   | `galeria-cores.jpg`      | Galeria                 | Quadrada     |
+| 6   | `galeria-mistura.jpg`    | Galeria                 | Quadrada     |
+| 7   | `galeria-prateleira.jpg` | Galeria                 | Larga 16:10  |
+| 8   | `galeria-balcao.jpg`     | Galeria                 | Larga 16:10  |
 
 ## Logo
 
