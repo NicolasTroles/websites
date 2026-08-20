@@ -5,17 +5,17 @@ como exemplo, para o layout não ficar vazio enquanto não há um ensaio própri
 Estão marcadas como "site de origem" na tabela abaixo — **troque por fotos
 reais da loja assim que possível**, o crop e o layout continuam os mesmos.
 
-| # | Arquivo | Onde aparece | Proporção | Origem |
-|---|---------|--------------|-----------|--------|
-| 1 | `hero.jpg` ✅ | Hero, tela cheia | Larga, 16:10+ | Foto de banco de imagens (mantida por pedido — não é foto real da loja) |
-| 2 | `oficio-1.jpg` ✅ | Seção "O ofício" — fundo claro | Vertical 2:3 | Site de origem: tirada de medidas |
-| 3 | `oficio-2.jpg` ✅ | Seção "O ofício" — fundo claro | Vertical 2:3 | Site de origem: interior da loja |
-| 4 | `galeria-destaque.jpg` ✅ | Galeria, ocupa 2 linhas | Vertical 2:3 | Site de origem: blazers em manequim |
-| 5 | `galeria-jaqueta.jpg` ✅ | Galeria | Quadrada | Site de origem: jaquetas personalizadas |
-| 6 | `galeria-medidas.jpg` ✅ | Galeria | Quadrada | Site de origem: detalhe da tirada de medidas |
-| 7 | `galeria-uniformes.jpg` ✅ | Galeria | Larga 16:10 | Site de origem: uniformes em lote |
-| 8 | `galeria-social.jpg` ✅ | Galeria | Larga 16:10 | Site de origem: trajes sociais |
-| 9 | `faixa-loja.jpg` ✅ | Faixa parallax | Larga, 16:9+ | Site de origem: interior da loja |
+| #   | Arquivo                    | Onde aparece                   | Proporção     | Origem                                                                  |
+| --- | -------------------------- | ------------------------------ | ------------- | ----------------------------------------------------------------------- |
+| 1   | `hero.jpg` ✅              | Hero, tela cheia               | Larga, 16:10+ | Foto de banco de imagens (mantida por pedido — não é foto real da loja) |
+| 2   | `oficio-1.jpg` ✅          | Seção "O ofício" — fundo claro | Vertical 2:3  | Site de origem: tirada de medidas                                       |
+| 3   | `oficio-2.jpg` ✅          | Seção "O ofício" — fundo claro | Vertical 2:3  | Site de origem: interior da loja                                        |
+| 4   | `galeria-destaque.jpg` ✅  | Galeria, ocupa 2 linhas        | Vertical 2:3  | Site de origem: blazers em manequim                                     |
+| 5   | `galeria-jaqueta.jpg` ✅   | Galeria                        | Quadrada      | Site de origem: jaquetas personalizadas                                 |
+| 6   | `galeria-medidas.jpg` ✅   | Galeria                        | Quadrada      | Site de origem: detalhe da tirada de medidas                            |
+| 7   | `galeria-uniformes.jpg` ✅ | Galeria                        | Larga 16:10   | Site de origem: uniformes em lote                                       |
+| 8   | `galeria-social.jpg` ✅    | Galeria                        | Larga 16:10   | Site de origem: trajes sociais                                          |
+| 9   | `faixa-loja.jpg` ✅        | Faixa parallax                 | Larga, 16:9+  | Site de origem: interior da loja                                        |
 
 ## Logo e favicon
 
@@ -63,11 +63,7 @@ Em `src/components/Hero.tsx` e `src/components/Secoes.tsx`, procure o
 comentário `// FOTO N` correspondente e troque o `src`:
 
 ```tsx
-<Foto
-  src="/fotos/nome-do-arquivo.jpg"
-  guia="..."
-  alt="..."
-/>
+<Foto src="/fotos/nome-do-arquivo.jpg" guia="..." alt="..." />
 ```
 
 ## Fundo de cada seção
