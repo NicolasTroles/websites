@@ -16,7 +16,7 @@ export function BotaoWhatsApp({ className }: { className?: string }) {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className={`${BASE} bg-petroleo text-white hover:bg-petroleoDeep active:scale-[0.98] ${className ?? ''}`}
+      className={`${BASE} whitespace-nowrap bg-petroleo text-white hover:bg-petroleoDeep active:scale-[0.98] ${className ?? ''}`}
     >
       <MessageCircle className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
       Falar no WhatsApp

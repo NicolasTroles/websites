@@ -2,7 +2,7 @@
 
 import { site } from '@/config/site.config';
 import { useParallax } from '@/lib/useParallax';
-import { BotaoTelefone, BotaoWhatsApp } from './Acoes';
+import { BotaoWhatsApp } from './Acoes';
 import { Foto } from './Foto';
 
 export function Hero() {
@@ -53,7 +53,6 @@ export function Hero() {
               style={{ animationDelay: '400ms' }}
             >
               <BotaoWhatsApp />
-              <BotaoTelefone />
             </div>
           </div>
 
