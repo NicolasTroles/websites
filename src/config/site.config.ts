@@ -1,144 +1,148 @@
 /**
- * Fonte única de verdade do site. Trocar dados aqui, nunca dentro dos componentes.
+ * Single source of truth for the site. Change data here, never inside components.
  *
- * Itens marcados com CONFIRMAR foram levantados de diretórios online e da foto
- * da fachada, mas não puderam ser validados no Google Maps (a página de
- * avaliações é renderizada por JavaScript e não pôde ser lida).
+ * Brand name, owner and phone taken from the public Instagram bio
+ * (instagram.com/alfageo_sondagens). Fields marked TODO were not published
+ * there and must be validated with AlfaGeo before launch — never invent a
+ * street address, opening hours, or testimonial.
  */
 
 export const site = {
-  /** Nome no letreiro interno da fachada. */
-  nome: 'Carlos Simões',
-  sobrenomeMarca: 'Alfaiate Camiseiro',
-  /** Marca maior no letreiro superior da loja. */
-  marcaLoja: 'Cavalieri Moda',
-  cidade: 'Curitiba',
-  estado: 'PR',
+  brandName: 'AlfaGeo',
+  brandFull: 'AlfaGeo Sondagens',
+  tagline: 'Sondagens e investigação geotécnica',
+  city: 'Curitiba',
+  state: 'PR',
 
-  /** Confirmado em duas fontes: letreiro da fachada + diretório Bendito Guia. */
-  telefone: '+55 41 99930-2624',
-  telefoneLink: '+554199302624',
-  whatsapp: '5541999302624',
-  whatsappMensagem:
-    'Olá! Vim pelo site e gostaria de saber mais sobre alfaiataria sob medida.',
+  // Confirmed on the Instagram bio.
+  phone: '+55 41 99657-6854',
+  phoneLink: '+5541996576854',
+  whatsapp: '5541996576854',
+  whatsappMessage:
+    'Olá! Vim pelo site e gostaria de solicitar um orçamento de sondagem geotécnica.',
 
-  endereco: {
-    // CONFIRMAR: a fachada mostra o número 58; o diretório registra 263.
-    // Provável que 58 seja o número da porta e 263 o do edifício. Checar com o Carlos.
-    logradouro: 'Alameda Dr. Carlos de Carvalho, 263',
-    bairro: 'Centro',
-    cidade: 'Curitiba',
-    estado: 'PR',
-    cep: '80410-180',
-    /** Usado no embed do mapa e no botão "traçar rota". */
-    queryMaps: 'Carlos Simões Alfaiate, Alameda Dr. Carlos de Carvalho, Centro, Curitiba - PR',
-  },
+  // TODO: confirm exact service area with the client — assuming metro Curitiba
+  // based on the Instagram location and the founder's base city.
+  areaServed: 'Curitiba e Região Metropolitana, PR',
 
-  /** CONFIRMAR horários com o Carlos antes de publicar. */
-  horarios: [
-    { dias: 'Segunda a sexta', horas: '09h às 18h' },
-    { dias: 'Sábado', horas: '09h às 13h' },
-    { dias: 'Domingo', horas: 'Fechado' },
+  // TODO: confirm business hours with the client — not published on Instagram.
+  openingHours: [
+    { days: 'Segunda a sexta', hours: '08h às 18h' },
+    { days: 'Sábado', hours: 'Plantão sob consulta' },
   ],
 
-  /** Preencher quando tiver os perfis. Links vazios não são renderizados. */
-  redes: {
-    instagram: '',
+  // Empty links are not rendered. Fill in when official profiles are confirmed.
+  socialLinks: {
+    instagram: 'https://www.instagram.com/alfageo_sondagens/',
     facebook: '',
   },
 
   seo: {
-    titulo: 'Carlos Simões Alfaiate | Ternos e camisas sob medida em Curitiba',
-    descricao:
-      'Alfaiataria tradicional no centro de Curitiba. Ternos, camisas sob medida e ajustes finos executados à mão por Carlos Simões. Agende sua prova pelo WhatsApp.',
-    url: 'https://carlos-alfaiate.vercel.app', // CONFIRMAR domínio final
+    title: 'AlfaGeo Sondagens | Sondagem SPT, Rotativa e Laudo Geotécnico em Curitiba',
+    description:
+      'AlfaGeo Sondagens executa sondagem SPT, sondagem rotativa, poços de inspeção, ensaio de percolação do solo e laudo geológico-geotécnico em Curitiba e região. Orçamento pelo WhatsApp.',
+    url: 'https://alfageo.vercel.app', // TODO: confirm final domain
   },
 } as const;
 
-export const servicos = [
+export const services = [
   {
-    icone: 'suit' as const,
-    titulo: 'Ternos sob medida',
-    descricao:
-      'Do corte do tecido ao último ponto. Cada peça é modelada a partir das suas medidas, com provas intermediárias até o caimento ficar exato.',
+    icon: 'coreSample' as const,
+    title: 'Sondagem SPT',
+    description:
+      'Sondagem de simples reconhecimento à percussão, conforme NBR 6484, para definir o perfil do solo e a capacidade de carga antes da fundação.',
   },
   {
-    icone: 'shirt' as const,
-    titulo: 'Camisas sob medida',
-    descricao:
-      'Colarinho, punho e comprimento definidos por você. O ofício de camiseiro que dá nome à casa, com tecidos escolhidos peça a peça.',
+    icon: 'drill' as const,
+    title: 'Sondagem rotativa',
+    description:
+      'Perfuração em rocha e solos de alta resistência, com extração de testemunhos, para investigações mais profundas ou terrenos com matacões.',
+  },
+  // Trado and lab tests are common complementary services offered alongside
+  // SPT/rotativa by geotechnical providers in this segment (per market
+  // research on similar companies) — confirm with AlfaGeo that these are
+  // actually part of the service list before publishing.
+  {
+    icon: 'ruler' as const,
+    title: 'Sondagem a trado',
+    description:
+      'Perfuração manual para reconhecimento raso em terrenos de fácil acesso, indicada para investigações preliminares e obras de menor porte.',
   },
   {
-    icone: 'scissors' as const,
-    titulo: 'Ajustes e reformas',
-    descricao:
-      'Aquele terno que nunca serviu direito pode voltar a servir. Barras, cintura, ombros e mangas ajustados com precisão de alfaiataria.',
+    icon: 'layers' as const,
+    title: 'Poços de inspeção',
+    description:
+      'Poços e trincheiras de inspeção visual para reconhecimento raso do solo, complementando os dados da sondagem à percussão.',
   },
   {
-    icone: 'calendar' as const,
-    titulo: 'Trajes para ocasião',
-    descricao:
-      'Casamento, formatura ou cerimônia. Planejamos o traje com antecedência para que ele esteja pronto, provado e impecável na data.',
+    icon: 'droplets' as const,
+    title: 'Ensaio de percolação do solo',
+    description:
+      'Ensaio de infiltração para dimensionar sumidouros e sistemas de disposição de esgoto, conforme a norma técnica aplicável.',
   },
-];
+  {
+    icon: 'flask' as const,
+    title: 'Ensaios de laboratório',
+    description:
+      'Classificação, umidade e compactação das amostras coletadas em campo, complementando os índices de resistência com a caracterização física do solo.',
+  },
+  {
+    icon: 'fileCheck' as const,
+    title: 'Laudo geológico-geotécnico',
+    description:
+      'Relatório técnico assinado por engenheiro responsável, com os resultados de campo e as recomendações para o projeto de fundação.',
+  },
+] as const;
 
-export const processo = [
+export const process = [
   {
-    numero: '01',
-    titulo: 'Conversa e escolha do tecido',
-    descricao:
-      'Entendemos a ocasião, o seu estilo e o orçamento. Você vê e sente os tecidos disponíveis antes de decidir.',
+    number: '01',
+    title: 'Contato e diagnóstico',
+    description:
+      'Você conta o tipo de obra, o endereço e a fase do projeto. Definimos juntos qual ensaio atende a necessidade e o prazo.',
   },
   {
-    numero: '02',
-    titulo: 'Medidas',
-    descricao:
-      'Mais de vinte medidas tiradas à mão, considerando postura e proporções. É isso que separa sob medida de tamanho padrão.',
+    number: '02',
+    title: 'Visita técnica e execução',
+    description:
+      'Equipe e equipamento próprio vão até o terreno e executam a sondagem em campo, seguindo a norma técnica correspondente.',
   },
   {
-    numero: '03',
-    titulo: 'Corte e montagem',
-    descricao:
-      'O molde é feito exclusivamente para você e o tecido é cortado à mão. A peça é montada e alinhavada para a primeira prova.',
+    number: '03',
+    title: 'Análise dos dados',
+    description:
+      'As amostras e os índices de resistência coletados em campo são organizados e interpretados pela equipe técnica.',
   },
   {
-    numero: '04',
-    titulo: 'Provas e entrega',
-    descricao:
-      'Uma ou mais provas para acertar cada detalhe. A peça só sai da alfaiataria quando o caimento está exato.',
+    number: '04',
+    title: 'Entrega do laudo',
+    description:
+      'Laudo geotécnico assinado, pronto para instruir o projeto de fundação junto ao engenheiro ou arquiteto responsável.',
   },
-];
+] as const;
 
 /**
- * SUBSTITUIR pelos depoimentos reais do Google Maps.
- * Não publique com estes textos de exemplo.
+ * TODO: replace with real client reviews (Google/Instagram) before launch.
+ * Do not publish with this placeholder text.
  */
-export const depoimentos = [
+export const testimonials = [
   {
-    texto: 'EXEMPLO — substituir por avaliação real do Google.',
-    autor: 'Nome do cliente',
-    contexto: 'Terno de casamento',
+    quote: 'EXEMPLO — substituir por avaliação real do cliente.',
+    author: 'Nome do cliente',
+    context: 'Fundação de obra residencial',
   },
   {
-    texto: 'EXEMPLO — substituir por avaliação real do Google.',
-    autor: 'Nome do cliente',
-    contexto: 'Ajuste de terno',
+    quote: 'EXEMPLO — substituir por avaliação real do cliente.',
+    author: 'Nome do cliente',
+    context: 'Sondagem para edifício comercial',
   },
   {
-    texto: 'EXEMPLO — substituir por avaliação real do Google.',
-    autor: 'Nome do cliente',
-    contexto: 'Camisas sob medida',
+    quote: 'EXEMPLO — substituir por avaliação real do cliente.',
+    author: 'Nome do cliente',
+    context: 'Laudo geotécnico para condomínio',
   },
-];
+] as const;
 
 export const whatsappUrl = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
-  site.whatsappMensagem,
+  site.whatsappMessage,
 )}`;
-
-export const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-  site.endereco.queryMaps,
-)}`;
-
-export const mapsEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(
-  site.endereco.queryMaps,
-)}&output=embed`;

@@ -6,45 +6,52 @@ const config: Config = {
     extend: {
       colors: {
         /*
-         * Duas famílias que se alternam ao longo da página.
-         *
-         * O escuro é preto-amarronzado, nunca preto neutro: preto puro lê como
-         * tecnologia, e alfaiataria precisa de calor. Referência tirada do CSS
-         * da Alfaiataria Estravagância (#0F0D0D) e do LV Alfaiataria.
+         * Dark family: cool near-black navy, not warm charcoal — this is a
+         * survey/instrumentation mood (night rig lights, LED displays), not
+         * a construction-site earth tone.
          */
-        ink: '#12100E', // fundo escuro, quente
-        surface: '#1B1815', // cards sobre o escuro
-        elevated: '#242019',
-        line: '#332E28', // divisores no escuro
-        silver: '#BFB6A8', // texto secundário no escuro
-        muted: '#8C8377',
-        bone: '#F7F3EC', // texto principal no escuro (creme, não branco)
+        ink: '#0A0F1C', // dark background
+        surface: '#111A2C', // cards on dark
+        elevated: '#182238',
+        line: '#28334A', // dividers on dark
+        silver: '#AAB4C6', // secondary text on dark
+        muted: '#6C7890',
+        bone: '#F2F4F8', // primary text on dark (cool near-white)
 
-        /* Família clara: carrega a maior parte do site. */
-        sand: '#F2EDE4', // fundo claro
-        sandDeep: '#E7DFD2', // cards sobre o claro
-        sandLine: '#D6CCBB', // divisores no claro
-        cocoa: '#2A2320', // texto principal no claro
-        cocoaSoft: '#5C5147', // texto secundário no claro
+        /* Light family: carries most of the page. Clean and neutral-cool. */
+        stone: '#F4F6FA', // light background
+        stoneDeep: '#E4E9F1', // cards on light
+        stoneLine: '#D3DAE6', // dividers on light
+        graphite: '#131722', // primary text on light
+        graphiteSoft: '#4C5568', // secondary text on light
 
-        /* Acento único, usado com parcimônia em ambos os fundos. */
-        // brass só sobre fundo escuro (6.1:1). Sobre o bege ele cai para 2.6:1,
-        // então texto dourado no claro usa obrigatoriamente brassDeep (5.4:1).
-        brass: '#B08D57',
-        brassDeep: '#785B31',
+        /*
+         * Three accents, lifted straight from the AlfaGeo mark: the orange
+         * survey-triangle, the blue "alfa" and the green "geo". Each has a
+         * light-background pair for AA text contrast (the bright value reads
+         * clearly on ink, ~7-8:1, but drops below AA on the light stone
+         * background, so light-background text always uses the Deep variant).
+         */
+        clay: '#E86A12', // orange — primary accent / CTA
+        clayDeep: '#A34F0E',
+        blue: '#3B62E8', // secondary accent
+        blueDeep: '#1D3B9E',
+        green: '#1FA968', // tertiary accent
+        greenDeep: '#0E7A48',
       },
       fontFamily: {
-        display: ['var(--font-display)', 'Georgia', 'serif'],
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       letterSpacing: {
-        brand: '0.32em',
+        wide2: '0.28em',
       },
       maxWidth: {
         prose: '68ch',
       },
       transitionTimingFunction: {
-        // Curva única para todo o site: entradas suaves, sem elástico.
+        // Single easing curve for the whole site: smooth entrances, no bounce.
         smooth: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       keyframes: {

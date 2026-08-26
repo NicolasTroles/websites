@@ -5,7 +5,7 @@ import { useReveal } from '@/lib/useParallax';
 
 type RevealProps = {
   children: ReactNode;
-  /** Atraso em ms. Use 60–100 por item para escalonar listas. */
+  /** Delay in ms. Use 60-100 per item to stagger lists. */
   delay?: number;
   className?: string;
 };

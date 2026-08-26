@@ -1,74 +1,95 @@
 /**
- * Marcas do site, redesenhadas em SVG a partir dos símbolos da fachada da loja
- * (cartola e silhueta de terno com gravata). Vetor próprio, não traçado da foto:
- * escala limpo do favicon 32px até a marca d'água de 800px do parallax.
+ * Site marks, drawn as SVG rather than imported from a logo file: AlfaGeo has
+ * no approved vector artwork yet, only the Instagram profile icon (a low-res
+ * raster). This mark is an homage to that icon's real motif — an orange
+ * survey-tripod triangle with a target dot at the apex — in the brand's
+ * actual colors, not an invented substitute. Swap for the real vector logo
+ * once the client provides one.
  */
 
 type IconProps = {
   className?: string;
 };
 
-/** Cartola — logo principal, usada no header e no favicon. */
-export function TopHat({ className }: IconProps) {
+/** Survey-tripod mark — used in the header and footer. Fixed brand colors. */
+export function LogoMark({ className }: IconProps) {
   return (
-    <svg
-      viewBox="0 0 64 64"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-      focusable="false"
-    >
-      {/* copa */}
+    <svg viewBox="0 0 64 64" fill="none" className={className} aria-hidden="true" focusable="false">
+      <path d="M32 11 L53 49 H11 Z" stroke="#E86A12" strokeWidth="4" strokeLinejoin="round" />
+      <circle cx="32" cy="11" r="3.6" fill="#E86A12" />
+      <line x1="19" y1="49" x2="45" y2="49" stroke="#3B62E8" strokeWidth="4" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/** Two-tone wordmark, matching the blue "alfa" / green "geo" of the real logo. */
+export function Wordmark({ className }: IconProps) {
+  return (
+    <span className={`font-display font-semibold tracking-tight ${className ?? ''}`}>
+      <span className="text-blue">Alfa</span>
+      <span className="text-green">Geo</span>
+    </span>
+  );
+}
+
+/** Drill rig silhouette — decorative background element for parallax sections. */
+export function RigSilhouette({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 64 80" fill="none" className={className} aria-hidden="true" focusable="false">
+      {/* mast */}
+      <rect x="29" y="4" width="6" height="66" fill="currentColor" />
+      {/* A-frame legs */}
+      <path d="M32 10 6 74h6l22-56-2-8Z" fill="currentColor" />
+      <path d="M32 10 58 74h-6L30 18l2-8Z" fill="currentColor" />
+      {/* base plate */}
+      <rect x="14" y="74" width="36" height="5" fill="currentColor" />
+      {/* crossbar */}
+      <rect x="20" y="30" width="24" height="4" fill="currentColor" opacity="0.8" />
+    </svg>
+  );
+}
+
+/**
+ * Minimal outline glyphs for social links. lucide-react dropped brand icons
+ * (Instagram, Facebook) in its current major version, so these are drawn
+ * directly — simple enough to keep in code instead of adding an icon
+ * dependency just for two glyphs.
+ */
+export function InstagramGlyph({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" focusable="false">
+      <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
+    </svg>
+  );
+}
+
+export function FacebookGlyph({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" focusable="false">
       <path
-        d="M20 8h24l2.5 34H17.5L20 8Z"
+        d="M14.5 21v-7.5h2.5l.4-3H14.5V8.4c0-.87.24-1.46 1.5-1.46h1.6V4.3c-.28-.04-1.22-.12-2.32-.12-2.3 0-3.88 1.4-3.88 3.98V10.5H9v3h2.4V21h3.1Z"
         fill="currentColor"
       />
-      {/* faixa da copa. currentColor + opacidade funciona sobre qualquer fundo,
-          diferente de um preto cravado, que sumiria no bege. */}
-      <path d="M18.4 33h27.2l.5 7H17.9l.5-7Z" fill="currentColor" opacity="0.35" />
-      {/* aba */}
-      <ellipse cx="32" cy="45" rx="27" ry="6.5" fill="currentColor" />
     </svg>
   );
 }
 
-/** Silhueta de terno com gravata — elemento decorativo do parallax. */
-export function SuitSilhouette({ className }: IconProps) {
-  return (
-    <svg
-      viewBox="0 0 64 80"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-      focusable="false"
-    >
-      {/* lapela esquerda */}
-      <path d="M26 4 8 16v60h12l4-46 2-26Z" fill="currentColor" />
-      {/* lapela direita */}
-      <path d="M38 4l18 12v60H44l-4-46-2-26Z" fill="currentColor" />
-      {/* gravata */}
-      <path d="M32 6l5 6-3 6 4 26-6 8-6-8 4-26-3-6 5-6Z" fill="currentColor" />
-    </svg>
-  );
-}
-
-/** Divisor de seção: fio + cartola centralizada, no lugar de uma linha reta. */
+/** Section divider: rule + centered mark, instead of a plain straight line. */
 export function SectionDivider({
   className,
-  tom = 'escuro',
-}: IconProps & { tom?: 'claro' | 'escuro' }) {
-  const claro = tom === 'claro';
+  tone = 'dark',
+}: IconProps & { tone?: 'light' | 'dark' }) {
+  const isLight = tone === 'light';
   return (
-    <div
-      className={`flex items-center justify-center gap-5 ${className ?? ''}`}
-      aria-hidden="true"
-    >
+    <div className={`flex items-center justify-center gap-5 ${className ?? ''}`} aria-hidden="true">
       <span
-        className={`h-px w-16 bg-gradient-to-r from-transparent sm:w-24 ${claro ? 'to-sandLine' : 'to-line'}`}
+        className={`h-px w-16 bg-gradient-to-r from-transparent sm:w-24 ${isLight ? 'to-stoneLine' : 'to-line'}`}
       />
-      <TopHat className={`h-5 w-5 ${claro ? 'text-brassDeep' : 'text-brass'}`} />
+      <LogoMark className="h-5 w-5" />
       <span
-        className={`h-px w-16 bg-gradient-to-l from-transparent sm:w-24 ${claro ? 'to-sandLine' : 'to-line'}`}
+        className={`h-px w-16 bg-gradient-to-l from-transparent sm:w-24 ${isLight ? 'to-stoneLine' : 'to-line'}`}
       />
     </div>
   );

@@ -1,39 +1,49 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { IBM_Plex_Mono, Inter, Space_Grotesk } from 'next/font/google';
 import { site } from '@/config/site.config';
 import './globals.css';
 
-// display: 'swap' evita texto invisível enquanto a fonte carrega.
+// display: 'swap' avoids invisible text while the font loads.
 const sans = Inter({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
+  weight: ['400', '500', '600'],
   variable: '--font-sans',
   display: 'swap',
 });
 
-const display = Playfair_Display({
+const display = Space_Grotesk({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['500', '600', '700'],
   variable: '--font-display',
+  display: 'swap',
+});
+
+// Used for depth/technical readouts (the SPT chart, data labels) — a
+// monospace face reads as instrumentation, reinforcing the field-data angle.
+const mono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-mono',
   display: 'swap',
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.seo.url),
-  title: site.seo.titulo,
-  description: site.seo.descricao,
+  title: site.seo.title,
+  description: site.seo.description,
   keywords: [
-    'alfaiate curitiba',
-    'terno sob medida curitiba',
-    'camisa sob medida curitiba',
-    'alfaiataria centro curitiba',
-    'ajuste de terno curitiba',
+    'sondagem spt curitiba',
+    'sondagem geotecnica curitiba',
+    'sondagem rotativa',
+    'laudo geologico geotecnico',
+    'ensaio de percolacao do solo',
   ],
+  alternates: { canonical: '/' },
   openGraph: {
-    title: site.seo.titulo,
-    description: site.seo.descricao,
+    title: site.seo.title,
+    description: site.seo.description,
     url: site.seo.url,
-    siteName: `${site.nome} ${site.sobrenomeMarca}`,
+    siteName: site.brandFull,
     locale: 'pt_BR',
     type: 'website',
   },
@@ -41,61 +51,45 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0A0A0A',
+  themeColor: '#0A0F1C',
   width: 'device-width',
   initialScale: 1,
-  // Sem maximumScale: bloquear zoom quebra a acessibilidade.
+  // No maximumScale: blocking zoom breaks accessibility.
 };
 
 /**
- * Schema.org de negócio local. É o que faz o Google exibir endereço, telefone
- * e horário direto no resultado de busca.
+ * Schema.org business markup. This is what lets Google surface phone number
+ * and service area directly in search results.
  */
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'ClothingStore',
-  name: `${site.nome} ${site.sobrenomeMarca}`,
-  description: site.seo.descricao,
-  telephone: site.telefone,
+  '@type': 'ProfessionalService',
+  name: site.brandFull,
+  description: site.seo.description,
+  telephone: site.phone,
   url: site.seo.url,
+  areaServed: {
+    '@type': 'City',
+    name: site.city,
+  },
   address: {
     '@type': 'PostalAddress',
-    streetAddress: site.endereco.logradouro,
-    addressLocality: site.endereco.cidade,
-    addressRegion: site.endereco.estado,
-    postalCode: site.endereco.cep,
+    addressLocality: site.city,
+    addressRegion: site.state,
     addressCountry: 'BR',
   },
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:00',
-      closes: '18:00',
-    },
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: 'Saturday',
-      opens: '09:00',
-      closes: '13:00',
-    },
-  ],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${sans.variable} ${display.variable}`}>
+    <html lang="pt-BR" className={`${sans.variable} ${display.variable} ${mono.variable}`}>
       <body className="font-sans">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <a
-          href="#conteudo"
+          href="#content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-bone focus:px-5 focus:py-3 focus:text-sm focus:text-ink"
         >
           Pular para o conteúdo

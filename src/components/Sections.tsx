@@ -1,0 +1,375 @@
+'use client';
+
+import {
+  Drill,
+  Droplets,
+  FileCheck,
+  FlaskConical,
+  Layers,
+  Quote,
+  Ruler,
+  TestTube2,
+} from 'lucide-react';
+import { process, services, site, testimonials } from '@/config/site.config';
+import { useParallax } from '@/lib/useParallax';
+import { RigSilhouette, SectionDivider } from './Brand';
+import {
+  FieldCrewIllustration,
+  LandscapeStripIllustration,
+  ReportIllustration,
+  RigStandingIllustration,
+  SamplerCloseupIllustration,
+  SoilSamplesIllustration,
+  SptOperatorIllustration,
+  TransportIllustration,
+} from './Illustrations';
+import { Photo } from './Photo';
+import { Reveal } from './Reveal';
+
+const ICONS = {
+  coreSample: TestTube2,
+  drill: Drill,
+  ruler: Ruler,
+  layers: Layers,
+  droplets: Droplets,
+  flask: FlaskConical,
+  fileCheck: FileCheck,
+} as const;
+
+/**
+ * The three brand accents (orange / blue / green, from the AlfaGeo mark),
+ * cycled across list items instead of one accent repeated — a direct,
+ * literal "follow the AlfaGeo colors" rather than a single-accent palette.
+ * Written as full literal class strings (not template-interpolated) so
+ * Tailwind's static build-time scan picks them up.
+ */
+const ACCENT_ICON = ['text-clayDeep', 'text-blueDeep', 'text-greenDeep'] as const;
+const ACCENT_NUMBER = ['text-clay/60', 'text-blue/60', 'text-green/60'] as const;
+const ACCENT_HOVER_BORDER = ['hover:border-clay/50', 'hover:border-blue/50', 'hover:border-green/50'] as const;
+
+/**
+ * Standard section heading.
+ * `tone` swaps text colors for light vs. dark sections — the page alternates
+ * between the two background families.
+ */
+function SectionHeading({
+  eyebrow,
+  title,
+  description,
+  center = false,
+  tone = 'light',
+}: {
+  eyebrow: string;
+  title: string;
+  description?: string;
+  center?: boolean;
+  tone?: 'light' | 'dark';
+}) {
+  const isLight = tone === 'light';
+  return (
+    <div className={center ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl'}>
+      <p
+        className={`text-[10px] uppercase tracking-wide2 ${isLight ? 'text-clayDeep' : 'text-clay'}`}
+      >
+        {eyebrow}
+      </p>
+      <h2
+        className={`mt-5 font-display text-[clamp(1.9rem,4.6vw,3.1rem)] font-semibold leading-[1.1] ${
+          isLight ? 'text-graphite' : 'text-bone'
+        }`}
+      >
+        {title}
+      </h2>
+      {description && (
+        <p
+          className={`mt-6 max-w-prose text-[17px] leading-relaxed ${
+            isLight ? 'text-graphiteSoft' : 'text-silver'
+          } ${center ? 'mx-auto' : ''}`}
+        >
+          {description}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/** Section 2 — LIGHT. Who we are, with photos of the crew at work. */
+export function About() {
+  const mark = useParallax<HTMLDivElement>(0.12);
+
+  return (
+    <section id="sobre" className="relative overflow-hidden bg-stone py-28 text-graphite sm:py-36">
+      {/* Watermark of the rig silhouette, drifting slowly in the background. */}
+      <div
+        ref={mark.ref}
+        className="pointer-events-none absolute -right-24 top-0 hidden opacity-[0.06] will-change-transform lg:block"
+        style={{ transform: `translate3d(0, ${mark.offset}px, 0)` }}
+        aria-hidden="true"
+      >
+        <RigSilhouette className="h-[42rem] w-auto text-graphite" />
+      </div>
+
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
+        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Sobre a AlfaGeo"
+              title="Dado de campo confiável, antes do projeto sair do papel."
+              description="Toda fundação começa com uma pergunta: o que tem embaixo do terreno? A AlfaGeo responde essa pergunta com sondagem SPT, rotativa e ensaios complementares, seguindo as normas técnicas da ABNT, para que engenheiros e arquitetos projetem com segurança."
+            />
+            <div className="mt-10 space-y-6 border-l-2 border-clay/50 pl-7">
+              <p className="max-w-prose leading-relaxed text-graphiteSoft">
+                Em {site.city}, {site.state}, a equipe da {site.brandName} opera com equipamento
+                próprio e atendimento direto — do primeiro contato à entrega do laudo assinado.
+              </p>
+              <p className="max-w-prose leading-relaxed text-graphiteSoft">
+                {/* TODO: confirm years of experience / team size with the client before publishing a number. */}
+                O objetivo é simples: dado de campo preciso, entregue no prazo combinado, para que a
+                fundação seja dimensionada com o solo real — não com uma estimativa.
+              </p>
+            </div>
+          </Reveal>
+
+          <Reveal delay={120}>
+            <div className="grid grid-cols-2 gap-4">
+              <Photo
+                src=""
+                guide="Detalhe da equipe operando o amostrador SPT durante a cravação, com o tripé e o cabo de aço em primeiro plano."
+                aiPrompt="Close-up documentary photo of a technician's gloved hands operating a manual SPT hammer and steel cable sampler at a soil boring site, tripod rig visible, sunny daytime, cool navy-blue and warm orange color grading, shallow depth of field, realistic photography, portrait orientation, no text or logos"
+                illustration={<SptOperatorIllustration tone="light" />}
+                alt="Ilustração de um técnico operando o amostrador SPT ao lado do tripé de sondagem"
+                aspect="tall"
+                tone="light"
+                sizes="(max-width: 1024px) 50vw, 25vw"
+                className="mt-10"
+              />
+              <Photo
+                src=""
+                guide="Amostras de solo (testemunhos) organizadas em caixas, prontas para classificação."
+                aiPrompt="Close-up photo of soil core samples neatly arranged in labeled wooden sample boxes on a table at a geotechnical field office, natural light, cool navy-blue and warm orange color grading, realistic documentary photography, portrait orientation, no text or logos"
+                illustration={<SoilSamplesIllustration tone="light" />}
+                alt="Ilustração de caixas com amostras de solo organizadas para classificação"
+                aspect="tall"
+                tone="light"
+                sizes="(max-width: 1024px) 50vw, 25vw"
+              />
+            </div>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** Section 3 — LIGHT. Services. */
+export function Services() {
+  return (
+    <section
+      id="servicos"
+      className="border-t border-stoneLine bg-stone py-28 text-graphite sm:py-36"
+    >
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <Reveal>
+          <SectionHeading eyebrow="Serviços" title="O que a AlfaGeo executa em campo." center />
+        </Reveal>
+
+        {/* Bento grid: the first service (the flagship SPT test) spans two
+            columns, the rest fall into an even grid — asymmetric on purpose. */}
+        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((service, i) => {
+            const Icon = ICONS[service.icon];
+            const accent = i % 3;
+            return (
+              <Reveal
+                key={service.title}
+                delay={i * 70}
+                className={i === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}
+              >
+                <article
+                  className={`group h-full border border-stoneLine bg-stoneDeep p-9 transition-all duration-300 hover:-translate-y-1 hover:bg-stone sm:p-11 ${ACCENT_HOVER_BORDER[accent]}`}
+                >
+                  <Icon className={`h-6 w-6 ${ACCENT_ICON[accent]}`} strokeWidth={1.5} aria-hidden="true" />
+                  <h3 className="mt-7 font-display text-2xl text-graphite">{service.title}</h3>
+                  <p className="mt-4 max-w-prose leading-relaxed text-graphiteSoft">
+                    {service.description}
+                  </p>
+                </article>
+              </Reveal>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** Section 4 — DARK. Field gallery: the dark background makes the photos pop. */
+export function Gallery() {
+  return (
+    <section id="trabalhos" className="bg-ink py-28 text-bone sm:py-36">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <Reveal>
+          <SectionHeading
+            eyebrow="Trabalhos"
+            title="Sondagens executadas em campo."
+            description="Fotos de referência do tipo de registro que a AlfaGeo vai gerar em cada visita técnica, até termos um ensaio fotográfico próprio."
+            tone="dark"
+          />
+        </Reveal>
+
+        {/* Asymmetric grid: more interesting than a uniform one. */}
+        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Reveal className="lg:row-span-2">
+            <Photo
+              src=""
+              guide="Foto vertical em destaque: equipamento de sondagem montado, tripé completo, em pé no terreno."
+              aiPrompt="Tall vertical documentary photo of a complete SPT drilling tripod rig standing on bare construction-site soil, steel cable and hammer visible, overcast sky, cool navy-blue and warm orange color grading, realistic photography, no people, no text or logos"
+              illustration={<RigStandingIllustration />}
+              alt="Ilustração do equipamento de sondagem SPT montado sobre o terreno"
+              aspect="tall"
+              className="h-full"
+            />
+          </Reveal>
+          <Reveal delay={80}>
+            <Photo
+              src=""
+              guide="Detalhe do amostrador SPT sendo extraído do solo, com marcas de profundidade visíveis."
+              aiPrompt="Close-up photo of a split-spoon soil sampler being pulled from a borehole, wet soil sample visible inside, depth markings on the drill rod, realistic macro photography, cool navy-blue and warm orange color grading, square crop, no text or logos"
+              illustration={<SamplerCloseupIllustration />}
+              alt="Ilustração em corte do amostrador SPT mostrando as camadas de solo coletadas"
+              aspect="square"
+            />
+          </Reveal>
+          <Reveal delay={160}>
+            <Photo
+              src=""
+              guide="Equipe técnica trabalhando em conjunto durante a sondagem, com equipamentos de segurança."
+              aiPrompt="Documentary photo of a two-person geotechnical field crew wearing hard hats and safety vests, working together around a drilling rig on a construction site, midday light, cool navy-blue and warm orange color grading, square crop, no text or logos"
+              illustration={<FieldCrewIllustration />}
+              alt="Ilustração de dois técnicos trabalhando em conjunto ao lado do equipamento de sondagem"
+              aspect="square"
+            />
+          </Reveal>
+          <Reveal delay={240}>
+            <Photo
+              src=""
+              guide="Equipamento de sondagem sendo transportado ou montado em um veículo utilitário."
+              aiPrompt="Photo of geotechnical drilling equipment, a tripod rig and steel rods, loaded onto a pickup truck at a job site, realistic documentary photography, landscape orientation, cool navy-blue and warm orange color grading, no text or logos"
+              illustration={<TransportIllustration />}
+              alt="Ilustração do equipamento de sondagem carregado em uma caminhonete"
+              aspect="landscape"
+            />
+          </Reveal>
+          <Reveal delay={320}>
+            <Photo
+              src=""
+              guide="Laudo técnico impresso sobre uma mesa, ao lado de um capacete de segurança."
+              aiPrompt="Photo of a printed geotechnical engineering report with charts and a soil profile diagram, resting on a wooden table next to a white hard hat and a pencil, soft natural window light, cool navy-blue and warm orange color grading, realistic photography, landscape orientation, no readable text, no logos"
+              illustration={<ReportIllustration />}
+              alt="Ilustração de um laudo geotécnico com gráfico de perfil de solo, pronto para entrega"
+              aspect="landscape"
+            />
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** Section 5 — DARK photo strip, then LIGHT process steps. */
+export function Process() {
+  const strip = useParallax<HTMLDivElement>(0.22);
+
+  return (
+    <section id="processo">
+      {/* Parallax photo strip: transition between dark and light. */}
+      <div className="relative h-[45vh] overflow-hidden bg-ink sm:h-[60vh]">
+        <div
+          ref={strip.ref}
+          className="absolute inset-0 scale-125 will-change-transform"
+          style={{ transform: `translate3d(0, ${strip.offset}px, 0) scale(1.25)` }}
+        >
+          <Photo
+            src=""
+            guide="Foto larga e atmosférica do canteiro de obras ou paisagem próxima a Curitiba, servindo de respiro entre seções."
+            aiPrompt="Wide atmospheric landscape photo of a construction site on the outskirts of Curitiba, Brazil, with drilling equipment small in the distance, overcast sky, misty hills in the background, cool navy-blue color grading, cinematic documentary photography, 16:9 aspect ratio, no text or logos"
+            illustration={<LandscapeStripIllustration />}
+            alt="Ilustração topográfica de um canteiro de obras com equipamento de sondagem ao fundo"
+            aspect="landscape"
+            sizes="100vw"
+            className="!aspect-auto h-full w-full"
+          />
+        </div>
+        <div className="absolute inset-0 bg-ink/55" aria-hidden="true" />
+      </div>
+
+      <div className="bg-stone text-graphite">
+        <div className="mx-auto max-w-7xl px-5 py-28 sm:px-8 sm:py-36">
+          <Reveal>
+            <SectionHeading
+              eyebrow="Como funciona"
+              title="Do primeiro contato ao laudo assinado."
+              description="Quatro etapas, com prazo combinado desde o início."
+              center
+            />
+          </Reveal>
+
+          <ol className="mt-16 grid gap-px border border-stoneLine bg-stoneLine md:grid-cols-2 lg:grid-cols-4">
+            {process.map((step, i) => (
+              <Reveal key={step.number} delay={i * 80}>
+                <li className="h-full bg-stone p-9">
+                  <span
+                    className={`font-mono text-5xl ${ACCENT_NUMBER[i % 3]}`}
+                    aria-hidden="true"
+                  >
+                    {step.number}
+                  </span>
+                  <h3 className="mt-5 font-display text-xl text-graphite">{step.title}</h3>
+                  <p className="mt-4 text-[15px] leading-relaxed text-graphiteSoft">
+                    {step.description}
+                  </p>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** Section 6 — LIGHT. Testimonials. */
+export function Testimonials() {
+  return (
+    <section className="border-t border-stoneLine bg-stone py-28 text-graphite sm:py-36">
+      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+        <Reveal>
+          <SectionHeading eyebrow="Clientes" title="Quem já confiou na AlfaGeo." center />
+        </Reveal>
+
+        <div className="mt-16 grid gap-4 md:grid-cols-3">
+          {testimonials.map((item, i) => (
+            <Reveal key={i} delay={i * 90}>
+              <figure className="flex h-full flex-col border border-stoneLine bg-stoneDeep p-9">
+                <Quote className={`h-6 w-6 ${ACCENT_ICON[i % 3]}`} strokeWidth={1.5} aria-hidden="true" />
+                <blockquote className="mt-6 flex-1 font-display text-lg leading-relaxed text-graphite">
+                  {item.quote}
+                </blockquote>
+                <figcaption className="mt-7 border-t border-stoneLine pt-5">
+                  <p className="text-[11px] uppercase tracking-wide2 text-graphite">
+                    {item.author}
+                  </p>
+                  <p className="mt-2 text-sm text-graphiteSoft">{item.context}</p>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal>
+          <SectionDivider className="mt-20" tone="light" />
+        </Reveal>
+      </div>
+    </section>
+  );
+}

@@ -9,21 +9,21 @@
 
   html {
     scroll-behavior: smooth;
-    /* Compensa o header fixo ao pular por âncora. */
+    /* Compensates for the fixed header when jumping to an anchor. */
     scroll-padding-top: 5rem;
   }
 
   body {
-    /* O site abre e fecha escuro; as seções claras pintam o próprio fundo. */
+    /* The site opens and closes dark; light sections paint their own background. */
     @apply bg-ink text-bone antialiased;
-    /* Evita o scroll horizontal que o parallax pode causar em telas estreitas. */
+    /* Avoids the horizontal scroll parallax can cause on narrow screens. */
     overflow-x: hidden;
   }
 
   /*
-   * Foco visível para navegação por teclado.
-   * `outline` com currentColor funciona nos dois fundos sem precisar de
-   * variante por seção — o anel herda a cor do texto local.
+   * Visible focus ring for keyboard navigation.
+   * `outline` with currentColor works on both backgrounds without needing a
+   * per-section variant — the ring inherits the local text color.
    */
   :focus-visible {
     outline: 2px solid currentColor;
@@ -31,57 +31,34 @@
   }
 
   ::selection {
-    @apply bg-brass text-ink;
+    @apply bg-clay text-ink;
   }
 }
 
 @layer utilities {
-  /* Título de seção com o espaçamento largo do letreiro da fachada. */
-  .brand-caps {
-    @apply font-sans uppercase tracking-brand;
+  /*
+   * Faint blueprint-style grid, in CSS only, for photo placeholders — a nod
+   * to engineering drawings instead of a generic empty box. One variant per
+   * background.
+   */
+  .grid-texture {
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 
-  /* Textura de tecido em CSS puro. Variante para cada fundo. */
-  .weave {
+  .grid-texture-light {
     background-image:
-      repeating-linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.018) 0px,
-        rgba(255, 255, 255, 0.018) 1px,
-        transparent 1px,
-        transparent 4px
-      ),
-      repeating-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 0.018) 0px,
-        rgba(255, 255, 255, 0.018) 1px,
-        transparent 1px,
-        transparent 4px
-      );
-  }
-
-  .weave-light {
-    background-image:
-      repeating-linear-gradient(
-        45deg,
-        rgba(42, 35, 32, 0.03) 0px,
-        rgba(42, 35, 32, 0.03) 1px,
-        transparent 1px,
-        transparent 4px
-      ),
-      repeating-linear-gradient(
-        -45deg,
-        rgba(42, 35, 32, 0.03) 0px,
-        rgba(42, 35, 32, 0.03) 1px,
-        transparent 1px,
-        transparent 4px
-      );
+      linear-gradient(to right, rgba(36, 39, 43, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(36, 39, 43, 0.05) 1px, transparent 1px);
+    background-size: 24px 24px;
   }
 }
 
 /*
- * Desliga todo o movimento quando o usuário pede menos animação.
- * O parallax também é desativado no JS; isto é a rede de segurança do CSS.
+ * Turns off all motion when the user asks for reduced motion.
+ * Parallax is also disabled in JS; this is the CSS safety net.
  */
 @media (prefers-reduced-motion: reduce) {
   html {
