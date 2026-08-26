@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { whatsappUrl } from '@/config/site.config';
-import { LogoMark, Wordmark } from './Brand';
+import { LogoImage } from './Brand';
 
 const LINKS = [
   { href: '#sobre', label: 'Sobre' },
@@ -45,8 +45,7 @@ export function Header() {
         aria-label="Navegação principal"
       >
         <a href="#top" className="flex items-center gap-2.5" aria-label="Início">
-          <LogoMark className="h-8 w-8" />
-          <Wordmark className="text-lg" />
+          <LogoImage className="h-[54px] w-auto" />
         </a>
 
         <ul className="hidden items-center gap-9 lg:flex">

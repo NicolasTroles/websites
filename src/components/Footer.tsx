@@ -1,5 +1,5 @@
 import { site } from '@/config/site.config';
-import { FacebookGlyph, InstagramGlyph, LogoMark, Wordmark } from './Brand';
+import { FacebookGlyph, InstagramGlyph, LogoImage } from './Brand';
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -10,8 +10,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
           <div className="flex items-center gap-2.5">
-            <LogoMark className="h-8 w-8" />
-            <Wordmark className="text-lg" />
+            <LogoImage className="h-[54px] w-auto" />
           </div>
 
           {hasSocialLinks && (

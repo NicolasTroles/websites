@@ -1,23 +1,39 @@
 /**
- * Site marks, drawn as SVG rather than imported from a logo file: AlfaGeo has
- * no approved vector artwork yet, only the Instagram profile icon (a low-res
- * raster). This mark is an homage to that icon's real motif — an orange
- * survey-tripod triangle with a target dot at the apex — in the brand's
- * actual colors, not an invented substitute. Swap for the real vector logo
- * once the client provides one.
+ * Site marks. LogoImage renders the client's actual logo (public/logo.jpg).
+ * LogoMark is an SVG homage to the same survey-tripod motif, kept for
+ * decorative uses (e.g. SectionDivider) where a raster icon doesn't fit.
  */
 
 type IconProps = {
   className?: string;
 };
 
-/** Survey-tripod mark — used in the header and footer. Fixed brand colors. */
+/** Real client logo (public/logo.png) — icon shown next to the Wordmark text. */
+export function LogoImage({ className }: IconProps) {
+  return (
+    <img
+      src="/logo.png"
+      alt="AlfaGeo"
+      className={`object-contain ${className ?? ''}`}
+    />
+  );
+}
+
+/** Survey-tripod mark — decorative use only (e.g. SectionDivider). Fixed brand colors. */
 export function LogoMark({ className }: IconProps) {
   return (
     <svg viewBox="0 0 64 64" fill="none" className={className} aria-hidden="true" focusable="false">
       <path d="M32 11 L53 49 H11 Z" stroke="#E86A12" strokeWidth="4" strokeLinejoin="round" />
       <circle cx="32" cy="11" r="3.6" fill="#E86A12" />
-      <line x1="19" y1="49" x2="45" y2="49" stroke="#3B62E8" strokeWidth="4" strokeLinecap="round" />
+      <line
+        x1="19"
+        y1="49"
+        x2="45"
+        y2="49"
+        stroke="#3B62E8"
+        strokeWidth="4"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
