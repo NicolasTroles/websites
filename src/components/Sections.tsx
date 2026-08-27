@@ -133,9 +133,8 @@ export function About() {
           <Reveal delay={120}>
             <div className="grid grid-cols-2 gap-4">
               <Photo
-                src=""
+                src="/dados1.png"
                 guide="Detalhe da equipe operando o amostrador SPT durante a cravação, com o tripé e o cabo de aço em primeiro plano."
-                aiPrompt="Close-up documentary photo of a technician's gloved hands operating a manual SPT hammer and steel cable sampler at a soil boring site, tripod rig visible, sunny daytime, cool navy-blue and warm orange color grading, shallow depth of field, realistic photography, portrait orientation, no text or logos"
                 illustration={<SptOperatorIllustration tone="light" />}
                 alt="Ilustração de um técnico operando o amostrador SPT ao lado do tripé de sondagem"
                 aspect="tall"
@@ -144,9 +143,8 @@ export function About() {
                 className="mt-10"
               />
               <Photo
-                src=""
+                src="/dados2.png"
                 guide="Amostras de solo (testemunhos) organizadas em caixas, prontas para classificação."
-                aiPrompt="Close-up photo of soil core samples neatly arranged in labeled wooden sample boxes on a table at a geotechnical field office, natural light, cool navy-blue and warm orange color grading, realistic documentary photography, portrait orientation, no text or logos"
                 illustration={<SoilSamplesIllustration tone="light" />}
                 alt="Ilustração de caixas com amostras de solo organizadas para classificação"
                 aspect="tall"
@@ -221,9 +219,8 @@ export function Gallery() {
         <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <Reveal className="lg:row-span-2">
             <Photo
-              src=""
+              src="/galeria1.png"
               guide="Foto vertical em destaque: equipamento de sondagem montado, tripé completo, em pé no terreno."
-              aiPrompt="Tall vertical documentary photo of a complete SPT drilling tripod rig standing on bare construction-site soil, steel cable and hammer visible, overcast sky, cool navy-blue and warm orange color grading, realistic photography, no people, no text or logos"
               illustration={<RigStandingIllustration />}
               alt="Ilustração do equipamento de sondagem SPT montado sobre o terreno"
               aspect="tall"
@@ -232,9 +229,8 @@ export function Gallery() {
           </Reveal>
           <Reveal delay={80}>
             <Photo
-              src=""
+              src="/galeria2.png"
               guide="Detalhe do amostrador SPT sendo extraído do solo, com marcas de profundidade visíveis."
-              aiPrompt="Close-up photo of a split-spoon soil sampler being pulled from a borehole, wet soil sample visible inside, depth markings on the drill rod, realistic macro photography, cool navy-blue and warm orange color grading, square crop, no text or logos"
               illustration={<SamplerCloseupIllustration />}
               alt="Ilustração em corte do amostrador SPT mostrando as camadas de solo coletadas"
               aspect="square"
@@ -242,9 +238,8 @@ export function Gallery() {
           </Reveal>
           <Reveal delay={160}>
             <Photo
-              src=""
+              src="/galeria3.png"
               guide="Equipe técnica trabalhando em conjunto durante a sondagem, com equipamentos de segurança."
-              aiPrompt="Documentary photo of a two-person geotechnical field crew wearing hard hats and safety vests, working together around a drilling rig on a construction site, midday light, cool navy-blue and warm orange color grading, square crop, no text or logos"
               illustration={<FieldCrewIllustration />}
               alt="Ilustração de dois técnicos trabalhando em conjunto ao lado do equipamento de sondagem"
               aspect="square"
@@ -252,9 +247,8 @@ export function Gallery() {
           </Reveal>
           <Reveal delay={240}>
             <Photo
-              src=""
+              src="/galeria4.png"
               guide="Equipamento de sondagem sendo transportado ou montado em um veículo utilitário."
-              aiPrompt="Photo of geotechnical drilling equipment, a tripod rig and steel rods, loaded onto a pickup truck at a job site, realistic documentary photography, landscape orientation, cool navy-blue and warm orange color grading, no text or logos"
               illustration={<TransportIllustration />}
               alt="Ilustração do equipamento de sondagem carregado em uma caminhonete"
               aspect="landscape"
@@ -262,9 +256,8 @@ export function Gallery() {
           </Reveal>
           <Reveal delay={320}>
             <Photo
-              src=""
+              src="/galeria5.png"
               guide="Laudo técnico impresso sobre uma mesa, ao lado de um capacete de segurança."
-              aiPrompt="Photo of a printed geotechnical engineering report with charts and a soil profile diagram, resting on a wooden table next to a white hard hat and a pencil, soft natural window light, cool navy-blue and warm orange color grading, realistic photography, landscape orientation, no readable text, no logos"
               illustration={<ReportIllustration />}
               alt="Ilustração de um laudo geotécnico com gráfico de perfil de solo, pronto para entrega"
               aspect="landscape"
@@ -290,9 +283,8 @@ export function Process() {
           style={{ transform: `translate3d(0, ${strip.offset}px, 0) scale(1.25)` }}
         >
           <Photo
-            src=""
+            src="/banner2.png"
             guide="Foto larga e atmosférica do canteiro de obras ou paisagem próxima a Curitiba, servindo de respiro entre seções."
-            aiPrompt="Wide atmospheric landscape photo of a construction site on the outskirts of Curitiba, Brazil, with drilling equipment small in the distance, overcast sky, misty hills in the background, cool navy-blue color grading, cinematic documentary photography, 16:9 aspect ratio, no text or logos"
             illustration={<LandscapeStripIllustration />}
             alt="Ilustração topográfica de um canteiro de obras com equipamento de sondagem ao fundo"
             aspect="landscape"

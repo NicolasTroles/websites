@@ -112,64 +112,71 @@ export function Photo({
   const isLight = tone === 'light';
   const background = isLight ? 'bg-stoneDeep' : 'bg-surface';
   const frame = `relative overflow-hidden ${background} ${ASPECT_CLASSES[aspect]} ${className ?? ''}`;
+  const showPlaceholder = !src || failed;
 
-  if ((!src || failed) && illustration) {
-    return (
-      <div
-        className={`${frame} ${isLight ? 'grid-texture-light' : 'grid-texture'}`}
-        role="img"
-        aria-label={alt}
+  // Always visible (not tucked behind a click) so the prompt is never
+  // mistaken for optional/debug info while a real photo is still pending.
+  const promptPanel = showPlaceholder && aiPrompt && (
+    <div
+      className={`mt-3 border p-4 text-left text-[12px] leading-relaxed ${isLight ? 'border-stoneLine bg-stone text-graphite' : 'border-line bg-ink text-silver'}`}
+    >
+      <p
+        className={`text-[10px] uppercase tracking-wide2 ${isLight ? 'text-graphiteSoft' : 'text-muted'}`}
       >
-        {illustration}
+        Prompt para gerar esta imagem
+      </p>
+      <p className="mt-2 font-mono">{aiPrompt}</p>
+      <CopyPromptButton prompt={aiPrompt} />
+    </div>
+  );
+
+  if (showPlaceholder && illustration) {
+    return (
+      <div>
+        <div
+          className={`${frame} ${isLight ? 'grid-texture-light' : 'grid-texture'}`}
+          role="img"
+          aria-label={alt}
+        >
+          {illustration}
+        </div>
+        {promptPanel}
       </div>
     );
   }
 
-  if (!src || failed) {
+  if (showPlaceholder) {
     return (
-      <div
-        className={`${frame} ${isLight ? 'grid-texture-light border-stoneLine' : 'grid-texture border-line'} grid place-items-center border border-dashed`}
-      >
-        <div className="max-w-[85%] px-5 py-6 text-center">
-          <Camera
-            className={`mx-auto h-7 w-7 ${isLight ? 'text-graphiteSoft' : 'text-muted'}`}
-            strokeWidth={1.5}
-            aria-hidden="true"
-          />
-          <p
-            className={`mt-4 text-[10px] uppercase tracking-wide2 ${isLight ? 'text-graphiteSoft' : 'text-muted'}`}
-          >
-            {failed ? 'Arquivo não encontrado' : 'Foto aqui'}
-          </p>
-          <p
-            className={`mt-2 text-sm leading-relaxed ${isLight ? 'text-graphite' : 'text-silver'}`}
-          >
-            {guide}
-          </p>
-          {failed && src && (
-            <code
-              className={`mt-3 block break-all text-[11px] ${isLight ? 'text-clayDeep' : 'text-clay'}`}
+      <div>
+        <div
+          className={`${frame} ${isLight ? 'grid-texture-light border-stoneLine' : 'grid-texture border-line'} grid place-items-center border border-dashed`}
+        >
+          <div className="max-w-[85%] px-5 py-6 text-center">
+            <Camera
+              className={`mx-auto h-7 w-7 ${isLight ? 'text-graphiteSoft' : 'text-muted'}`}
+              strokeWidth={1.5}
+              aria-hidden="true"
+            />
+            <p
+              className={`mt-4 text-[10px] uppercase tracking-wide2 ${isLight ? 'text-graphiteSoft' : 'text-muted'}`}
             >
-              public{src}
-            </code>
-          )}
-
-          {aiPrompt && (
-            <details className="group mt-4 text-left">
-              <summary
-                className={`inline-flex min-h-8 cursor-pointer list-none items-center text-[11px] uppercase tracking-wide2 underline underline-offset-4 ${isLight ? 'text-clayDeep' : 'text-clay'}`}
+              {failed ? 'Arquivo não encontrado' : 'Foto aqui'}
+            </p>
+            <p
+              className={`mt-2 text-sm leading-relaxed ${isLight ? 'text-graphite' : 'text-silver'}`}
+            >
+              {guide}
+            </p>
+            {failed && src && (
+              <code
+                className={`mt-3 block break-all text-[11px] ${isLight ? 'text-clayDeep' : 'text-clay'}`}
               >
-                Prompt para gerar esta imagem
-              </summary>
-              <div
-                className={`mt-3 border p-4 text-left text-[12px] leading-relaxed ${isLight ? 'border-stoneLine bg-stone text-graphite' : 'border-line bg-ink text-silver'}`}
-              >
-                <p className="font-mono">{aiPrompt}</p>
-                <CopyPromptButton prompt={aiPrompt} />
-              </div>
-            </details>
-          )}
+                public{src}
+              </code>
+            )}
+          </div>
         </div>
+        {promptPanel}
       </div>
     );
   }
