@@ -145,7 +145,7 @@ export function BarrelBand() {
   );
 }
 
-/** Seção — ESCURA. Catálogo de chopes em grade bento assimétrica. */
+/** Seção — ESCURA. Catálogo de chopes, em cards uniformes (nenhum rótulo em destaque). */
 export function Catalog() {
   return (
     <section id="catalog" className="bg-stout py-28 text-foam sm:py-36">
@@ -159,44 +159,27 @@ export function Catalog() {
           />
         </Reveal>
 
-        <div className="mt-16 grid auto-rows-[10rem] grid-cols-2 gap-4 sm:grid-cols-4">
-          {beers.map((beer, i) => {
-            const featured = i === 0;
-            return (
-              <Reveal
-                key={beer.slug}
-                delay={i * 60}
-                className={featured ? 'col-span-2 row-span-2' : 'col-span-1'}
-              >
-                <article
-                  className={`group flex h-full flex-col justify-between rounded-2xl border border-caskLine bg-cask p-6 transition-colors duration-300 hover:border-amber/60 ${featured ? 'sm:p-8' : ''}`}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <Beer
-                      className={featured ? 'h-8 w-8 text-amber' : 'h-5 w-5 text-amber'}
-                      strokeWidth={1.5}
-                      aria-hidden="true"
-                    />
-                    <span className="brand-caps rounded-full bg-hop/20 px-3 py-1 text-[9px] text-hop">
-                      {beer.tag}
-                    </span>
-                  </div>
-                  <div>
-                    <h3
-                      className={`font-display uppercase text-foam ${featured ? 'text-3xl sm:text-4xl' : 'text-xl'}`}
-                    >
-                      {beer.name}
-                    </h3>
-                    {featured && (
-                      <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-barley">
-                        {beer.description}
-                      </p>
-                    )}
-                  </div>
-                </article>
-              </Reveal>
-            );
-          })}
+        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {beers.map((beer, i) => (
+            <Reveal key={beer.slug} delay={i * 60} className="h-full">
+              <article className="group flex h-full flex-col gap-6 rounded-2xl border border-caskLine bg-cask p-7 transition-all duration-300 hover:-translate-y-1 hover:border-amber/60">
+                <div className="flex items-center justify-between">
+                  <span className="grid h-11 w-11 place-items-center rounded-full bg-stout text-amber transition-colors duration-300 group-hover:bg-amber group-hover:text-stout">
+                    <Beer className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+                  </span>
+                  <span className="brand-caps rounded-full bg-hop/20 px-3 py-1 text-[9px] text-hop">
+                    {beer.tag}
+                  </span>
+                </div>
+                <div>
+                  <h3 className="font-display text-2xl uppercase text-foam">{beer.name}</h3>
+                  <p className="mt-2.5 text-[14px] leading-relaxed text-barley">
+                    {beer.description}
+                  </p>
+                </div>
+              </article>
+            </Reveal>
+          ))}
         </div>
 
         <Reveal delay={200}>
