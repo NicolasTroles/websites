@@ -1,15 +1,18 @@
-import { BarraContatoMobile } from '@/components/Acoes';
-import { Contato } from '@/components/Contato';
+import { MobileContactBar } from '@/components/Actions';
+import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
+import { BrandMarquee } from '@/components/Marquee';
 import {
-  Depoimentos,
-  Galeria,
-  Oficio,
-  Processo,
-  Servicos,
-} from '@/components/Secoes';
+  About,
+  BarrelBand,
+  Catalog,
+  Events,
+  HowItWorks,
+  Partnerships,
+  Testimonials,
+} from '@/components/Sections';
 
 export default function Home() {
   return (
@@ -17,17 +20,20 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <Oficio />
-        <Servicos />
-        <Galeria />
-        <Processo />
-        <Depoimentos />
-        <Contato />
+        <BrandMarquee />
+        <About />
+        <BarrelBand />
+        <Catalog />
+        <HowItWorks />
+        <Events />
+        <Partnerships />
+        <Testimonials />
+        <Contact />
       </main>
       <Footer />
       {/* Espaço reservado para a barra fixa não cobrir o rodapé no mobile. */}
       <div className="h-20 md:hidden" aria-hidden="true" />
-      <BarraContatoMobile />
+      <MobileContactBar />
     </>
   );
 }

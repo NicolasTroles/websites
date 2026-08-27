@@ -14,75 +14,40 @@
   }
 
   body {
-    /* O site abre e fecha escuro; as seções claras pintam o próprio fundo. */
-    @apply bg-ink text-bone antialiased;
-    /* Evita o scroll horizontal que o parallax pode causar em telas estreitas. */
+    /* O site abre e fecha escuro; os blocos claros pintam o próprio fundo. */
+    @apply bg-stout text-foam antialiased;
+    /* Evita o scroll horizontal que o parallax e o marquee podem causar. */
     overflow-x: hidden;
   }
 
-  /*
-   * Foco visível para navegação por teclado.
-   * `outline` com currentColor funciona nos dois fundos sem precisar de
-   * variante por seção — o anel herda a cor do texto local.
-   */
   :focus-visible {
     outline: 2px solid currentColor;
     outline-offset: 3px;
   }
 
   ::selection {
-    @apply bg-brass text-ink;
+    @apply bg-amber text-stout;
   }
 }
 
 @layer utilities {
-  /* Título de seção com o espaçamento largo do letreiro da fachada. */
+  /* Rótulo/etiqueta com o espaçamento largo de um rótulo de garrafa. */
   .brand-caps {
     @apply font-sans uppercase tracking-brand;
   }
 
-  /* Textura de tecido em CSS puro. Variante para cada fundo. */
-  .weave {
-    background-image:
-      repeating-linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.018) 0px,
-        rgba(255, 255, 255, 0.018) 1px,
-        transparent 1px,
-        transparent 4px
-      ),
-      repeating-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 0.018) 0px,
-        rgba(255, 255, 255, 0.018) 1px,
-        transparent 1px,
-        transparent 4px
-      );
+  /* Grão sutil em CSS puro — textura de foto analógica, não de tecido. */
+  .grain {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 3px 3px;
   }
 
-  .weave-light {
-    background-image:
-      repeating-linear-gradient(
-        45deg,
-        rgba(42, 35, 32, 0.03) 0px,
-        rgba(42, 35, 32, 0.03) 1px,
-        transparent 1px,
-        transparent 4px
-      ),
-      repeating-linear-gradient(
-        -45deg,
-        rgba(42, 35, 32, 0.03) 0px,
-        rgba(42, 35, 32, 0.03) 1px,
-        transparent 1px,
-        transparent 4px
-      );
+  .grain-light {
+    background-image: radial-gradient(rgba(42, 30, 10, 0.06) 1px, transparent 1px);
+    background-size: 3px 3px;
   }
 }
 
-/*
- * Desliga todo o movimento quando o usuário pede menos animação.
- * O parallax também é desativado no JS; isto é a rede de segurança do CSS.
- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

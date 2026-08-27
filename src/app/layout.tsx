@@ -1,92 +1,81 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Bebas_Neue, Manrope } from 'next/font/google';
 import { site } from '@/config/site.config';
 import './globals.css';
 
 // display: 'swap' evita texto invisível enquanto a fonte carrega.
-const sans = Inter({
+const sans = Manrope({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
+  weight: ['400', '500', '600', '700', '800'],
   variable: '--font-sans',
   display: 'swap',
 });
 
-const display = Playfair_Display({
+const display = Bebas_Neue({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['400'],
   variable: '--font-display',
   display: 'swap',
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.seo.url),
-  title: site.seo.titulo,
-  description: site.seo.descricao,
+  title: site.seo.title,
+  description: site.seo.description,
   keywords: [
-    'alfaiate curitiba',
-    'terno sob medida curitiba',
-    'camisa sob medida curitiba',
-    'alfaiataria centro curitiba',
-    'ajuste de terno curitiba',
+    'chopp são josé dos pinhais',
+    'disk chopp são josé dos pinhais',
+    'aluguel de chopeira curitiba',
+    'distribuidora de chopp curitiba',
+    'chopp para eventos pr',
+    'chopp brahma heineken barril',
   ],
+  alternates: { canonical: site.seo.url },
   openGraph: {
-    title: site.seo.titulo,
-    description: site.seo.descricao,
+    title: site.seo.title,
+    description: site.seo.description,
     url: site.seo.url,
-    siteName: `${site.nome} ${site.sobrenomeMarca}`,
+    siteName: site.name,
     locale: 'pt_BR',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: site.seo.title,
+    description: site.seo.description,
   },
   robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0A0A0A',
+  themeColor: '#14100C',
   width: 'device-width',
   initialScale: 1,
   // Sem maximumScale: bloquear zoom quebra a acessibilidade.
 };
 
 /**
- * Schema.org de negócio local. É o que faz o Google exibir endereço, telefone
- * e horário direto no resultado de busca.
+ * Schema.org de negócio local. LiquorStore é o subtipo mais próximo do
+ * schema.org para uma distribuidora que vende/entrega chopp — não existe um
+ * @type específico para locação de chopeira.
  */
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'ClothingStore',
-  name: `${site.nome} ${site.sobrenomeMarca}`,
-  description: site.seo.descricao,
-  telephone: site.telefone,
+  '@type': 'LiquorStore',
+  name: site.name,
+  description: site.seo.description,
+  telephone: site.phone,
   url: site.seo.url,
+  areaServed: site.serviceArea,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: site.endereco.logradouro,
-    addressLocality: site.endereco.cidade,
-    addressRegion: site.endereco.estado,
-    postalCode: site.endereco.cep,
+    addressLocality: site.city,
+    addressRegion: site.state,
     addressCountry: 'BR',
   },
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:00',
-      closes: '18:00',
-    },
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: 'Saturday',
-      opens: '09:00',
-      closes: '13:00',
-    },
-  ],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${sans.variable} ${display.variable}`}>
       <body className="font-sans">
@@ -95,8 +84,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <a
-          href="#conteudo"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-bone focus:px-5 focus:py-3 focus:text-sm focus:text-ink"
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-foam focus:px-5 focus:py-3 focus:text-sm focus:text-stout"
         >
           Pular para o conteúdo
         </a>

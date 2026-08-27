@@ -1,112 +1,123 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
 import { site } from '@/config/site.config';
 import { useParallax } from '@/lib/useParallax';
-import { BotaoTelefone, BotaoWhatsApp } from './Acoes';
-import { Foto } from './Foto';
+import { PhoneButton, WhatsAppButton } from './Actions';
+import { Photo } from './Photo';
+
+const STATS = [
+  { value: '30L / 50L', label: 'Tamanhos de barril' },
+  { value: 'Chopeira', label: 'Inclusa no barril' },
+  { value: 'Disk Chopp', label: 'Pedido pelo WhatsApp' },
+];
 
 export function Hero() {
   // A foto de fundo se move mais devagar que a página: é isso que cria a profundidade.
-  const fundo = useParallax<HTMLDivElement>(0.18);
+  const background = useParallax<HTMLDivElement>(0.18);
 
   return (
-    <section
-      id="topo"
-      className="relative flex min-h-dvh items-center overflow-hidden"
-    >
+    <section id="top" className="relative flex min-h-dvh items-center overflow-hidden bg-stout">
       {/* Camada 1: foto de fundo em parallax. Escala 110% para não revelar bordas. */}
       <div
-        ref={fundo.ref}
+        ref={background.ref}
         className="absolute inset-0 scale-110 will-change-transform"
-        style={{ transform: `translate3d(0, ${fundo.offset}px, 0) scale(1.1)` }}
+        style={{ transform: `translate3d(0, ${background.offset}px, 0) scale(1.1)` }}
       >
-        <Foto
-          // FOTO 1 — hero
-          src="/fotos/hero.jpg"
-          guia="Foto larga e escura: terno bem cortado em um homem, ou o Carlos ajustando uma lapela. Precisa ter área escura à esquerda para o texto ficar legível."
-          alt="Homem vestindo terno sob medida ajustando a gravata em um ateliê de alfaiataria"
-          aspect="paisagem"
+        <Photo
+          src=""
+          guide="Foto larga e escura: chopp sendo servido em taça, com bastante espuma escorrendo, vista de perto (macro). Precisa ter área escura à esquerda para o texto ficar legível."
+          aiPrompt="Wide cinematic close-up photo of a glass of golden draft beer (chopp) being poured, thick foam overflowing down the glass, dramatic dark background fading to pure black on the left third of the frame for text overlay, warm amber and copper tones, condensation droplets on the glass, shallow depth of field, moody bar lighting, professional beverage photography, 16:9"
+          alt="Copo de chopp gelado sendo servido com espuma transbordando, fundo escuro"
+          aspect="landscape"
           priority
-          // Ancorado à direita: em telas estreitas o crop come a lateral
-          // esquerda (que é o vazio escuro) e nunca corta o homem de terno.
-          foco="direita"
+          focus="right"
+          variant="backdrop"
           sizes="100vw"
-          className="h-full w-full !aspect-auto"
+          className="!aspect-auto h-full w-full"
         />
       </div>
 
-      {/*
-       * Camada 2: véu de contraste.
-       *
-       * Medido sobre a foto real: a média da metade esquerda é bem escura,
-       * mas o abajur aceso cai justamente na faixa do título e derruba o
-       * contraste do dourado para ~1.3:1. Por isso o véu é forte até 55% da
-       * largura (cobrindo o abajur) e só depois abre, preservando o homem
-       * de terno e a madeira do ateliê à direita.
-       */}
+      {/* Camada 2: véu de contraste — forte à esquerda, onde fica o texto. */}
       <div
-        className="absolute inset-0 bg-gradient-to-r from-ink via-ink/92 via-55% to-transparent"
+        className="absolute inset-0 bg-gradient-to-r from-stout via-stout/90 via-55% to-transparent"
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/45"
+        className="absolute inset-0 bg-gradient-to-t from-stout via-transparent to-stout/50"
         aria-hidden="true"
       />
 
-      {/* Camada 3: conteúdo. */}
+      {/* Bolhas subindo — decoração pontual, desligada com prefers-reduced-motion. */}
       <div
-        id="conteudo"
-        className="relative mx-auto w-full max-w-7xl px-5 pb-28 pt-28 sm:px-8"
+        className="pointer-events-none absolute inset-0 hidden overflow-hidden sm:block"
+        aria-hidden="true"
       >
+        {[14, 34, 58, 76, 90].map((left, i) => (
+          <span
+            key={left}
+            className="absolute bottom-0 animate-rise rounded-full bg-amber/25"
+            style={{
+              left: `${left}%`,
+              width: `${6 + (i % 3) * 4}px`,
+              height: `${6 + (i % 3) * 4}px`,
+              animationDelay: `${i * 900}ms`,
+              animationDuration: `${4000 + i * 600}ms`,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Camada 3: conteúdo. */}
+      <div id="content" className="relative mx-auto w-full max-w-7xl px-5 pb-32 pt-32 sm:px-8">
         <div className="max-w-2xl">
-          <p className="brand-caps animate-fade-up text-[10px] text-silver sm:text-[11px]">
-            {site.marcaLoja} · {site.cidade}, {site.estado}
+          <p className="brand-caps animate-fade-up text-[10px] text-barley sm:text-[11px]">
+            {site.tagline} · {site.city}, {site.state}
           </p>
 
           <h1
-            className="mt-7 animate-fade-up font-display text-[clamp(2.6rem,8vw,5.2rem)] font-normal leading-[0.98] text-bone"
+            className="mt-6 animate-fade-up font-display text-[clamp(3rem,10vw,6.4rem)] font-normal uppercase leading-[0.92] text-foam"
             style={{ animationDelay: '120ms' }}
           >
-            O terno que
+            Chopp gelado
             <br />
-            <span className="italic text-brass">veste você</span>
+            direto na sua
             <br />
-            e mais ninguém.
+            <span className="text-amber">festa.</span>
           </h1>
 
-          <div
-            className="mt-8 h-px w-24 origin-left animate-draw-line bg-brass"
-            style={{ animationDelay: '360ms' }}
-            aria-hidden="true"
-          />
-
           <p
-            className="mt-8 max-w-prose animate-fade-up text-[17px] leading-relaxed text-silver"
+            className="mt-8 max-w-prose animate-fade-up text-[17px] leading-relaxed text-barley"
             style={{ animationDelay: '260ms' }}
           >
-            Alfaiataria tradicional no centro de Curitiba. Ternos e camisas
-            cortados à mão sobre as suas medidas, com o cuidado de quem faz isso
-            há décadas.
+            Disk Chopp em {site.city}. Escolha o rótulo e o tamanho do barril pelo WhatsApp — a
+            gente entrega tudo montado, com chopeira inclusa.
           </p>
 
           <div
-            className="mt-11 flex animate-fade-up flex-col gap-3 sm:flex-row"
-            style={{ animationDelay: '400ms' }}
+            className="mt-10 flex animate-fade-up flex-col gap-3 sm:flex-row"
+            style={{ animationDelay: '380ms' }}
           >
-            <BotaoWhatsApp />
-            <BotaoTelefone className="hidden sm:inline-flex" />
+            <WhatsAppButton />
+            <PhoneButton className="hidden sm:inline-flex" />
           </div>
         </div>
-      </div>
 
-      <a
-        href="#oficio"
-        aria-label="Ver mais"
-        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-brass transition-colors hover:text-bone md:block"
-      >
-        <ChevronDown className="h-6 w-6 animate-bounce" strokeWidth={1.5} />
-      </a>
+        {/* Cluster de cartões flutuantes — estilo bento, só a partir de md. */}
+        <div
+          className="mt-16 hidden animate-fade-up gap-4 md:grid md:max-w-2xl md:grid-cols-3"
+          style={{ animationDelay: '500ms' }}
+        >
+          {STATS.map((stat) => (
+            <div
+              key={stat.label}
+              className="border border-caskLine bg-stout/60 px-5 py-4 backdrop-blur-sm"
+            >
+              <p className="font-display text-xl uppercase text-amber">{stat.value}</p>
+              <p className="mt-1 text-[12px] leading-snug text-barley">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

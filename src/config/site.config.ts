@@ -1,144 +1,189 @@
 /**
  * Fonte única de verdade do site. Trocar dados aqui, nunca dentro dos componentes.
  *
- * Itens marcados com CONFIRMAR foram levantados de diretórios online e da foto
- * da fachada, mas não puderam ser validados no Google Maps (a página de
- * avaliações é renderizada por JavaScript e não pôde ser lida).
+ * Dados de contato e bio levantados do perfil @choppsaojose no Instagram
+ * (372 posts, 3.683 seguidores) e de um flyer de tabela de chopes postado
+ * pelo perfil. Itens marcados com TODO não puderam ser confirmados numa
+ * fonte oficial (site próprio ou Google Business não localizados) e devem
+ * ser checados com o cliente antes de publicar.
  */
 
 export const site = {
-  /** Nome no letreiro interno da fachada. */
-  nome: 'Carlos Simões',
-  sobrenomeMarca: 'Alfaiate Camiseiro',
-  /** Marca maior no letreiro superior da loja. */
-  marcaLoja: 'Cavalieri Moda',
-  cidade: 'Curitiba',
-  estado: 'PR',
+  name: 'Chopp São José',
+  tagline: 'Distribuidora de Chopp',
+  city: 'São José dos Pinhais',
+  state: 'PR',
+  // TODO: confirm exact service radius with client — inferred from Instagram bio (city only).
+  serviceArea: 'São José dos Pinhais e região metropolitana de Curitiba',
 
-  /** Confirmado em duas fontes: letreiro da fachada + diretório Bendito Guia. */
-  telefone: '+55 41 99930-2624',
-  telefoneLink: '+554199302624',
-  whatsapp: '5541999302624',
-  whatsappMensagem:
-    'Olá! Vim pelo site e gostaria de saber mais sobre alfaiataria sob medida.',
+  /** Número do Disk Chopp, do flyer de tabela de chopes do Instagram. */
+  phone: '+55 41 99618-1098',
+  phoneLink: '+5541996181098',
+  whatsapp: '5541996181098',
+  whatsappMessage:
+    'Olá! Vim pelo site da Chopp São José e queria fazer um pedido de chopp para o meu evento.',
 
-  endereco: {
-    // CONFIRMAR: a fachada mostra o número 58; o diretório registra 263.
-    // Provável que 58 seja o número da porta e 263 o do edifício. Checar com o Carlos.
-    logradouro: 'Alameda Dr. Carlos de Carvalho, 263',
-    bairro: 'Centro',
-    cidade: 'Curitiba',
-    estado: 'PR',
-    cep: '80410-180',
-    /** Usado no embed do mapa e no botão "traçar rota". */
-    queryMaps: 'Carlos Simões Alfaiate, Alameda Dr. Carlos de Carvalho, Centro, Curitiba - PR',
-  },
+  // TODO: confirm with client — not shown on the Instagram profile.
+  openingHours: [{ days: 'Disk Chopp, todos os dias', hours: 'Mediante agendamento' }],
 
-  /** CONFIRMAR horários com o Carlos antes de publicar. */
-  horarios: [
-    { dias: 'Segunda a sexta', horas: '09h às 18h' },
-    { dias: 'Sábado', horas: '09h às 13h' },
-    { dias: 'Domingo', horas: 'Fechado' },
-  ],
-
-  /** Preencher quando tiver os perfis. Links vazios não são renderizados. */
-  redes: {
-    instagram: '',
+  socialLinks: {
+    instagram: 'https://www.instagram.com/choppsaojose',
     facebook: '',
   },
 
   seo: {
-    titulo: 'Carlos Simões Alfaiate | Ternos e camisas sob medida em Curitiba',
-    descricao:
-      'Alfaiataria tradicional no centro de Curitiba. Ternos, camisas sob medida e ajustes finos executados à mão por Carlos Simões. Agende sua prova pelo WhatsApp.',
-    url: 'https://carlos-alfaiate.vercel.app', // CONFIRMAR domínio final
+    title: 'Chopp São José | Disk Chopp e locação de chopeira em São José dos Pinhais',
+    description:
+      'Distribuidora de chopp em São José dos Pinhais. Brahma, Heineken, Pilsen, Puro Malte, IPA e mais, em barris de 30 e 50 litros com chopeira inclusa. Peça pelo WhatsApp.',
+    url: 'https://chopp-sao-jose.vercel.app', // TODO: update after deploy / custom domain
   },
 } as const;
 
-export const servicos = [
+/**
+ * Catálogo de chopes. Tamanhos e "chopeira inclusa" vêm do flyer do
+ * Instagram; os próprios valores não entram no site a pedido do cliente
+ * (consultar direto pelo WhatsApp).
+ */
+export const beers = [
   {
-    icone: 'suit' as const,
-    titulo: 'Ternos sob medida',
-    descricao:
-      'Do corte do tecido ao último ponto. Cada peça é modelada a partir das suas medidas, com provas intermediárias até o caimento ficar exato.',
+    slug: 'pilsen',
+    name: 'Pilsen',
+    tag: 'Clássico',
+    description: 'Leve, refrescante e de fácil aprovação — o chopp que nunca falta em festa boa.',
   },
   {
-    icone: 'shirt' as const,
-    titulo: 'Camisas sob medida',
-    descricao:
-      'Colarinho, punho e comprimento definidos por você. O ofício de camiseiro que dá nome à casa, com tecidos escolhidos peça a peça.',
+    slug: 'puro-malte',
+    name: 'Puro Malte',
+    tag: 'Encorpado',
+    description: 'Mais corpo e sabor de malte, para quem já bebe chopp com exigência.',
   },
   {
-    icone: 'scissors' as const,
-    titulo: 'Ajustes e reformas',
-    descricao:
-      'Aquele terno que nunca serviu direito pode voltar a servir. Barras, cintura, ombros e mangas ajustados com precisão de alfaiataria.',
+    slug: 'brahma',
+    name: 'Brahma',
+    tag: 'Tradicional',
+    description: 'A marca mais pedida do Brasil, gelada e no ponto certo de espuma.',
   },
   {
-    icone: 'calendar' as const,
-    titulo: 'Trajes para ocasião',
-    descricao:
-      'Casamento, formatura ou cerimônia. Planejamos o traje com antecedência para que ele esteja pronto, provado e impecável na data.',
+    slug: 'heineken',
+    name: 'Heineken',
+    tag: 'Premium',
+    description: 'Rótulo internacional, para eventos que pedem um chopp mais sofisticado.',
   },
-];
+  {
+    slug: 'ipa',
+    name: 'IPA',
+    tag: 'Lupulado',
+    description: 'Amargor marcante e aroma cítrico para o convidado que curte um craft.',
+  },
+  {
+    slug: 'chopp-de-vinho',
+    name: 'Chopp de Vinho',
+    tag: 'Diferente',
+    description: 'A opção mais pedida por quem não bebe cerveja — doce, gelada e sem álcool forte.',
+  },
+  {
+    slug: 'mega-chopp',
+    name: 'Mega Chopp',
+    tag: 'Alto volume',
+    description: 'Formato para eventos grandes, com estrutura pensada para servir sem fila.',
+  },
+] as const;
 
-export const processo = [
+export const barrelSizes = ['30 Litros', '50 Litros'] as const;
+
+export const howItWorks = [
   {
-    numero: '01',
-    titulo: 'Conversa e escolha do tecido',
-    descricao:
-      'Entendemos a ocasião, o seu estilo e o orçamento. Você vê e sente os tecidos disponíveis antes de decidir.',
+    number: '01',
+    title: 'Chame no WhatsApp',
+    description: 'Conte a data, o número de convidados e escolha o chopp e o tamanho do barril.',
   },
   {
-    numero: '02',
-    titulo: 'Medidas',
-    descricao:
-      'Mais de vinte medidas tiradas à mão, considerando postura e proporções. É isso que separa sob medida de tamanho padrão.',
+    number: '02',
+    title: 'Confirmamos tudo',
+    description: 'Fechamos data, horário e endereço de entrega — sem letra miúda.',
   },
   {
-    numero: '03',
-    titulo: 'Corte e montagem',
-    descricao:
-      'O molde é feito exclusivamente para você e o tecido é cortado à mão. A peça é montada e alinhavada para a primeira prova.',
+    number: '03',
+    title: 'Entregamos instalado',
+    description: 'Barril e chopeira chegam prontos pra servir. A chopeira já vai inclusa.',
   },
   {
-    numero: '04',
-    titulo: 'Provas e entrega',
-    descricao:
-      'Uma ou mais provas para acertar cada detalhe. A peça só sai da alfaiataria quando o caimento está exato.',
+    number: '04',
+    title: 'Você só aproveita',
+    description: 'Serve à vontade durante o evento — buscamos o equipamento depois.',
   },
-];
+] as const;
+
+export const eventTypes = [
+  {
+    icon: 'heart' as const,
+    title: 'Casamentos',
+    description: 'Chopp gelado para brindar do início ao fim da festa.',
+  },
+  {
+    icon: 'cake' as const,
+    title: 'Aniversários',
+    description: 'De confraternização em casa a festa grande de salão.',
+  },
+  {
+    icon: 'graduationCap' as const,
+    title: 'Formaturas',
+    description: 'Estrutura para grupos grandes, sem faltar chopp na pista.',
+  },
+  {
+    icon: 'briefcase' as const,
+    title: 'Eventos de empresa',
+    description: 'Confraternizações, happy hours e eventos corporativos.',
+  },
+] as const;
+
+export const partnershipAudiences = [
+  {
+    title: 'Bares e restaurantes',
+    description: 'Fornecimento recorrente com entrega programada, sem quebra de estoque.',
+  },
+  {
+    title: 'Casas de festa e buffets',
+    description: 'Parceria fixa para eventos que você já tem na agenda.',
+  },
+  {
+    title: 'Revendedores',
+    description: 'Condições especiais para quem já revende chopp na região.',
+  },
+] as const;
 
 /**
- * SUBSTITUIR pelos depoimentos reais do Google Maps.
+ * SUBSTITUIR pelos depoimentos reais do Google/Instagram.
  * Não publique com estes textos de exemplo.
  */
-export const depoimentos = [
+export const testimonials = [
   {
-    texto: 'EXEMPLO — substituir por avaliação real do Google.',
-    autor: 'Nome do cliente',
-    contexto: 'Terno de casamento',
+    text: 'EXEMPLO — substituir por avaliação real do Google ou Instagram.',
+    author: 'Nome do cliente',
+    context: 'Aniversário',
   },
   {
-    texto: 'EXEMPLO — substituir por avaliação real do Google.',
-    autor: 'Nome do cliente',
-    contexto: 'Ajuste de terno',
+    text: 'EXEMPLO — substituir por avaliação real do Google ou Instagram.',
+    author: 'Nome do cliente',
+    context: 'Casamento',
   },
   {
-    texto: 'EXEMPLO — substituir por avaliação real do Google.',
-    autor: 'Nome do cliente',
-    contexto: 'Camisas sob medida',
+    text: 'EXEMPLO — substituir por avaliação real do Google ou Instagram.',
+    author: 'Nome do cliente',
+    context: 'Evento de empresa',
   },
-];
+] as const;
 
 export const whatsappUrl = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
-  site.whatsappMensagem,
+  site.whatsappMessage,
 )}`;
 
+const mapsQuery = `${site.city} - ${site.state}`;
+
 export const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-  site.endereco.queryMaps,
+  mapsQuery,
 )}`;
 
 export const mapsEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(
-  site.endereco.queryMaps,
+  mapsQuery,
 )}&output=embed`;
