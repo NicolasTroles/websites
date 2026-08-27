@@ -3,9 +3,29 @@
 import { Baby, Droplet, Quote, Scissors, Sparkles, Wind } from 'lucide-react';
 import { differentiators, services, site, testimonials } from '@/config/site.config';
 import { useParallax } from '@/lib/useParallax';
-import { EyebrowGlyph, MustacheGlyph, PineSilhouette, RazorGlyph, SectionDivider } from './Brand';
-import { Photo } from './Photo';
+import {
+  BeardedSilhouette,
+  EyebrowGlyph,
+  MustacheGlyph,
+  RazorGlyph,
+  SectionDivider,
+} from './Brand';
+import { Photo, type PhotoProps } from './Photo';
 import { Reveal } from './Reveal';
+
+/** A gallery photo that drifts vertically at its own rate as the page scrolls — the "cascade". */
+function ParallaxPhoto({ speed, ...photoProps }: { speed: number } & PhotoProps) {
+  const { ref, offset } = useParallax<HTMLDivElement>(speed);
+  return (
+    <div
+      ref={ref}
+      className="h-full will-change-transform"
+      style={{ transform: `translate3d(0, ${offset}px, 0)` }}
+    >
+      <Photo {...photoProps} />
+    </div>
+  );
+}
 
 const SERVICE_ICONS = {
   scissors: Scissors,
@@ -68,7 +88,7 @@ export function About() {
         style={{ transform: `translate3d(0, ${watermark.offset}px, 0)` }}
         aria-hidden="true"
       >
-        <PineSilhouette className="h-[38rem] w-auto text-ink" />
+        <BeardedSilhouette className="h-[38rem] w-auto text-ink" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
@@ -107,13 +127,40 @@ export function About() {
   );
 }
 
+/** Atmospheric DARK parallax band — a strong scale+drift photo strip, a breathing moment before the menu. */
+export function BeardBand() {
+  const band = useParallax<HTMLDivElement>(0.24);
+
+  return (
+    <div className="relative h-[38vh] overflow-hidden bg-bark sm:h-[52vh]">
+      <div
+        ref={band.ref}
+        className="absolute inset-0 scale-125 will-change-transform"
+        style={{ transform: `translate3d(0, ${band.offset}px, 0) scale(1.25)` }}
+      >
+        <Photo
+          src=""
+          guide="Foto larga e atmosférica: barba cheia e bem cuidada em close-up, iluminação lateral dramática."
+          aiPrompt="Wide atmospheric close-up photo of a thick, well-groomed beard, dramatic side lighting, warm amber highlights against deep shadow, shallow depth of field, editorial barbershop photography, 21:9"
+          alt="Close-up de barba bem cuidada"
+          aspect="landscape"
+          variant="backdrop"
+          sizes="100vw"
+          className="!aspect-auto h-full w-full"
+        />
+      </div>
+      <div className="absolute inset-0 bg-bark/55" aria-hidden="true" />
+    </div>
+  );
+}
+
 /** Static angled ribbon banner listing the core service categories — a sash, not a moving ticker. */
 export function ServiceRibbon() {
   const items = ['Corte', 'Barba', 'Bigode', 'Sobrancelha', 'Navalha', 'Pigmentação'];
 
   return (
-    <div className="overflow-hidden bg-cream py-2" aria-hidden="true">
-      <div className="-rotate-1 border-y-4 border-bark bg-rust py-3">
+    <div className="overflow-hidden bg-bark py-2" aria-hidden="true">
+      <div className="-rotate-1 border-y-4 border-paper/20 bg-rust py-3">
         <p className="label-caps flex flex-wrap justify-center gap-x-10 gap-y-2 px-5 text-center text-[13px] text-bark sm:text-sm">
           {items.map((item) => (
             <span key={item}>{item}</span>
@@ -202,16 +249,18 @@ export function Gallery() {
 
         <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           <Reveal className="lg:col-span-2">
-            <Photo
+            <ParallaxPhoto
+              speed={0.08}
               src=""
-              guide="DESTAQUE: cliente de costas mostrando um degradê bem definido, luz de estúdio."
-              aiPrompt="Close-up photo of the back of a man's head showing a sharp skin fade haircut with a clean line-up, studio lighting, dark background, editorial barbershop photography, 16:10"
-              alt="Degradê bem definido feito na barbearia"
+              guide="DESTAQUE: barba cheia e bem definida em close-up, cliente de frente, luz de estúdio."
+              aiPrompt="Close-up portrait photo of a man with a thick, sharply shaped full beard, clean neckline, studio lighting, dark background, editorial barbershop photography, 16:10"
+              alt="Barba cheia e bem definida feita na barbearia"
               aspect="landscape"
             />
           </Reveal>
           <Reveal delay={80}>
-            <Photo
+            <ParallaxPhoto
+              speed={-0.06}
               src=""
               guide="Detalhe de navalha aparando a barba, close-up macro."
               aiPrompt="Macro close-up photo of a straight razor shaping a beard line, shaving foam, dramatic side light, dark moody background, professional barbershop photography, 4:5"
@@ -220,7 +269,8 @@ export function Gallery() {
             />
           </Reveal>
           <Reveal delay={140}>
-            <Photo
+            <ParallaxPhoto
+              speed={0.1}
               src=""
               guide="Ferramentas de barbeiro sobre a bancada: tesoura, navalha, pente."
               aiPrompt="Flat lay photo of barber tools on a wooden counter — scissors, straight razor, comb, clippers — warm side lighting, dark green and walnut tones, editorial still life photography, 4:5"
@@ -229,7 +279,8 @@ export function Gallery() {
             />
           </Reveal>
           <Reveal delay={200} className="lg:col-span-2">
-            <Photo
+            <ParallaxPhoto
+              speed={-0.07}
               src=""
               guide="Cliente relaxado recebendo toalha quente antes da barba."
               aiPrompt="Photo of a relaxed client with a hot towel wrap on his face at a barbershop, warm ambient lighting, dark green leather chair, editorial barbershop photography, 16:10"

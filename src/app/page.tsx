@@ -5,6 +5,7 @@ import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
 import {
   About,
+  BeardBand,
   Differentiators,
   Gallery,
   ServiceRibbon,
@@ -19,6 +20,7 @@ export default function Home() {
       <main>
         <Hero />
         <About />
+        <BeardBand />
         <ServiceRibbon />
         <Services />
         <Differentiators />

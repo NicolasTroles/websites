@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { Camera, Check, Copy } from 'lucide-react';
 
-type PhotoProps = {
+export type PhotoProps = {
   /** Path from /public. E.g. '/photos/hero.jpg'. */
   src?: string;
   /** Alt text. Required and descriptive: screen readers depend on it. */

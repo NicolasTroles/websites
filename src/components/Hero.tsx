@@ -4,18 +4,20 @@ import { Star } from 'lucide-react';
 import { site } from '@/config/site.config';
 import { useParallax } from '@/lib/useParallax';
 import { PhoneButton, WhatsAppButton } from './Actions';
-import { AxeCutEdge } from './Brand';
+import { BeardedSilhouette, CombEdge } from './Brand';
 import { Magnetic } from './Magnetic';
 import { Photo } from './Photo';
 
 /**
  * Split hero: dark panel with the pitch on the left, a photo panel cut at an
- * angle on the right — an axe chop through the frame, not a full-bleed photo
- * with a gradient veil. The real Google rating sits as a stamped badge over
- * the seam.
+ * angle on the right. Two parallax layers move at different speeds behind
+ * the text — the photo and a big, faint bearded silhouette — for a sense of
+ * depth instead of a single flat background. The real Google rating sits as
+ * a stamped badge over the seam.
  */
 export function Hero() {
-  const background = useParallax<HTMLDivElement>(0.12);
+  const background = useParallax<HTMLDivElement>(0.14);
+  const silhouette = useParallax<HTMLDivElement>(0.05);
 
   return (
     <section id="top" className="relative flex min-h-dvh items-center overflow-hidden bg-bark">
@@ -31,9 +33,9 @@ export function Hero() {
         >
           <Photo
             src=""
-            guide="Foto vertical, em preto e branco ou tons quentes: barbeiro finalizando um degradê com a navalha, cliente de perfil, ambiente de barbearia ao fundo."
-            aiPrompt="Moody portrait photo of a barber giving a client a sharp fade haircut with a straight razor, focused expression, warm tungsten barbershop lighting, dark green and walnut tones in the background, shallow depth of field, editorial barbershop photography, 4:5"
-            alt="Barbeiro finalizando um corte degradê em um cliente"
+            guide="Foto vertical, em tons quentes: barbeiro aparando uma barba cheia com tesoura, cliente de perfil, ambiente de barbearia ao fundo."
+            aiPrompt="Moody portrait photo of a barber trimming a full, well-groomed beard with scissors, client shown in profile, warm tungsten barbershop lighting, dark green and walnut tones in the background, shallow depth of field, editorial barbershop photography, 4:5"
+            alt="Barbeiro aparando a barba de um cliente"
             aspect="portrait"
             priority
             variant="backdrop"
@@ -48,6 +50,16 @@ export function Hero() {
         />
       </div>
 
+      {/* Big faint bearded mark, drifting slower than the photo for depth. */}
+      <div
+        ref={silhouette.ref}
+        className="pointer-events-none absolute -left-16 bottom-0 hidden opacity-[0.07] will-change-transform lg:block"
+        style={{ transform: `translate3d(0, ${silhouette.offset}px, 0)` }}
+        aria-hidden="true"
+      >
+        <BeardedSilhouette className="h-[32rem] w-auto text-paper" />
+      </div>
+
       {/* Content, over the dark portion. */}
       <div id="content" className="relative mx-auto w-full max-w-7xl px-5 pb-28 pt-32 sm:px-8">
         <div className="max-w-xl">
@@ -59,10 +71,10 @@ export function Hero() {
             className="mt-6 animate-fade-up font-display text-[clamp(2.6rem,7vw,4.6rem)] font-bold leading-[1.02] text-paper"
             style={{ animationDelay: '120ms' }}
           >
-            Corte, barba
-            <br />e atitude de
+            Barba, corte
+            <br />e navalha na
             <br />
-            <span className="text-rust">lenhador.</span>
+            <span className="text-rust">medida certa.</span>
           </h1>
 
           <div
@@ -75,7 +87,7 @@ export function Hero() {
             className="mt-7 max-w-prose animate-fade-up text-[17px] leading-relaxed text-fern"
             style={{ animationDelay: '260ms' }}
           >
-            {site.tagline}. Corte, barba na navalha, bigode e sobrancelha — o ritual completo, sem
+            {site.tagline}. Barba na navalha, corte, bigode e sobrancelha — o ritual completo, sem
             pressa e sem fórmula de franquia.
           </p>
 
@@ -107,7 +119,7 @@ export function Hero() {
         </div>
       </div>
 
-      <AxeCutEdge className="absolute inset-x-0 bottom-0 h-8 w-full text-cream sm:h-11" />
+      <CombEdge className="absolute inset-x-0 bottom-0 h-8 w-full text-cream sm:h-11" />
     </section>
   );
 }

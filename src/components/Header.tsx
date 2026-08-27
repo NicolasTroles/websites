@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { site, whatsappUrl } from '@/config/site.config';
-import { AxeMark } from './Brand';
+import { BeardMark } from './Brand';
 
 const LINKS = [
   { href: '#about', label: 'Sobre' },
@@ -43,7 +43,7 @@ export function Header() {
         aria-label="Navegação principal"
       >
         <a href="#top" className="flex items-center gap-3" aria-label="Início">
-          <AxeMark className="h-7 w-7 text-rust" />
+          <BeardMark className="h-7 w-7 text-rust" />
           <span className="flex flex-col leading-none">
             <span className="font-display text-[15px] font-bold uppercase tracking-wide text-paper">
               {site.brandName}

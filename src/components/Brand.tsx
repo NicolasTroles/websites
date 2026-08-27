@@ -1,63 +1,78 @@
 /**
- * Brand marks drawn for this project: a single-bit axe (logo icon), a pine
- * silhouette (decorative watermark), and a jagged "axe-cut" edge used as the
- * section divider in place of a straight line or a wave.
+ * Brand marks drawn for this project: a bearded-face mark (logo icon), a
+ * bigger bearded silhouette (decorative watermark/parallax layer), and a
+ * comb-tooth edge used as the section divider in place of a straight line
+ * or a wave — grooming-forward, not axe/pine lumberjack imagery.
  */
 
 type IconProps = {
   className?: string;
 };
 
-/** Axe head + handle — logo icon, used in the header and footer. */
-export function AxeMark({ className }: IconProps) {
+/** Bearded face — logo icon, used in the header and footer. */
+export function BeardMark({ className }: IconProps) {
   return (
     <svg viewBox="0 0 64 64" fill="none" className={className} aria-hidden="true" focusable="false">
-      {/* handle */}
-      <path d="M30 8c-1 14-1 34 0 52" stroke="currentColor" strokeWidth="4" strokeLinecap="round" />
-      {/* axe head */}
+      <circle cx="32" cy="20" r="11" fill="currentColor" />
       <path
-        d="M30 12c8-8 20-9 26-4-1 9-9 17-19 18-3 3-5 4-7 2s-1-4 2-7c-3-3-4-6-2-9Z"
+        d="M14 27c0 3 2 6 4 8-5 4-8 10-8 17 0 13 10 20 22 20s22-7 22-20c0-7-3-13-8-17 2-2 4-5 4-8-4 4-9 5-13 5H27c-4 0-9-1-13-5Z"
         fill="currentColor"
       />
-      {/* edge highlight */}
-      <path d="M54 8c-1 9-9 17-19 18" stroke="currentColor" strokeWidth="1.5" opacity="0.4" />
     </svg>
   );
 }
 
-/** Pine tree silhouette — decorative background element for parallax sections. */
-export function PineSilhouette({ className }: IconProps) {
+/** Bearded head silhouette — decorative background element for parallax layers. */
+export function BeardedSilhouette({ className }: IconProps) {
   return (
-    <svg viewBox="0 0 64 80" fill="none" className={className} aria-hidden="true" focusable="false">
-      <path d="M32 4 18 26h6L10 46h8L6 68h52l-12-22h8L42 26h6L32 4Z" fill="currentColor" />
-      <rect x="28" y="68" width="8" height="10" fill="currentColor" />
+    <svg viewBox="0 0 64 72" fill="none" className={className} aria-hidden="true" focusable="false">
+      <circle cx="32" cy="18" r="12" fill="currentColor" />
+      <path
+        d="M14 26c0 4 2 7 4 9-5 4-8 10-8 17 0 14 10 22 22 22s22-8 22-22c0-7-3-13-8-17 2-2 4-5 4-9-4 4-9 6-14 6h-8c-5 0-10-2-14-6Z"
+        fill="currentColor"
+      />
     </svg>
   );
 }
 
 /**
- * Jagged block divider between light/dark sections — an axe-cut edge instead
- * of a straight line or a wave. `flip` mirrors it for use at the top of a
- * block instead of the bottom.
+ * Comb-tooth block divider between light/dark sections — even, regular teeth
+ * instead of a straight line or an organic wave. `flip` mirrors it for use
+ * at the top of a block instead of the bottom.
  */
-export function AxeCutEdge({ className, flip = false }: IconProps & { flip?: boolean }) {
+export function CombEdge({ className, flip = false }: IconProps & { flip?: boolean }) {
+  const width = 1200;
+  const height = 44;
+  const barHeight = 14;
+  const toothHeight = 24;
+  const toothWidth = 16;
+  const count = 30;
+  const gap = width / count;
+
   return (
     <svg
-      viewBox="0 0 1200 44"
+      viewBox={`0 0 ${width} ${height}`}
       preserveAspectRatio="none"
       className={`${flip ? 'rotate-180' : ''} ${className ?? ''}`}
       aria-hidden="true"
       focusable="false"
     >
-      <path
-        d="M0 44V6l40 14 42-18 44 20 40-16 46 22 40-18 44 16 42-20 40 18 44-14 40 20 44-16 42 18 40-14 44 20 40-16 42 14 46-18 20 8v54H0Z"
-        fill="currentColor"
-      />
+      <rect x="0" y={height - barHeight} width={width} height={barHeight} fill="currentColor" />
+      {Array.from({ length: count }).map((_, i) => (
+        <rect
+          key={i}
+          x={i * gap + (gap - toothWidth) / 2}
+          y={height - barHeight - toothHeight}
+          width={toothWidth}
+          height={toothHeight + barHeight}
+          fill="currentColor"
+        />
+      ))}
     </svg>
   );
 }
 
-/** Short divider: rule + centered axe mark. */
+/** Short divider: rule + centered bearded mark. */
 export function SectionDivider({
   className,
   tone = 'dark',
@@ -68,7 +83,7 @@ export function SectionDivider({
       <span
         className={`h-px w-16 bg-gradient-to-r from-transparent sm:w-24 ${light ? 'to-creamLine' : 'to-barkLine'}`}
       />
-      <AxeMark className={`h-5 w-5 ${light ? 'text-rustDeep' : 'text-rust'}`} />
+      <BeardMark className={`h-5 w-5 ${light ? 'text-rustDeep' : 'text-rust'}`} />
       <span
         className={`h-px w-16 bg-gradient-to-l from-transparent sm:w-24 ${light ? 'to-creamLine' : 'to-barkLine'}`}
       />
