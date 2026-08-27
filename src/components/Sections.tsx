@@ -4,7 +4,7 @@ import { Baby, Droplet, Quote, Scissors, Sparkles, Wind } from 'lucide-react';
 import { differentiators, services, site, testimonials } from '@/config/site.config';
 import { useParallax } from '@/lib/useParallax';
 import {
-  BeardedSilhouette,
+  ClipperSilhouette,
   EyebrowGlyph,
   MustacheGlyph,
   RazorGlyph,
@@ -88,7 +88,7 @@ export function About() {
         style={{ transform: `translate3d(0, ${watermark.offset}px, 0)` }}
         aria-hidden="true"
       >
-        <BeardedSilhouette className="h-[38rem] w-auto text-ink" />
+        <ClipperSilhouette className="h-[38rem] w-auto text-ink" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
@@ -113,11 +113,11 @@ export function About() {
 
           <Reveal delay={120}>
             <Photo
-              src=""
+              src="/interior.png"
               guide="Foto do interior da barbearia: cadeiras, espelhos, ferramentas à mostra, iluminação quente."
               aiPrompt="Interior photo of a modern rustic barbershop, dark green walls, leather barber chairs, exposed wood shelving with grooming tools, warm Edison bulb lighting, editorial architectural photography, 4:5 vertical"
-              alt="Interior da Barbearia Lumberjack"
-              aspect="tall"
+              alt="Interior da Barbearia Lumberjack, com cadeiras de couro e prateleiras de produtos"
+              aspect="portrait"
               tone="light"
             />
           </Reveal>
@@ -139,7 +139,7 @@ export function BeardBand() {
         style={{ transform: `translate3d(0, ${band.offset}px, 0) scale(1.25)` }}
       >
         <Photo
-          src=""
+          src="/barba.png"
           guide="Foto larga e atmosférica: barba cheia e bem cuidada em close-up, iluminação lateral dramática."
           aiPrompt="Wide atmospheric close-up photo of a thick, well-groomed beard, dramatic side lighting, warm amber highlights against deep shadow, shallow depth of field, editorial barbershop photography, 21:9"
           alt="Close-up de barba bem cuidada"

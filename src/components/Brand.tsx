@@ -1,6 +1,6 @@
 /**
  * Brand marks drawn for this project: a bearded-face mark (logo icon), a
- * bigger bearded silhouette (decorative watermark/parallax layer), and a
+ * hair-clipper silhouette (decorative watermark/parallax layer), and a
  * comb-tooth edge used as the section divider in place of a straight line
  * or a wave — grooming-forward, not axe/pine lumberjack imagery.
  */
@@ -16,19 +16,6 @@ export function BeardMark({ className }: IconProps) {
       <circle cx="32" cy="20" r="11" fill="currentColor" />
       <path
         d="M14 27c0 3 2 6 4 8-5 4-8 10-8 17 0 13 10 20 22 20s22-7 22-20c0-7-3-13-8-17 2-2 4-5 4-8-4 4-9 5-13 5H27c-4 0-9-1-13-5Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-/** Bearded head silhouette — decorative background element for parallax layers. */
-export function BeardedSilhouette({ className }: IconProps) {
-  return (
-    <svg viewBox="0 0 64 72" fill="none" className={className} aria-hidden="true" focusable="false">
-      <circle cx="32" cy="18" r="12" fill="currentColor" />
-      <path
-        d="M14 26c0 4 2 7 4 9-5 4-8 10-8 17 0 14 10 22 22 22s22-8 22-22c0-7-3-13-8-17 2-2 4-5 4-9-4 4-9 6-14 6h-8c-5 0-10-2-14-6Z"
         fill="currentColor"
       />
     </svg>
