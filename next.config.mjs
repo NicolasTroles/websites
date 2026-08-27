@@ -1,10 +1,16 @@
 /** @type {import('next').NextConfig} */
 
+const isDev = process.env.NODE_ENV !== 'production';
+
 // CSP permite o embed do Google Maps (frame-src) e mantém o resto restrito a
 // 'self' — o site não carrega nenhum script ou imagem de terceiros.
+// 'unsafe-eval' só entra em dev: o Fast Refresh do Next usa eval() para
+// aplicar os módulos, e sem isso o script trava logo no início e a página
+// nunca hidrata (JS morto = nada que dependa de JS aparece, como o
+// scroll-reveal das seções). Em produção o build não usa eval, então fica de fora.
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline';
+  script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''};
   style-src 'self' 'unsafe-inline';
   img-src 'self' data:;
   font-src 'self' data:;
