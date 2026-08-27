@@ -1,144 +1,149 @@
 /**
- * Fonte única de verdade do site. Trocar dados aqui, nunca dentro dos componentes.
+ * Single source of truth for the site. Change data here, never inside components.
  *
- * Itens marcados com CONFIRMAR foram levantados de diretórios online e da foto
- * da fachada, mas não puderam ser validados no Google Maps (a página de
- * avaliações é renderizada por JavaScript e não pôde ser lida).
+ * Data confirmed from two independent official sources: the Google Business
+ * listing ("Barbearia Lumberjack", Curitiba) and the Instagram profile
+ * (@lumberjackbarbershopp) / linktr.ee/lumberjackbarbearia_. Fields marked
+ * TODO were not published in either source and must be confirmed with the
+ * client before launch — never invent a name, price, or testimonial.
  */
 
 export const site = {
-  /** Nome no letreiro interno da fachada. */
-  nome: 'Carlos Simões',
-  sobrenomeMarca: 'Alfaiate Camiseiro',
-  /** Marca maior no letreiro superior da loja. */
-  marcaLoja: 'Cavalieri Moda',
-  cidade: 'Curitiba',
-  estado: 'PR',
+  brandName: 'Lumberjack',
+  brandFull: 'Barbearia Lumberjack',
+  tagline: 'Seu estilo, nossa especialidade',
+  city: 'Curitiba',
+  state: 'PR',
 
-  /** Confirmado em duas fontes: letreiro da fachada + diretório Bendito Guia. */
-  telefone: '+55 41 99930-2624',
-  telefoneLink: '+554199302624',
-  whatsapp: '5541999302624',
-  whatsappMensagem:
-    'Olá! Vim pelo site e gostaria de saber mais sobre alfaiataria sob medida.',
+  // Confirmed on Google Business and Instagram (same number in both).
+  phone: '+55 41 99987-9216',
+  phoneLink: '+554199879216',
+  whatsapp: '5541999879216',
+  whatsappMessage: 'Olá! Vim pelo site e gostaria de agendar um horário na barbearia.',
 
-  endereco: {
-    // CONFIRMAR: a fachada mostra o número 58; o diretório registra 263.
-    // Provável que 58 seja o número da porta e 263 o do edifício. Checar com o Carlos.
-    logradouro: 'Alameda Dr. Carlos de Carvalho, 263',
-    bairro: 'Centro',
-    cidade: 'Curitiba',
-    estado: 'PR',
-    cep: '80410-180',
-    /** Usado no embed do mapa e no botão "traçar rota". */
-    queryMaps: 'Carlos Simões Alfaiate, Alameda Dr. Carlos de Carvalho, Centro, Curitiba - PR',
+  // Confirmed on Google Business.
+  address: {
+    street: 'Rua Clara Polsin, 716',
+    neighborhood: 'Novo Mundo',
+    city: 'Curitiba',
+    state: 'PR',
+    zip: '81020-310',
+    mapsQuery: 'Barbearia Lumberjack, Rua Clara Polsin, 716, Novo Mundo, Curitiba - PR',
   },
 
-  /** CONFIRMAR horários com o Carlos antes de publicar. */
-  horarios: [
-    { dias: 'Segunda a sexta', horas: '09h às 18h' },
-    { dias: 'Sábado', horas: '09h às 13h' },
-    { dias: 'Domingo', horas: 'Fechado' },
+  // Confirmed on Google Business (matches the Instagram bio: "terça a sábado").
+  openingHours: [
+    { days: 'Terça a sexta', hours: '10h às 19h' },
+    { days: 'Sábado', hours: '09h às 20h' },
+    { days: 'Domingo e segunda', hours: 'Fechado' },
   ],
 
-  /** Preencher quando tiver os perfis. Links vazios não são renderizados. */
-  redes: {
-    instagram: '',
+  // Confirmed on Google Business.
+  rating: { value: 5.0, count: 48 },
+
+  // Empty links are not rendered.
+  socialLinks: {
+    instagram: 'https://www.instagram.com/lumberjackbarbershopp/',
     facebook: '',
   },
 
   seo: {
-    titulo: 'Carlos Simões Alfaiate | Ternos e camisas sob medida em Curitiba',
-    descricao:
-      'Alfaiataria tradicional no centro de Curitiba. Ternos, camisas sob medida e ajustes finos executados à mão por Carlos Simões. Agende sua prova pelo WhatsApp.',
-    url: 'https://carlos-alfaiate.vercel.app', // CONFIRMAR domínio final
+    title: 'Barbearia Lumberjack | Corte, Barba e Navalha em Curitiba',
+    description:
+      'Barbearia Lumberjack em Curitiba (Novo Mundo). Corte masculino, degradê, barba na navalha, bigode, sobrancelha e pigmentação. 5,0 estrelas no Google. Agende pelo WhatsApp.',
+    url: 'https://barbearia-lumberjack.vercel.app', // TODO: confirm final domain
   },
 } as const;
 
-export const servicos = [
+/**
+ * Full service menu. Categories and treatments researched against common
+ * barbershop offerings in this segment (SP/PR market) — confirm with the
+ * client that every item here is actually offered before publishing, since
+ * only the shop name/address/phone/hours came from an official source.
+ */
+export const services = [
   {
-    icone: 'suit' as const,
-    titulo: 'Ternos sob medida',
-    descricao:
-      'Do corte do tecido ao último ponto. Cada peça é modelada a partir das suas medidas, com provas intermediárias até o caimento ficar exato.',
+    icon: 'scissors' as const,
+    title: 'Corte masculino',
+    description: 'Tesoura, máquina ou degradê (fade), do clássico ao mais moderno.',
   },
   {
-    icone: 'shirt' as const,
-    titulo: 'Camisas sob medida',
-    descricao:
-      'Colarinho, punho e comprimento definidos por você. O ofício de camiseiro que dá nome à casa, com tecidos escolhidos peça a peça.',
+    icon: 'razor' as const,
+    title: 'Barba na navalha',
+    description: 'Toalha quente, navalha e desenho fino para um acabamento de respeito.',
   },
   {
-    icone: 'scissors' as const,
-    titulo: 'Ajustes e reformas',
-    descricao:
-      'Aquele terno que nunca serviu direito pode voltar a servir. Barras, cintura, ombros e mangas ajustados com precisão de alfaiataria.',
+    icon: 'mustache' as const,
+    title: 'Bigode',
+    description: 'Aparo e modelagem para manter a régua certa entre um bigode e outro.',
   },
   {
-    icone: 'calendar' as const,
-    titulo: 'Trajes para ocasião',
-    descricao:
-      'Casamento, formatura ou cerimônia. Planejamos o traje com antecedência para que ele esteja pronto, provado e impecável na data.',
+    icon: 'eyebrow' as const,
+    title: 'Sobrancelha',
+    description: 'Design na navalha ou pinça, sem tirar a naturalidade do olhar.',
   },
-];
+  {
+    icon: 'droplet' as const,
+    title: 'Pigmentação',
+    description: 'Disfarça falhas e fios brancos na barba ou no cabelo com efeito natural.',
+  },
+  {
+    icon: 'sparkles' as const,
+    title: 'Platinado e coloração',
+    description: 'Descoloração e cor para quem quer um visual fora da régua.',
+  },
+  {
+    icon: 'child' as const,
+    title: 'Corte infantil',
+    description: 'Atendimento com paciência extra para os clientes mais novos da casa.',
+  },
+  {
+    icon: 'wind' as const,
+    title: 'Acabamento e cera',
+    description: 'Pezinho, limpeza de nuca e cera para nariz e orelha — o acabamento completo.',
+  },
+] as const;
 
-export const processo = [
+export const differentiators = [
   {
-    numero: '01',
-    titulo: 'Conversa e escolha do tecido',
-    descricao:
-      'Entendemos a ocasião, o seu estilo e o orçamento. Você vê e sente os tecidos disponíveis antes de decidir.',
+    title: 'Ritual completo',
+    description: 'Toalha quente, navalha e produtos de barbearia de verdade — não é só tesoura.',
   },
   {
-    numero: '02',
-    titulo: 'Medidas',
-    descricao:
-      'Mais de vinte medidas tiradas à mão, considerando postura e proporções. É isso que separa sob medida de tamanho padrão.',
+    title: 'Ambiente autêntico',
+    description: 'Barbearia de bairro, sem pressa e sem fórmula de franquia.',
   },
   {
-    numero: '03',
-    titulo: 'Corte e montagem',
-    descricao:
-      'O molde é feito exclusivamente para você e o tecido é cortado à mão. A peça é montada e alinhavada para a primeira prova.',
+    title: '5,0 no Google',
+    description: `${site.rating.count} avaliações e nota máxima de clientes de ${site.city}.`,
   },
-  {
-    numero: '04',
-    titulo: 'Provas e entrega',
-    descricao:
-      'Uma ou mais provas para acertar cada detalhe. A peça só sai da alfaiataria quando o caimento está exato.',
-  },
-];
+] as const;
 
 /**
- * SUBSTITUIR pelos depoimentos reais do Google Maps.
- * Não publique com estes textos de exemplo.
+ * Real Google reviews (screenshots from the client's Google Business page).
+ * Reviewer names weren't legible in the source screenshot, so they're
+ * credited generically instead of inventing a name — never publish a made-up
+ * author for a real quote.
  */
-export const depoimentos = [
+export const testimonials = [
   {
-    texto: 'EXEMPLO — substituir por avaliação real do Google.',
-    autor: 'Nome do cliente',
-    contexto: 'Terno de casamento',
+    quote: 'Profissionais competentes, atenciosos e um serviço de alta qualidade.',
+    author: 'Avaliação no Google',
   },
   {
-    texto: 'EXEMPLO — substituir por avaliação real do Google.',
-    autor: 'Nome do cliente',
-    contexto: 'Ajuste de terno',
+    quote: 'Ótimo ambiente, preço bom e um grande profissional.',
+    author: 'Avaliação no Google',
   },
-  {
-    texto: 'EXEMPLO — substituir por avaliação real do Google.',
-    autor: 'Nome do cliente',
-    contexto: 'Camisas sob medida',
-  },
-];
+] as const;
 
 export const whatsappUrl = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
-  site.whatsappMensagem,
+  site.whatsappMessage,
 )}`;
 
 export const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-  site.endereco.queryMaps,
+  site.address.mapsQuery,
 )}`;
 
 export const mapsEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(
-  site.endereco.queryMaps,
+  site.address.mapsQuery,
 )}&output=embed`;

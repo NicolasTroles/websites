@@ -6,45 +6,48 @@ const config: Config = {
     extend: {
       colors: {
         /*
-         * Duas famílias que se alternam ao longo da página.
-         *
-         * O escuro é preto-amarronzado, nunca preto neutro: preto puro lê como
-         * tecnologia, e alfaiataria precisa de calor. Referência tirada do CSS
-         * da Alfaiataria Estravagância (#0F0D0D) e do LV Alfaiataria.
+         * Paleta "lumberjack": floresta e madeira queimada, não o marrom de
+         * couro/alfaiataria nem o dourado de chopp já usados em outros
+         * projetos. Base escura puxa pro verde-preto (mata fechada à noite),
+         * não pro marrom neutro.
          */
-        ink: '#12100E', // fundo escuro, quente
-        surface: '#1B1815', // cards sobre o escuro
-        elevated: '#242019',
-        line: '#332E28', // divisores no escuro
-        silver: '#BFB6A8', // texto secundário no escuro
-        muted: '#8C8377',
-        bone: '#F7F3EC', // texto principal no escuro (creme, não branco)
+        bark: '#12160F', // fundo escuro principal
+        pine: '#1C2216', // cards/elevação sobre o escuro
+        barkLine: '#2A3320', // divisores no escuro
+        paper: '#F3ECD9', // texto principal no escuro (papel/pergaminho, não branco)
+        fern: '#A9B78E', // texto secundário no escuro (8.6:1 sobre bark)
 
-        /* Família clara: carrega a maior parte do site. */
-        sand: '#F2EDE4', // fundo claro
-        sandDeep: '#E7DFD2', // cards sobre o claro
-        sandLine: '#D6CCBB', // divisores no claro
-        cocoa: '#2A2320', // texto principal no claro
-        cocoaSoft: '#5C5147', // texto secundário no claro
+        /* Família clara: papel de barbearia antiga, usado com parcimônia. */
+        cream: '#F4EEE1', // fundo claro
+        creamDeep: '#E9E0CB', // cards sobre o claro
+        creamLine: '#D8CCA9', // divisores no claro
+        ink: '#12160F', // texto principal no claro (mesmo tom do fundo escuro)
+        inkSoft: '#55503F', // texto secundário no claro (6.9:1 sobre cream)
 
-        /* Acento único, usado com parcimônia em ambos os fundos. */
-        // brass só sobre fundo escuro (6.1:1). Sobre o bege ele cai para 2.6:1,
-        // então texto dourado no claro usa obrigatoriamente brassDeep (5.4:1).
-        brass: '#B08D57',
-        brassDeep: '#785B31',
+        /*
+         * Acento duplo: ferrugem/couro de machado (uso principal, CTAs) +
+         * verde-pinheiro (uso pontual, tags e ícones decorativos).
+         * rust só sobre fundo escuro (4.9:1). Texto corrido sobre cream usa
+         * obrigatoriamente rustDeep (6.3:1).
+         */
+        rust: '#CB6A2E',
+        rustDeep: '#8A431A',
+        spruce: '#5C7A4E',
       },
       fontFamily: {
+        // Slab serif robusta — crachá/etiqueta de barbearia vintage, o
+        // oposto da condensada em caixa-alta usada no projeto de chopp e da
+        // serifada fina do projeto de alfaiataria.
         display: ['var(--font-display)', 'Georgia', 'serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
-        brand: '0.32em',
+        wide2: '0.16em',
       },
       maxWidth: {
-        prose: '68ch',
+        prose: '62ch',
       },
       transitionTimingFunction: {
-        // Curva única para todo o site: entradas suaves, sem elástico.
         smooth: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       keyframes: {

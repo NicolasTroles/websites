@@ -1,112 +1,113 @@
 'use client';
 
-import { ChevronDown } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { site } from '@/config/site.config';
 import { useParallax } from '@/lib/useParallax';
-import { BotaoTelefone, BotaoWhatsApp } from './Acoes';
-import { Foto } from './Foto';
+import { PhoneButton, WhatsAppButton } from './Actions';
+import { AxeCutEdge } from './Brand';
+import { Magnetic } from './Magnetic';
+import { Photo } from './Photo';
 
+/**
+ * Split hero: dark panel with the pitch on the left, a photo panel cut at an
+ * angle on the right — an axe chop through the frame, not a full-bleed photo
+ * with a gradient veil. The real Google rating sits as a stamped badge over
+ * the seam.
+ */
 export function Hero() {
-  // A foto de fundo se move mais devagar que a página: é isso que cria a profundidade.
-  const fundo = useParallax<HTMLDivElement>(0.18);
+  const background = useParallax<HTMLDivElement>(0.12);
 
   return (
-    <section
-      id="topo"
-      className="relative flex min-h-dvh items-center overflow-hidden"
-    >
-      {/* Camada 1: foto de fundo em parallax. Escala 110% para não revelar bordas. */}
+    <section id="top" className="relative flex min-h-dvh items-center overflow-hidden bg-bark">
+      {/* Right panel: photo, clipped at a diagonal. */}
       <div
-        ref={fundo.ref}
-        className="absolute inset-0 scale-110 will-change-transform"
-        style={{ transform: `translate3d(0, ${fundo.offset}px, 0) scale(1.1)` }}
+        className="absolute inset-y-0 right-0 w-full sm:w-[62%]"
+        style={{ clipPath: 'polygon(18% 0, 100% 0, 100% 100%, 0% 100%)' }}
       >
-        <Foto
-          // FOTO 1 — hero
-          src="/fotos/hero.jpg"
-          guia="Foto larga e escura: terno bem cortado em um homem, ou o Carlos ajustando uma lapela. Precisa ter área escura à esquerda para o texto ficar legível."
-          alt="Homem vestindo terno sob medida ajustando a gravata em um ateliê de alfaiataria"
-          aspect="paisagem"
-          priority
-          // Ancorado à direita: em telas estreitas o crop come a lateral
-          // esquerda (que é o vazio escuro) e nunca corta o homem de terno.
-          foco="direita"
-          sizes="100vw"
-          className="h-full w-full !aspect-auto"
+        <div
+          ref={background.ref}
+          className="absolute inset-0 scale-110 will-change-transform"
+          style={{ transform: `translate3d(0, ${background.offset}px, 0) scale(1.1)` }}
+        >
+          <Photo
+            src=""
+            guide="Foto vertical, em preto e branco ou tons quentes: barbeiro finalizando um degradê com a navalha, cliente de perfil, ambiente de barbearia ao fundo."
+            aiPrompt="Moody portrait photo of a barber giving a client a sharp fade haircut with a straight razor, focused expression, warm tungsten barbershop lighting, dark green and walnut tones in the background, shallow depth of field, editorial barbershop photography, 4:5"
+            alt="Barbeiro finalizando um corte degradê em um cliente"
+            aspect="portrait"
+            priority
+            variant="backdrop"
+            sizes="(max-width: 640px) 100vw, 62vw"
+            className="!aspect-auto h-full w-full"
+          />
+        </div>
+        {/* Left-edge fade so the diagonal cut doesn't read as a hard pasted seam. */}
+        <div
+          className="absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-bark to-transparent"
+          aria-hidden="true"
         />
       </div>
 
-      {/*
-       * Camada 2: véu de contraste.
-       *
-       * Medido sobre a foto real: a média da metade esquerda é bem escura,
-       * mas o abajur aceso cai justamente na faixa do título e derruba o
-       * contraste do dourado para ~1.3:1. Por isso o véu é forte até 55% da
-       * largura (cobrindo o abajur) e só depois abre, preservando o homem
-       * de terno e a madeira do ateliê à direita.
-       */}
-      <div
-        className="absolute inset-0 bg-gradient-to-r from-ink via-ink/92 via-55% to-transparent"
-        aria-hidden="true"
-      />
-      <div
-        className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/45"
-        aria-hidden="true"
-      />
-
-      {/* Camada 3: conteúdo. */}
-      <div
-        id="conteudo"
-        className="relative mx-auto w-full max-w-7xl px-5 pb-28 pt-28 sm:px-8"
-      >
-        <div className="max-w-2xl">
-          <p className="brand-caps animate-fade-up text-[10px] text-silver sm:text-[11px]">
-            {site.marcaLoja} · {site.cidade}, {site.estado}
+      {/* Content, over the dark portion. */}
+      <div id="content" className="relative mx-auto w-full max-w-7xl px-5 pb-28 pt-32 sm:px-8">
+        <div className="max-w-xl">
+          <p className="label-caps animate-fade-up text-[10px] text-fern sm:text-[11px]">
+            {site.brandFull} · {site.city}, {site.state}
           </p>
 
           <h1
-            className="mt-7 animate-fade-up font-display text-[clamp(2.6rem,8vw,5.2rem)] font-normal leading-[0.98] text-bone"
+            className="mt-6 animate-fade-up font-display text-[clamp(2.6rem,7vw,4.6rem)] font-bold leading-[1.02] text-paper"
             style={{ animationDelay: '120ms' }}
           >
-            O terno que
+            Corte, barba
+            <br />e atitude de
             <br />
-            <span className="italic text-brass">veste você</span>
-            <br />
-            e mais ninguém.
+            <span className="text-rust">lenhador.</span>
           </h1>
 
           <div
-            className="mt-8 h-px w-24 origin-left animate-draw-line bg-brass"
+            className="mt-7 h-px w-24 origin-left animate-draw-line bg-rust"
             style={{ animationDelay: '360ms' }}
             aria-hidden="true"
           />
 
           <p
-            className="mt-8 max-w-prose animate-fade-up text-[17px] leading-relaxed text-silver"
+            className="mt-7 max-w-prose animate-fade-up text-[17px] leading-relaxed text-fern"
             style={{ animationDelay: '260ms' }}
           >
-            Alfaiataria tradicional no centro de Curitiba. Ternos e camisas
-            cortados à mão sobre as suas medidas, com o cuidado de quem faz isso
-            há décadas.
+            {site.tagline}. Corte, barba na navalha, bigode e sobrancelha — o ritual completo, sem
+            pressa e sem fórmula de franquia.
           </p>
 
           <div
-            className="mt-11 flex animate-fade-up flex-col gap-3 sm:flex-row"
+            className="mt-9 flex animate-fade-up flex-col gap-3 sm:flex-row"
             style={{ animationDelay: '400ms' }}
           >
-            <BotaoWhatsApp />
-            <BotaoTelefone className="hidden sm:inline-flex" />
+            <Magnetic>
+              <WhatsAppButton />
+            </Magnetic>
+            <PhoneButton className="hidden sm:inline-flex" />
           </div>
+        </div>
+
+        {/* Real rating, stamped over the seam between the two panels. */}
+        <div
+          className="mt-14 flex w-fit animate-fade-up items-center gap-3 border border-barkLine bg-bark/70 px-5 py-3 backdrop-blur-sm sm:absolute sm:bottom-16 sm:right-[38%] sm:mt-0 sm:translate-x-1/2"
+          style={{ animationDelay: '520ms' }}
+        >
+          <div className="flex gap-0.5 text-rust" aria-hidden="true">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <Star key={i} className="h-3.5 w-3.5 fill-current" strokeWidth={0} />
+            ))}
+          </div>
+          <p className="label-caps text-[11px] text-paper">
+            {site.rating.value.toFixed(1).replace('.', ',')} · {site.rating.count} avaliações no
+            Google
+          </p>
         </div>
       </div>
 
-      <a
-        href="#oficio"
-        aria-label="Ver mais"
-        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-brass transition-colors hover:text-bone md:block"
-      >
-        <ChevronDown className="h-6 w-6 animate-bounce" strokeWidth={1.5} />
-      </a>
+      <AxeCutEdge className="absolute inset-x-0 bottom-0 h-8 w-full text-cream sm:h-11" />
     </section>
   );
 }

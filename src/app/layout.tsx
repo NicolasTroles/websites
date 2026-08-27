@@ -1,92 +1,100 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Bitter, Work_Sans } from 'next/font/google';
 import { site } from '@/config/site.config';
 import './globals.css';
 
-// display: 'swap' evita texto invisível enquanto a fonte carrega.
-const sans = Inter({
+// display: 'swap' avoids invisible text while the font loads.
+const sans = Work_Sans({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
+  weight: ['400', '500', '600'],
   variable: '--font-sans',
   display: 'swap',
 });
 
-const display = Playfair_Display({
+const display = Bitter({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['500', '700', '800'],
   variable: '--font-display',
   display: 'swap',
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.seo.url),
-  title: site.seo.titulo,
-  description: site.seo.descricao,
+  title: site.seo.title,
+  description: site.seo.description,
   keywords: [
-    'alfaiate curitiba',
-    'terno sob medida curitiba',
-    'camisa sob medida curitiba',
-    'alfaiataria centro curitiba',
-    'ajuste de terno curitiba',
+    'barbearia curitiba',
+    'barbearia novo mundo curitiba',
+    'corte masculino curitiba',
+    'barba navalha curitiba',
+    'barbearia lumberjack',
   ],
+  alternates: { canonical: site.seo.url },
   openGraph: {
-    title: site.seo.titulo,
-    description: site.seo.descricao,
+    title: site.seo.title,
+    description: site.seo.description,
     url: site.seo.url,
-    siteName: `${site.nome} ${site.sobrenomeMarca}`,
+    siteName: site.brandFull,
     locale: 'pt_BR',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: site.seo.title,
+    description: site.seo.description,
   },
   robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0A0A0A',
+  themeColor: '#12160F',
   width: 'device-width',
   initialScale: 1,
-  // Sem maximumScale: bloquear zoom quebra a acessibilidade.
+  // No maximumScale: blocking zoom breaks accessibility.
 };
 
 /**
- * Schema.org de negócio local. É o que faz o Google exibir endereço, telefone
- * e horário direto no resultado de busca.
+ * Schema.org business markup. HairSalon is the closest schema.org type to a
+ * barbershop (no dedicated "Barbershop" type exists) — this is what lets
+ * Google surface the address, phone, and hours directly in search results.
  */
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'ClothingStore',
-  name: `${site.nome} ${site.sobrenomeMarca}`,
-  description: site.seo.descricao,
-  telephone: site.telefone,
+  '@type': 'HairSalon',
+  name: site.brandFull,
+  description: site.seo.description,
+  telephone: site.phone,
   url: site.seo.url,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: site.endereco.logradouro,
-    addressLocality: site.endereco.cidade,
-    addressRegion: site.endereco.estado,
-    postalCode: site.endereco.cep,
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.state,
+    postalCode: site.address.zip,
     addressCountry: 'BR',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: site.rating.value,
+    reviewCount: site.rating.count,
   },
   openingHoursSpecification: [
     {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:00',
-      closes: '18:00',
+      dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '10:00',
+      closes: '19:00',
     },
     {
       '@type': 'OpeningHoursSpecification',
       dayOfWeek: 'Saturday',
       opens: '09:00',
-      closes: '13:00',
+      closes: '20:00',
     },
   ],
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`${sans.variable} ${display.variable}`}>
       <body className="font-sans">
@@ -95,8 +103,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <a
-          href="#conteudo"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-bone focus:px-5 focus:py-3 focus:text-sm focus:text-ink"
+          href="#content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-paper focus:px-5 focus:py-3 focus:text-sm focus:text-bark"
         >
           Pular para o conteúdo
         </a>
