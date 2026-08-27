@@ -1,6 +1,7 @@
+import Image from 'next/image';
 import { Facebook, Instagram } from 'lucide-react';
 import { site } from '@/config/site.config';
-import { BeerMark, FoamEdge } from './Brand';
+import { FoamEdge } from './Brand';
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -12,15 +13,13 @@ export function Footer() {
 
       <div className="mx-auto max-w-7xl px-5 pt-10 sm:px-8">
         <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
-          <div className="flex items-center gap-3">
-            <BeerMark className="h-8 w-8 text-amber" />
-            <div>
-              <p className="brand-caps text-xs text-foam">{site.name}</p>
-              <p className="mt-1.5 font-sans text-[9px] uppercase tracking-[0.24em] text-barley">
-                {site.tagline}
-              </p>
-            </div>
-          </div>
+          <Image
+            src="/logo.png"
+            alt={site.name}
+            width={168}
+            height={142}
+            className="h-16 w-auto object-contain"
+          />
 
           {hasSocialLinks && (
             <div className="flex gap-2">

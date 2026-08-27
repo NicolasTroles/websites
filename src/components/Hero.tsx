@@ -24,7 +24,7 @@ export function Hero() {
         style={{ transform: `translate3d(0, ${background.offset}px, 0) scale(1.1)` }}
       >
         <Photo
-          src=""
+          src="/banner.png"
           guide="Foto larga e escura: chopp sendo servido em taça, com bastante espuma escorrendo, vista de perto (macro). Precisa ter área escura à esquerda para o texto ficar legível."
           aiPrompt="Wide cinematic close-up photo of a glass of golden draft beer (chopp) being poured, thick foam overflowing down the glass, dramatic dark background fading to pure black on the left third of the frame for text overlay, warm amber and copper tones, condensation droplets on the glass, shallow depth of field, moody bar lighting, professional beverage photography, 16:9"
           alt="Copo de chopp gelado sendo servido com espuma transbordando, fundo escuro"

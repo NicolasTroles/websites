@@ -88,7 +88,7 @@ export function About() {
             <SectionHeading
               eyebrow="Quem somos"
               title="Chopp de verdade, entregue na hora certa."
-              description={`A ${site.name} é distribuidora de chopp em ${site.city}. Atendemos ${site.serviceArea.toLowerCase()} com barril, chopeira e todo o suporte para o seu evento não parar.`}
+              description={`A ${site.name} é distribuidora de chopp em ${site.city}. Atendemos ${site.serviceArea} com barril, chopeira e todo o suporte para o seu evento não parar.`}
             />
             <div className="mt-10 space-y-6 border-l-2 border-amber/60 pl-7">
               <p className="max-w-prose leading-relaxed text-copperDeep">
@@ -104,11 +104,11 @@ export function About() {
 
           <Reveal delay={120}>
             <Photo
-              src=""
+              src="/profissionais.png"
               guide="Foto da equipe ou do caminhão/carro de entrega da distribuidora, com barris de chopp visíveis."
               aiPrompt="Professional photo of a small local beer keg delivery team next to a delivery van, loading stainless steel beer kegs, warm late afternoon light, amber and copper color grading, friendly and trustworthy mood, shallow depth of field, editorial commercial photography, 4:5 vertical"
-              alt="Equipe da Chopp São José entregando barris de chopp"
-              aspect="tall"
+              alt="Equipe da Chopp São José carregando barris de chopp na van de entrega"
+              aspect="portrait"
               tone="light"
             />
           </Reveal>
@@ -130,7 +130,7 @@ export function BarrelBand() {
         style={{ transform: `translate3d(0, ${band.offset}px, 0) scale(1.25)` }}
       >
         <Photo
-          src=""
+          src="/banner2.png"
           guide="Foto larga e atmosférica: fileira de barris de chopp de metal, iluminação lateral dramática, ambiente de distribuidora ou evento."
           aiPrompt="Wide atmospheric photo of a row of stainless steel beer kegs stacked in a warehouse, dramatic side lighting, warm amber highlights against deep shadow, subtle fog, cinematic mood, editorial commercial photography, 21:9"
           alt="Fileira de barris de chopp em ambiente escuro e iluminado lateralmente"
@@ -288,7 +288,7 @@ export function Events() {
         <div className="mt-6 grid gap-4 sm:grid-cols-3">
           <Reveal className="sm:col-span-2">
             <Photo
-              src=""
+              src="/destaque1.png"
               guide="DESTAQUE: festa em andamento com convidados servindo chopp, ambiente iluminado e animado."
               aiPrompt="Wide photo of a lively outdoor party at golden hour, guests holding cups of golden draft beer near a beer keg tap station, string lights, warm bokeh background, candid documentary style, amber and copper tones, 16:10"
               alt="Convidados servindo chopp em uma festa ao ar livre"
@@ -297,7 +297,7 @@ export function Events() {
           </Reveal>
           <Reveal delay={80}>
             <Photo
-              src=""
+              src="/destaque2.png"
               guide="Detalhe da torneira da chopeira servindo chopp em um copo, close-up."
               aiPrompt="Macro close-up photo of a beer tap pouring golden draft beer into a glass, foam rising, dark moody background, dramatic side light, water droplets, professional beverage photography, 4:5"
               alt="Torneira de chopeira servindo chopp em copo"

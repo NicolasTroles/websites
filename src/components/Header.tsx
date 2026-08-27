@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 import { site, whatsappUrl } from '@/config/site.config';
-import { BeerMark } from './Brand';
 
 const LINKS = [
   { href: '#about', label: 'Sobre' },
@@ -43,14 +43,15 @@ export function Header() {
         className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8"
         aria-label="Navegação principal"
       >
-        <a href="#top" className="flex items-center gap-3" aria-label="Início">
-          <BeerMark className="h-7 w-7 text-amber" />
-          <span className="flex flex-col leading-none">
-            <span className="brand-caps text-[13px] text-foam">{site.name}</span>
-            <span className="mt-1 font-sans text-[9px] uppercase tracking-[0.24em] text-barley">
-              {site.tagline}
-            </span>
-          </span>
+        <a href="#top" aria-label="Início">
+          <Image
+            src="/logo.png"
+            alt={site.name}
+            width={168}
+            height={142}
+            priority
+            className="h-14 w-auto object-contain"
+          />
         </a>
 
         <ul className="hidden items-center gap-9 lg:flex">
