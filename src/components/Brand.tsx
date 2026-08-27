@@ -35,6 +35,28 @@ export function BeardedSilhouette({ className }: IconProps) {
   );
 }
 
+/** Hair clipper silhouette — decorative background element for parallax layers. */
+export function ClipperSilhouette({ className }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 64 120"
+      fill="none"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      {/* teeth */}
+      <path d="M14 14V4h4v6h4V4h4v6h4V4h4v6h4V4h4v6h4V4h4v10Z" fill="currentColor" />
+      {/* blade guard */}
+      <rect x="12" y="14" width="40" height="15" rx="2" fill="currentColor" />
+      {/* body */}
+      <rect x="16" y="29" width="32" height="82" rx="11" fill="currentColor" />
+      {/* switch detail */}
+      <rect x="26" y="50" width="12" height="20" rx="3" fill="currentColor" opacity="0.3" />
+    </svg>
+  );
+}
+
 /**
  * Comb-tooth block divider between light/dark sections — even, regular teeth
  * instead of a straight line or an organic wave. `flip` mirrors it for use

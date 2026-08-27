@@ -4,16 +4,16 @@ import { Star } from 'lucide-react';
 import { site } from '@/config/site.config';
 import { useParallax } from '@/lib/useParallax';
 import { PhoneButton, WhatsAppButton } from './Actions';
-import { BeardedSilhouette, CombEdge } from './Brand';
+import { ClipperSilhouette, CombEdge } from './Brand';
 import { Magnetic } from './Magnetic';
 import { Photo } from './Photo';
 
 /**
  * Split hero: dark panel with the pitch on the left, a photo panel cut at an
  * angle on the right. Two parallax layers move at different speeds behind
- * the text — the photo and a big, faint bearded silhouette — for a sense of
- * depth instead of a single flat background. The real Google rating sits as
- * a stamped badge over the seam.
+ * the text — the photo and a big, faint hair-clipper silhouette — for a
+ * sense of depth instead of a single flat background. The real Google
+ * rating sits as a stamped badge over the seam.
  */
 export function Hero() {
   const background = useParallax<HTMLDivElement>(0.14);
@@ -51,14 +51,14 @@ export function Hero() {
         />
       </div>
 
-      {/* Big faint bearded mark, drifting slower than the photo for depth. */}
+      {/* Big faint clipper mark, drifting slower than the photo for depth. */}
       <div
         ref={silhouette.ref}
-        className="pointer-events-none absolute -left-16 bottom-0 hidden opacity-[0.07] will-change-transform lg:block"
+        className="pointer-events-none absolute -left-8 bottom-0 hidden opacity-[0.07] will-change-transform lg:block"
         style={{ transform: `translate3d(0, ${silhouette.offset}px, 0)` }}
         aria-hidden="true"
       >
-        <BeardedSilhouette className="h-[32rem] w-auto text-paper" />
+        <ClipperSilhouette className="h-[30rem] w-auto text-paper" />
       </div>
 
       {/* Content, over the dark portion. */}
