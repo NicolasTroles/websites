@@ -32,12 +32,13 @@ export function Hero() {
           style={{ transform: `translate3d(0, ${background.offset}px, 0) scale(1.1)` }}
         >
           <Photo
-            src=""
-            guide="Foto vertical, em tons quentes: barbeiro aparando uma barba cheia com tesoura, cliente de perfil, ambiente de barbearia ao fundo."
-            aiPrompt="Moody portrait photo of a barber trimming a full, well-groomed beard with scissors, client shown in profile, warm tungsten barbershop lighting, dark green and walnut tones in the background, shallow depth of field, editorial barbershop photography, 4:5"
-            alt="Barbeiro aparando a barba de um cliente"
+            src="/banner.png"
+            guide="Foto vertical, em tons quentes: barbeiro aparando uma barba cheia com navalha, cliente de perfil, ambiente de barbearia ao fundo."
+            aiPrompt="Moody portrait photo of a barber trimming a full, well-groomed beard with a straight razor, client shown in profile, warm tungsten barbershop lighting, dark green and walnut tones in the background, shallow depth of field, editorial barbershop photography, 4:5"
+            alt="Barbeiro aparando a barba de um cliente com navalha"
             aspect="portrait"
             priority
+            focus="top"
             variant="backdrop"
             sizes="(max-width: 640px) 100vw, 62vw"
             className="!aspect-auto h-full w-full"
