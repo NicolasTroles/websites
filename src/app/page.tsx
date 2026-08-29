@@ -3,15 +3,7 @@ import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
-import {
-  About,
-  BeardBand,
-  Differentiators,
-  Gallery,
-  ServiceRibbon,
-  Services,
-  Testimonials,
-} from '@/components/Sections';
+import { About, BeardBand, ServiceRibbon, Services, SocialProof } from '@/components/Sections';
 
 export default function Home() {
   return (
@@ -23,9 +15,7 @@ export default function Home() {
         <BeardBand />
         <ServiceRibbon />
         <Services />
-        <Differentiators />
-        <Gallery />
-        <Testimonials />
+        <SocialProof />
         <Contact />
       </main>
       <Footer />

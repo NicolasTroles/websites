@@ -1,6 +1,5 @@
 'use client';
 
-import { Star } from 'lucide-react';
 import { site } from '@/config/site.config';
 import { useParallax } from '@/lib/useParallax';
 import { PhoneButton, WhatsAppButton } from './Actions';
@@ -12,8 +11,7 @@ import { Photo } from './Photo';
  * Split hero: dark panel with the pitch on the left, a photo panel cut at an
  * angle on the right. Two parallax layers move at different speeds behind
  * the text — the photo and a big, faint hair-clipper silhouette — for a
- * sense of depth instead of a single flat background. The real Google
- * rating sits as a stamped badge over the seam.
+ * sense of depth instead of a single flat background.
  */
 export function Hero() {
   const background = useParallax<HTMLDivElement>(0.14);
@@ -101,22 +99,6 @@ export function Hero() {
             </Magnetic>
             <PhoneButton className="hidden sm:inline-flex" />
           </div>
-        </div>
-
-        {/* Real rating, stamped over the seam between the two panels. */}
-        <div
-          className="mt-14 flex w-fit animate-fade-up items-center gap-3 border border-barkLine bg-bark/70 px-5 py-3 backdrop-blur-sm sm:absolute sm:bottom-16 sm:right-[38%] sm:mt-0 sm:translate-x-1/2"
-          style={{ animationDelay: '520ms' }}
-        >
-          <div className="flex gap-0.5 text-rust" aria-hidden="true">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} className="h-3.5 w-3.5 fill-current" strokeWidth={0} />
-            ))}
-          </div>
-          <p className="label-caps text-[11px] text-paper">
-            {site.rating.value.toFixed(1).replace('.', ',')} · {site.rating.count} avaliações no
-            Google
-          </p>
         </div>
       </div>
 

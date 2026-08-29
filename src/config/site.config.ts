@@ -104,38 +104,6 @@ export const services = [
   },
 ] as const;
 
-export const differentiators = [
-  {
-    title: 'Ritual completo',
-    description: 'Toalha quente, navalha e produtos de barbearia de verdade — não é só tesoura.',
-  },
-  {
-    title: 'Ambiente autêntico',
-    description: 'Barbearia de bairro, sem pressa e sem fórmula de franquia.',
-  },
-  {
-    title: '5,0 no Google',
-    description: `${site.rating.count} avaliações e nota máxima de clientes de ${site.city}.`,
-  },
-] as const;
-
-/**
- * Real Google reviews (screenshots from the client's Google Business page).
- * Reviewer names weren't legible in the source screenshot, so they're
- * credited generically instead of inventing a name — never publish a made-up
- * author for a real quote.
- */
-export const testimonials = [
-  {
-    quote: 'Profissionais competentes, atenciosos e um serviço de alta qualidade.',
-    author: 'Avaliação no Google',
-  },
-  {
-    quote: 'Ótimo ambiente, preço bom e um grande profissional.',
-    author: 'Avaliação no Google',
-  },
-] as const;
-
 export const whatsappUrl = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
   site.whatsappMessage,
 )}`;

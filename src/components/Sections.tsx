@@ -1,31 +1,17 @@
 'use client';
 
-import { Baby, Droplet, Quote, Scissors, Sparkles, Wind } from 'lucide-react';
-import { differentiators, services, site, testimonials } from '@/config/site.config';
+import { ArrowUpRight, Baby, Droplet, Scissors, Sparkles, Star, Wind } from 'lucide-react';
+import { mapsUrl, services, site } from '@/config/site.config';
 import { useParallax } from '@/lib/useParallax';
 import {
   ClipperSilhouette,
   EyebrowGlyph,
+  InstagramGlyph,
   MustacheGlyph,
   RazorGlyph,
-  SectionDivider,
 } from './Brand';
-import { Photo, type PhotoProps } from './Photo';
+import { Photo } from './Photo';
 import { Reveal } from './Reveal';
-
-/** A gallery photo that drifts vertically at its own rate as the page scrolls — the "cascade". */
-function ParallaxPhoto({ speed, ...photoProps }: { speed: number } & PhotoProps) {
-  const { ref, offset } = useParallax<HTMLDivElement>(speed);
-  return (
-    <div
-      ref={ref}
-      className="h-full will-change-transform"
-      style={{ transform: `translate3d(0, ${offset}px, 0)` }}
-    >
-      <Photo {...photoProps} />
-    </div>
-  );
-}
 
 const SERVICE_ICONS = {
   scissors: Scissors,
@@ -219,118 +205,83 @@ export function Services() {
   );
 }
 
-/** Section — LIGHT. Three differentiators. */
-export function Differentiators() {
+/**
+ * Section — DARK. Instead of embedding placeholder gallery photos or
+ * testimonial quotes we can't fully verify, this just points people to
+ * where that content actually lives and is kept up to date: Instagram and
+ * the real Google Business listing.
+ */
+export function SocialProof() {
   return (
-    <section className="border-t border-creamLine bg-cream py-24 text-ink sm:py-28">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid gap-4 sm:grid-cols-3">
-          {differentiators.map((item, i) => (
-            <Reveal key={item.title} delay={i * 90}>
-              <div className="h-full border border-creamLine bg-creamDeep p-8">
-                <h3 className="font-display text-xl font-bold text-ink">{item.title}</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-inkSoft">{item.description}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/** Section — DARK. Photo gallery. */
-export function Gallery() {
-  return (
-    <section id="gallery" className="bg-bark py-28 text-paper sm:py-36">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal>
-          <SectionHeading eyebrow="Galeria" title="Trabalho que fala por si." tone="dark" center />
-        </Reveal>
-
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <Reveal className="lg:col-span-2">
-            <ParallaxPhoto
-              speed={0.08}
-              src=""
-              guide="DESTAQUE: barba cheia e bem definida em close-up, cliente de frente, luz de estúdio."
-              aiPrompt="Close-up portrait photo of a man with a thick, sharply shaped full beard, clean neckline, studio lighting, dark background, editorial barbershop photography, 16:10"
-              alt="Barba cheia e bem definida feita na barbearia"
-              aspect="landscape"
-            />
-          </Reveal>
-          <Reveal delay={80}>
-            <ParallaxPhoto
-              speed={-0.06}
-              src=""
-              guide="Detalhe de navalha aparando a barba, close-up macro."
-              aiPrompt="Macro close-up photo of a straight razor shaping a beard line, shaving foam, dramatic side light, dark moody background, professional barbershop photography, 4:5"
-              alt="Navalha aparando a linha da barba"
-              aspect="tall"
-            />
-          </Reveal>
-          <Reveal delay={140}>
-            <ParallaxPhoto
-              speed={0.1}
-              src=""
-              guide="Ferramentas de barbeiro sobre a bancada: tesoura, navalha, pente."
-              aiPrompt="Flat lay photo of barber tools on a wooden counter — scissors, straight razor, comb, clippers — warm side lighting, dark green and walnut tones, editorial still life photography, 4:5"
-              alt="Ferramentas de barbeiro sobre a bancada"
-              aspect="tall"
-            />
-          </Reveal>
-          <Reveal delay={200} className="lg:col-span-2">
-            <ParallaxPhoto
-              speed={-0.07}
-              src=""
-              guide="Cliente relaxado recebendo toalha quente antes da barba."
-              aiPrompt="Photo of a relaxed client with a hot towel wrap on his face at a barbershop, warm ambient lighting, dark green leather chair, editorial barbershop photography, 16:10"
-              alt="Cliente recebendo toalha quente antes da barba"
-              aspect="landscape"
-            />
-          </Reveal>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/** Section — DARK. Real Google reviews. */
-export function Testimonials() {
-  return (
-    <section
-      id="testimonials"
-      className="border-t border-barkLine bg-bark py-28 text-paper sm:py-36"
-    >
+    <section id="reviews" className="border-t border-barkLine bg-bark py-28 text-paper sm:py-36">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal>
           <SectionHeading
-            eyebrow="Avaliações"
-            title="Quem já passou por aqui."
-            center
+            eyebrow="Redes e avaliações"
+            title="Veja mais no Instagram e no Google."
+            description="Fotos de cortes, bastidores e as avaliações reais de quem já passou por aqui."
             tone="dark"
+            center
           />
         </Reveal>
 
-        <div className="mx-auto mt-16 grid max-w-4xl gap-4 sm:grid-cols-2">
-          {testimonials.map((item, i) => (
-            <Reveal key={item.quote} delay={i * 100}>
-              <figure className="flex h-full flex-col border border-barkLine bg-pine p-9">
-                <Quote className="h-6 w-6 text-rust" strokeWidth={1.5} aria-hidden="true" />
-                <blockquote className="mt-6 flex-1 font-display text-lg leading-relaxed text-paper">
-                  {item.quote}
-                </blockquote>
-                <figcaption className="mt-7 border-t border-barkLine pt-5">
-                  <p className="label-caps text-[11px] text-fern">{item.author}</p>
-                </figcaption>
-              </figure>
-            </Reveal>
-          ))}
-        </div>
+        <div className="mx-auto mt-16 grid max-w-3xl gap-4 sm:grid-cols-2">
+          <Reveal>
+            <a
+              href={site.socialLinks.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex h-full flex-col justify-between border border-barkLine bg-pine p-9 transition-colors hover:border-rust/60"
+            >
+              <InstagramGlyph className="h-7 w-7 text-rust" />
+              <div className="mt-10">
+                <h3 className="font-display text-xl font-bold text-paper">Instagram</h3>
+                <p className="mt-2 text-[14px] leading-relaxed text-fern">
+                  Cortes, bastidores e novidades da barbearia.
+                </p>
+                <span className="label-caps mt-6 inline-flex items-center gap-2 text-[11px] text-rust">
+                  Ver perfil
+                  <ArrowUpRight
+                    className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+                </span>
+              </div>
+            </a>
+          </Reveal>
 
-        <Reveal>
-          <SectionDivider className="mt-16" tone="dark" />
-        </Reveal>
+          <Reveal delay={80}>
+            <a
+              href={mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex h-full flex-col justify-between border border-barkLine bg-pine p-9 transition-colors hover:border-rust/60"
+            >
+              <div className="flex gap-0.5 text-rust" aria-hidden="true">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-5 w-5 fill-current" strokeWidth={0} />
+                ))}
+              </div>
+              <div className="mt-10">
+                <h3 className="font-display text-xl font-bold text-paper">
+                  {site.rating.value.toFixed(1).replace('.', ',')} no Google
+                </h3>
+                <p className="mt-2 text-[14px] leading-relaxed text-fern">
+                  {site.rating.count} avaliações de clientes de {site.city}.
+                </p>
+                <span className="label-caps mt-6 inline-flex items-center gap-2 text-[11px] text-rust">
+                  Ver avaliações
+                  <ArrowUpRight
+                    className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+                </span>
+              </div>
+            </a>
+          </Reveal>
+        </div>
       </div>
     </section>
   );
