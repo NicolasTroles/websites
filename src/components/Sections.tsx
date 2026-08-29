@@ -116,8 +116,9 @@ export function About() {
               src="/interior.png"
               guide="Foto do interior da barbearia: cadeiras, espelhos, ferramentas à mostra, iluminação quente."
               aiPrompt="Interior photo of a modern rustic barbershop, dark green walls, leather barber chairs, exposed wood shelving with grooming tools, warm Edison bulb lighting, editorial architectural photography, 4:5 vertical"
-              alt="Interior da Barbearia Lumberjack, com cadeiras de couro e prateleiras de produtos"
-              aspect="portrait"
+              alt="Interior da Barbearia Lumberjack, com o letreiro da loja e cadeiras de barbeiro em fila"
+              aspect="tall"
+              focus="top"
               tone="light"
             />
           </Reveal>
@@ -179,7 +180,7 @@ export function Services() {
         <Reveal>
           <SectionHeading
             eyebrow="Serviços"
-            title="O ritual completo do corte."
+            title="Serviços para cada detalhe do seu visual."
             description="Consulte disponibilidade e valores pelo WhatsApp."
             tone="dark"
             center

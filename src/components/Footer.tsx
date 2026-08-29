@@ -1,5 +1,6 @@
+import Image from 'next/image';
 import { site } from '@/config/site.config';
-import { BeardMark, CombEdge, FacebookGlyph, InstagramGlyph } from './Brand';
+import { CombEdge, FacebookGlyph, InstagramGlyph } from './Brand';
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -11,15 +12,13 @@ export function Footer() {
 
       <div className="mx-auto max-w-7xl px-5 pt-10 sm:px-8">
         <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
-          <div className="flex items-center gap-3">
-            <BeardMark className="h-8 w-8 text-rust" />
-            <div>
-              <p className="font-display text-sm font-bold uppercase tracking-wide text-paper">
-                {site.brandName}
-              </p>
-              <p className="label-caps mt-1.5 text-[9px] text-fern">Barbearia</p>
-            </div>
-          </div>
+          <Image
+            src="/logo.png"
+            alt="Barbearia Lumberjack"
+            width={192}
+            height={128}
+            className="h-[114px] w-auto object-contain"
+          />
 
           {hasSocialLinks && (
             <div className="flex gap-2">

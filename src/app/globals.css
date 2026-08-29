@@ -9,8 +9,8 @@
 
   html {
     scroll-behavior: smooth;
-    /* Compensates the fixed header when jumping to an anchor. */
-    scroll-padding-top: 5rem;
+    /* Compensates the fixed header when jumping to an anchor — sized for the enlarged logo. */
+    scroll-padding-top: 8rem;
   }
 
   body {

@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
-import { site, whatsappUrl } from '@/config/site.config';
-import { BeardMark } from './Brand';
+import { whatsappUrl } from '@/config/site.config';
 
 const LINKS = [
   { href: '#about', label: 'Sobre' },
@@ -39,17 +39,18 @@ export function Header() {
       }`}
     >
       <nav
-        className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8"
+        className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-6 px-5 py-2 sm:px-8"
         aria-label="Navegação principal"
       >
-        <a href="#top" className="flex items-center gap-3" aria-label="Início">
-          <BeardMark className="h-7 w-7 text-rust" />
-          <span className="flex flex-col leading-none">
-            <span className="font-display text-[15px] font-bold uppercase tracking-wide text-paper">
-              {site.brandName}
-            </span>
-            <span className="label-caps mt-1 text-[9px] text-fern">Barbearia</span>
-          </span>
+        <a href="#top" aria-label="Início" className="shrink-0">
+          <Image
+            src="/logo.png"
+            alt="Barbearia Lumberjack"
+            width={192}
+            height={128}
+            priority
+            className="h-[106px] w-auto object-contain"
+          />
         </a>
 
         <ul className="hidden items-center gap-9 lg:flex">
