@@ -305,7 +305,7 @@ export function Testimonials() {
         <Reveal>
           <SectionHeading
             eyebrow="Avaliações"
-            title={`${site.rating.value.toFixed(1).replace('.', ',')} estrelas no Google.`}
+            title="Quem já passou por aqui."
             center
             tone="dark"
           />
