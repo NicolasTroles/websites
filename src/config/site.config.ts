@@ -51,7 +51,7 @@ export const site = {
     title: 'Barbearia Lumberjack | Corte, Barba e Navalha em Curitiba',
     description:
       'Barbearia Lumberjack em Curitiba (Novo Mundo). Corte masculino, degradê, barba na navalha, bigode, sobrancelha e pigmentação. 5,0 estrelas no Google. Agende pelo WhatsApp.',
-    url: 'https://barbearia-lumberjack.vercel.app', // TODO: confirm final domain
+    url: 'https://barbearialumberjack.vercel.app', // confirmed live deploy domain
   },
 } as const;
 
