@@ -1,27 +1,31 @@
 'use client';
 
-import { ArrowUpRight, Baby, Droplet, Scissors, Sparkles, Star, Wind } from 'lucide-react';
-import { mapsUrl, services, site } from '@/config/site.config';
-import { useParallax } from '@/lib/useParallax';
 import {
-  ClipperSilhouette,
-  EyebrowGlyph,
-  InstagramGlyph,
-  MustacheGlyph,
-  RazorGlyph,
-} from './Brand';
+  Armchair,
+  ClipboardList,
+  Droplet,
+  ExternalLink,
+  Hammer,
+  Lamp,
+  Paintbrush,
+  Wrench,
+  Zap,
+} from 'lucide-react';
+import { mapsUrl, processSteps, services, site } from '@/config/site.config';
+import { useParallax } from '@/lib/useParallax';
+import { ServiceMarquee, ToolWatermark } from './Brand';
 import { Photo } from './Photo';
 import { Reveal } from './Reveal';
 
 const SERVICE_ICONS = {
-  scissors: Scissors,
-  razor: RazorGlyph,
-  mustache: MustacheGlyph,
-  eyebrow: EyebrowGlyph,
   droplet: Droplet,
-  sparkles: Sparkles,
-  child: Baby,
-  wind: Wind,
+  zap: Zap,
+  paintbrush: Paintbrush,
+  armchair: Armchair,
+  hammer: Hammer,
+  lamp: Lamp,
+  wrench: Wrench,
+  clipboard: ClipboardList,
 } as const;
 
 /** Standard section header. `tone` swaps colors for the alternating light/dark backgrounds. */
@@ -41,10 +45,12 @@ function SectionHeading({
   const light = tone === 'light';
   return (
     <div className={center ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl'}>
-      <p className={`label-caps text-[10px] ${light ? 'text-rustDeep' : 'text-rust'}`}>{eyebrow}</p>
+      <p className={`label-caps text-[10px] ${light ? 'text-safetyDeep' : 'text-safety'}`}>
+        {eyebrow}
+      </p>
       <h2
-        className={`mt-4 font-display text-[clamp(2rem,5vw,3.2rem)] font-bold leading-[1.08] ${
-          light ? 'text-ink' : 'text-paper'
+        className={`mt-4 font-display text-[clamp(2rem,5vw,3.2rem)] uppercase leading-[1.05] tracking-wide ${
+          light ? 'text-ink' : 'text-chalk'
         }`}
       >
         {title}
@@ -52,7 +58,7 @@ function SectionHeading({
       {description && (
         <p
           className={`mt-6 max-w-prose text-[17px] leading-relaxed ${
-            light ? 'text-inkSoft' : 'text-fern'
+            light ? 'text-inkSoft' : 'text-mist'
           } ${center ? 'mx-auto' : ''}`}
         >
           {description}
@@ -62,19 +68,19 @@ function SectionHeading({
   );
 }
 
-/** Section — LIGHT. Brand story. */
+/** Section — LIGHT. Who Isaias is, and the one mention of the Google listing as a trust signal. */
 export function About() {
-  const watermark = useParallax<HTMLDivElement>(0.1);
+  const watermark = useParallax<HTMLDivElement>(0.08);
 
   return (
-    <section id="about" className="relative overflow-hidden bg-cream py-28 text-ink sm:py-36">
+    <section id="about" className="relative overflow-hidden bg-floor py-28 text-ink sm:py-36">
       <div
         ref={watermark.ref}
-        className="pointer-events-none absolute -right-14 top-6 hidden opacity-[0.05] will-change-transform lg:block"
+        className="pointer-events-none absolute -right-16 top-10 hidden opacity-[0.05] will-change-transform lg:block"
         style={{ transform: `translate3d(0, ${watermark.offset}px, 0)` }}
         aria-hidden="true"
       >
-        <ClipperSilhouette className="h-[38rem] w-auto text-ink" />
+        <ToolWatermark className="h-[32rem] w-auto text-ink" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
@@ -82,29 +88,25 @@ export function About() {
           <Reveal>
             <SectionHeading
               eyebrow="Sobre"
-              title="Barba, tesoura e história de bairro."
-              description={`A ${site.brandFull} fica no ${site.address.neighborhood}, em ${site.city}. Nada de fórmula de franquia: aqui o corte é feito com tempo, técnica e o ritual completo de uma barbearia de verdade.`}
+              title="Quem resolve é o Isaias — e resolve bem."
+              description={`${site.ownerFirstName} atende em todo o ${site.city}, com o cuidado de quem faz o serviço direito e o preço justo de quem trabalha sem intermediário — do orçamento ao acabamento, é sempre ele quem aparece na sua porta.`}
             />
-            <div className="mt-10 space-y-6 border-l-2 border-rust/60 pl-7">
+            <div className="mt-10 space-y-6 border-l-2 border-safetyDeep/50 pl-7">
               <p className="max-w-prose leading-relaxed text-inkSoft">
-                Corte, barba na navalha, bigode, sobrancelha e pigmentação — tudo debaixo do mesmo
-                teto, com quem entende do ofício.
-              </p>
-              <p className="max-w-prose leading-relaxed text-inkSoft">
-                O resultado: nota máxima e {site.rating.count} avaliações no Google de clientes da
-                região.
+                Hidráulica, elétrica, pintura, montagem de móveis e pequenos reparos — resolvidos
+                com qualidade e ótimo custo-benefício, sem enrolação.
               </p>
             </div>
           </Reveal>
 
           <Reveal delay={120}>
             <Photo
-              src="/interior.png"
-              guide="Foto do interior da barbearia: cadeiras, espelhos, ferramentas à mostra, iluminação quente."
-              aiPrompt="Interior photo of a modern rustic barbershop, dark green walls, leather barber chairs, exposed wood shelving with grooming tools, warm Edison bulb lighting, editorial architectural photography, 4:5 vertical"
-              alt="Interior da Barbearia Lumberjack, com o letreiro da loja e cadeiras de barbeiro em fila"
+              src="/sobre.png"
+              guide="Foto close, sem rosto: mãos e antebraços consertando um ponto elétrico ou hidráulico, ferramenta em uso."
+              aiPrompt="Close-up documentary photo of a pair of weathered male hands and forearms (mid-40s skin tone and build, matching the attached reference photo for continuity — crop excludes the face entirely, so no facial reconstruction needed), gripping a wrench while tightening a fitting on a household electrical panel, sleeves rolled up over a charcoal-grey work shirt, one safety-yellow tool visible for a pop of color, warm side lighting, shallow depth of field, gritty realistic texture, editorial photography, 4:5 vertical"
+              alt="Close-up de mãos consertando um ponto elétrico com ferramentas"
               aspect="tall"
-              focus="top"
+              focus="center"
               tone="light"
             />
           </Reveal>
@@ -114,59 +116,15 @@ export function About() {
   );
 }
 
-/** Atmospheric DARK parallax band — a strong scale+drift photo strip, a breathing moment before the menu. */
-export function BeardBand() {
-  const band = useParallax<HTMLDivElement>(0.24);
-
-  return (
-    <div className="relative h-[38vh] overflow-hidden bg-bark sm:h-[52vh]">
-      <div
-        ref={band.ref}
-        className="absolute inset-0 scale-125 will-change-transform"
-        style={{ transform: `translate3d(0, ${band.offset}px, 0) scale(1.25)` }}
-      >
-        <Photo
-          src="/barba.png"
-          guide="Foto larga e atmosférica: barba cheia e bem cuidada em close-up, iluminação lateral dramática."
-          aiPrompt="Wide atmospheric close-up photo of a thick, well-groomed beard, dramatic side lighting, warm amber highlights against deep shadow, shallow depth of field, editorial barbershop photography, 21:9"
-          alt="Close-up de barba bem cuidada"
-          aspect="landscape"
-          variant="backdrop"
-          sizes="100vw"
-          className="!aspect-auto h-full w-full"
-        />
-      </div>
-      <div className="absolute inset-0 bg-bark/55" aria-hidden="true" />
-    </div>
-  );
-}
-
-/** Static angled ribbon banner listing the core service categories — a sash, not a moving ticker. */
-export function ServiceRibbon() {
-  const items = ['Corte', 'Barba', 'Bigode', 'Sobrancelha', 'Navalha', 'Pigmentação'];
-
-  return (
-    <div className="overflow-hidden bg-bark py-2" aria-hidden="true">
-      <div className="-rotate-1 border-y-4 border-paper/20 bg-rust py-3">
-        <p className="label-caps flex flex-wrap justify-center gap-x-10 gap-y-2 px-5 text-center text-[13px] text-bark sm:text-sm">
-          {items.map((item) => (
-            <span key={item}>{item}</span>
-          ))}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/** Section — DARK. Full service menu, styled as ticket-stub cards. */
+/** Section — DARK. Full service menu, styled as riveted metal tags instead of ticket stubs. */
 export function Services() {
   return (
-    <section id="services" className="bg-bark py-28 text-paper sm:py-36">
+    <section id="services" className="bg-charcoal py-28 text-chalk sm:py-36">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal>
           <SectionHeading
             eyebrow="Serviços"
-            title="Serviços para cada detalhe do seu visual."
+            title="Um faz-tudo pra cada canto da casa."
             description="Consulte disponibilidade e valores pelo WhatsApp."
             tone="dark"
             center
@@ -178,20 +136,26 @@ export function Services() {
             const Icon = SERVICE_ICONS[service.icon];
             return (
               <Reveal key={service.title} delay={i * 60} className="h-full">
-                <article className="relative flex h-full flex-col gap-4 border-y border-dashed border-barkLine bg-pine px-6 py-7">
-                  {/* Ticket punch-holes, matching the section background. */}
-                  <span
-                    className="absolute -left-2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-bark"
-                    aria-hidden="true"
-                  />
-                  <span
-                    className="absolute -right-2 top-1/2 h-4 w-4 -translate-y-1/2 rounded-full bg-bark"
-                    aria-hidden="true"
-                  />
-                  <Icon className="h-6 w-6 text-rust" strokeWidth={1.5} aria-hidden="true" />
+                <article className="relative flex h-full flex-col gap-4 border border-steelLine bg-steel px-6 py-7">
+                  {/* Rivet dots at each corner, like a bolted metal tag. */}
+                  {[
+                    'left-2 top-2',
+                    'right-2 top-2',
+                    'left-2 bottom-2',
+                    'right-2 bottom-2',
+                  ].map((pos) => (
+                    <span
+                      key={pos}
+                      className={`absolute h-1.5 w-1.5 rounded-full bg-charcoal ${pos}`}
+                      aria-hidden="true"
+                    />
+                  ))}
+                  <Icon className="h-6 w-6 text-safety" strokeWidth={1.5} aria-hidden="true" />
                   <div>
-                    <h3 className="font-display text-lg font-bold text-paper">{service.title}</h3>
-                    <p className="mt-2 text-[14px] leading-relaxed text-fern">
+                    <h3 className="font-display text-lg uppercase tracking-wide text-chalk">
+                      {service.title}
+                    </h3>
+                    <p className="mt-2 text-[14px] leading-relaxed text-mist">
                       {service.description}
                     </p>
                   </div>
@@ -205,84 +169,89 @@ export function Services() {
   );
 }
 
-/**
- * Section — DARK. Instead of embedding placeholder gallery photos or
- * testimonial quotes we can't fully verify, this just points people to
- * where that content actually lives and is kept up to date: Instagram and
- * the real Google Business listing.
- */
-export function SocialProof() {
+/** Atmospheric DARK parallax band — a wide, close-up strip of tools, a breathing moment before "como funciona". */
+export function ToolBand() {
+  const band = useParallax<HTMLDivElement>(0.24);
+
   return (
-    <section id="reviews" className="border-t border-barkLine bg-bark py-28 text-paper sm:py-36">
+    <div className="relative h-[38vh] overflow-hidden bg-charcoal sm:h-[52vh]">
+      <div
+        ref={band.ref}
+        className="absolute inset-0 scale-125 will-change-transform"
+        style={{ transform: `translate3d(0, ${band.offset}px, 0) scale(1.25)` }}
+      >
+        <Photo
+          src="/ferramentas.png"
+          guide="Foto larga e atmosférica: ferramentas (chave inglesa, trena, alicate) organizadas sobre madeira ou concreto."
+          aiPrompt="Wide atmospheric flat-lay photo of well-worn hand tools — an adjustable wrench, a tape measure, pliers, a screwdriver — arranged on raw concrete, dramatic raking side light, deep charcoal shadows with one safety-yellow tape measure as the only saturated color, shallow depth of field, editorial product photography, 21:9"
+          alt="Ferramentas de trabalho organizadas sobre uma bancada"
+          aspect="landscape"
+          variant="backdrop"
+          sizes="100vw"
+          className="!aspect-auto h-full w-full"
+        />
+      </div>
+      <div className="absolute inset-0 bg-charcoal/55" aria-hidden="true" />
+    </div>
+  );
+}
+
+/** Section — LIGHT. "Como funciona", four numbered steps. */
+export function Process() {
+  return (
+    <section id="process" className="bg-floor py-28 text-ink sm:py-36">
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         <Reveal>
           <SectionHeading
-            eyebrow="Redes e avaliações"
-            title="Veja mais no Instagram e no Google."
-            description="Fotos de cortes, bastidores e as avaliações reais de quem já passou por aqui."
-            tone="dark"
+            eyebrow="Como funciona"
+            title="Do problema à solução, sem mistério."
+            tone="light"
             center
           />
         </Reveal>
 
-        <div className="mx-auto mt-16 grid max-w-3xl gap-4 sm:grid-cols-2">
-          <Reveal>
-            <a
-              href={site.socialLinks.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex h-full flex-col justify-between border border-barkLine bg-pine p-9 transition-colors hover:border-rust/60"
-            >
-              <InstagramGlyph className="h-7 w-7 text-rust" />
-              <div className="mt-10">
-                <h3 className="font-display text-xl font-bold text-paper">Instagram</h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-fern">
-                  Cortes, bastidores e novidades da barbearia.
-                </p>
-                <span className="label-caps mt-6 inline-flex items-center gap-2 text-[11px] text-rust">
-                  Ver perfil
-                  <ArrowUpRight
-                    className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                    strokeWidth={2}
-                    aria-hidden="true"
-                  />
-                </span>
-              </div>
-            </a>
-          </Reveal>
-
-          <Reveal delay={80}>
-            <a
-              href={mapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex h-full flex-col justify-between border border-barkLine bg-pine p-9 transition-colors hover:border-rust/60"
-            >
-              <div className="flex gap-0.5 text-rust" aria-hidden="true">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-5 w-5 fill-current" strokeWidth={0} />
-                ))}
-              </div>
-              <div className="mt-10">
-                <h3 className="font-display text-xl font-bold text-paper">
-                  {site.rating.value.toFixed(1).replace('.', ',')} no Google
-                </h3>
-                <p className="mt-2 text-[14px] leading-relaxed text-fern">
-                  {site.rating.count} avaliações de clientes de {site.city}.
-                </p>
-                <span className="label-caps mt-6 inline-flex items-center gap-2 text-[11px] text-rust">
-                  Ver avaliações
-                  <ArrowUpRight
-                    className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-                    strokeWidth={2}
-                    aria-hidden="true"
-                  />
-                </span>
-              </div>
-            </a>
-          </Reveal>
+        <div className="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+          {processSteps.map((item, i) => (
+            <Reveal key={item.step} delay={i * 80}>
+              <span className="font-display text-5xl text-floorLine">{item.step}</span>
+              <h3 className="mt-3 font-display text-lg uppercase tracking-wide text-ink">
+                {item.title}
+              </h3>
+              <p className="mt-2 max-w-prose text-[14px] leading-relaxed text-inkSoft">
+                {item.description}
+              </p>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
+  );
+}
+
+/** Continuous ticker of service categories, running like a strip of hazard tape between sections. */
+export function ServicesTicker() {
+  const items: string[] = [...services.map((s) => s.title), 'Orçamento grátis pelo WhatsApp'];
+  return <ServiceMarquee items={items} />;
+}
+
+/** Compact badge linking the Google Business listing — the only public profile that exists. */
+export function GoogleBadge({ tone = 'light' }: { tone?: 'light' | 'dark' }) {
+  const light = tone === 'light';
+  return (
+    <a
+      href={mapsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`group inline-flex items-center gap-2 text-[12px] transition-colors ${
+        light ? 'text-safetyDeep hover:text-ink' : 'text-safety hover:text-chalk'
+      }`}
+    >
+      Perfil verificado no Google Maps
+      <ExternalLink
+        className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+        strokeWidth={2}
+        aria-hidden="true"
+      />
+    </a>
   );
 }

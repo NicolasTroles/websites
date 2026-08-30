@@ -63,8 +63,8 @@ function CopyPromptButton({ prompt, light }: { prompt: string; light: boolean })
       }}
       className={`label-caps mt-3 inline-flex min-h-9 items-center gap-1.5 px-3 text-[11px] ${
         light
-          ? 'border border-creamLine text-rustDeep hover:bg-creamDeep'
-          : 'border border-barkLine text-rust hover:bg-pine'
+          ? 'border border-floorLine text-safetyDeep hover:bg-floorDeep'
+          : 'border border-steelLine text-safety hover:bg-steel'
       }`}
     >
       {copied ? (
@@ -100,18 +100,18 @@ export function Photo({
   const [failed, setFailed] = useState(false);
 
   const light = tone === 'light';
-  const background = light ? 'bg-creamDeep' : 'bg-pine';
+  const background = light ? 'bg-floorDeep' : 'bg-steel';
   const frame = `relative overflow-hidden ${background} ${ASPECTS[aspect]} ${className ?? ''}`;
 
   if (!src || failed) {
     if (variant === 'backdrop') {
       return (
-        <div className={`${frame} ${light ? 'woodgrain-light' : 'woodgrain'}`}>
+        <div className={`${frame} ${light ? 'concrete-light' : 'concrete'}`}>
           <div
             className={`absolute bottom-5 right-5 max-w-[min(20rem,80%)] rounded-md border px-4 py-3 text-left backdrop-blur-sm ${
               light
-                ? 'border-creamLine bg-cream/85 text-rustDeep'
-                : 'border-barkLine bg-bark/75 text-fern'
+                ? 'border-floorLine bg-floor/85 text-safetyDeep'
+                : 'border-steelLine bg-charcoal/75 text-mist'
             }`}
           >
             <p className="label-caps flex items-center gap-2 text-[10px]">
@@ -121,7 +121,7 @@ export function Photo({
             <p className="mt-1.5 text-[11px] leading-relaxed">{guide}</p>
             <details className="mt-2">
               <summary
-                className={`label-caps cursor-pointer text-[10px] ${light ? 'text-rustDeep' : 'text-rust'}`}
+                className={`label-caps cursor-pointer text-[10px] ${light ? 'text-safetyDeep' : 'text-safety'}`}
               >
                 Prompt para gerar essa imagem
               </summary>
@@ -137,23 +137,23 @@ export function Photo({
 
     return (
       <div
-        className={`${frame} ${light ? 'woodgrain-light border-creamLine' : 'woodgrain border-barkLine'} flex flex-col items-center justify-center border border-dashed`}
+        className={`${frame} ${light ? 'concrete-light border-floorLine' : 'concrete border-steelLine'} flex flex-col items-center justify-center border border-dashed`}
       >
         <div className="max-w-[88%] px-5 py-6 text-center">
           <Camera
-            className={`mx-auto h-7 w-7 ${light ? 'text-rustDeep' : 'text-fern'}`}
+            className={`mx-auto h-7 w-7 ${light ? 'text-safetyDeep' : 'text-mist'}`}
             strokeWidth={1.5}
             aria-hidden="true"
           />
-          <p className={`label-caps mt-4 text-[10px] ${light ? 'text-rustDeep' : 'text-fern'}`}>
+          <p className={`label-caps mt-4 text-[10px] ${light ? 'text-safetyDeep' : 'text-mist'}`}>
             {failed ? 'Arquivo não encontrado' : 'Foto aqui'}
           </p>
-          <p className={`mt-2 text-sm leading-relaxed ${light ? 'text-rustDeep' : 'text-paper'}`}>
+          <p className={`mt-2 text-sm leading-relaxed ${light ? 'text-safetyDeep' : 'text-chalk'}`}>
             {guide}
           </p>
           {failed && src && (
             <code
-              className={`mt-3 block break-all text-[11px] ${light ? 'text-rustDeep' : 'text-rust'}`}
+              className={`mt-3 block break-all text-[11px] ${light ? 'text-safetyDeep' : 'text-safety'}`}
             >
               public{src}
             </code>
@@ -161,12 +161,12 @@ export function Photo({
 
           <details className="mt-4 text-left">
             <summary
-              className={`label-caps cursor-pointer text-[11px] ${light ? 'text-rustDeep' : 'text-rust'}`}
+              className={`label-caps cursor-pointer text-[11px] ${light ? 'text-safetyDeep' : 'text-safety'}`}
             >
               Prompt para gerar essa imagem
             </summary>
             <p
-              className={`mt-2 max-h-40 overflow-y-auto text-[11px] leading-relaxed ${light ? 'text-rustDeep/80' : 'text-fern'}`}
+              className={`mt-2 max-h-40 overflow-y-auto text-[11px] leading-relaxed ${light ? 'text-safetyDeep/80' : 'text-mist'}`}
             >
               {aiPrompt}
             </p>

@@ -1,109 +1,107 @@
 /**
- * Brand marks drawn for this project: a bearded-face mark (logo icon), a
- * hair-clipper silhouette (decorative watermark/parallax layer), and a
- * comb-tooth edge used as the section divider in place of a straight line
- * or a wave — grooming-forward, not axe/pine lumberjack imagery.
+ * Brand marks drawn for this project: no artwork exists for Isaias's
+ * business (only the Google Business listing), so the wordmark, the tool
+ * emblem and the section divider are all code-drawn — construction-forward
+ * (wrench/screwdriver, hazard stripe), not the comb/clipper of the barbershop
+ * project or the paint-roller of Marciel Tintas.
  */
 
 type IconProps = {
   className?: string;
 };
 
-/** Bearded face — logo icon, used in the header and footer. */
-export function BeardMark({ className }: IconProps) {
+/** Crossed wrench + screwdriver — the icon mark, used standalone and inside Wordmark. */
+export function ToolMark({ className }: IconProps) {
   return (
     <svg viewBox="0 0 64 64" fill="none" className={className} aria-hidden="true" focusable="false">
-      <circle cx="32" cy="20" r="11" fill="currentColor" />
+      {/* screwdriver, back to front */}
       <path
-        d="M14 27c0 3 2 6 4 8-5 4-8 10-8 17 0 13 10 20 22 20s22-7 22-20c0-7-3-13-8-17 2-2 4-5 4-8-4 4-9 5-13 5H27c-4 0-9-1-13-5Z"
+        d="M10 10 26 26 23 29 7 13Z M23 29 29 23 33 27 27 33Z M33 27 50 44 47.5 51 40 53.5 22.5 36"
+        fill="currentColor"
+      />
+      {/* wrench, front to back */}
+      <path
+        d="M46 8c-6 0-11 5-11 11 0 1.6.3 3.1.9 4.5L13 46.4l4.6 4.6L40.5 28c1.4.6 2.9.9 4.5.9 6 0 11-5 11-11 0-1.7-.4-3.3-1.1-4.7l-6.2 6.2-5-5 6.2-6.2C48.7 8.4 47.4 8 46 8Z"
         fill="currentColor"
       />
     </svg>
   );
 }
 
-/** Hair clipper silhouette — decorative background element for parallax layers. */
-export function ClipperSilhouette({ className }: IconProps) {
+/** Full lockup: icon mark + two-line wordmark, used in the header and footer. */
+export function Wordmark({ className, dark = false }: IconProps & { dark?: boolean }) {
   return (
-    <svg
-      viewBox="0 0 64 120"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-      focusable="false"
-    >
-      {/* teeth */}
-      <path d="M14 14V4h4v6h4V4h4v6h4V4h4v6h4V4h4v6h4V4h4v10Z" fill="currentColor" />
-      {/* blade guard */}
-      <rect x="12" y="14" width="40" height="15" rx="2" fill="currentColor" />
-      {/* body */}
-      <rect x="16" y="29" width="32" height="82" rx="11" fill="currentColor" />
-      {/* switch detail */}
-      <rect x="26" y="50" width="12" height="20" rx="3" fill="currentColor" opacity="0.3" />
-    </svg>
-  );
-}
-
-/**
- * Comb-tooth block divider between light/dark sections — even, regular teeth
- * instead of a straight line or an organic wave. `flip` mirrors it for use
- * at the top of a block instead of the bottom.
- */
-export function CombEdge({ className, flip = false }: IconProps & { flip?: boolean }) {
-  const width = 1200;
-  const height = 44;
-  const barHeight = 14;
-  const toothHeight = 24;
-  const toothWidth = 16;
-  const count = 30;
-  const gap = width / count;
-
-  return (
-    <svg
-      viewBox={`0 0 ${width} ${height}`}
-      preserveAspectRatio="none"
-      className={`${flip ? 'rotate-180' : ''} ${className ?? ''}`}
-      aria-hidden="true"
-      focusable="false"
-    >
-      <rect x="0" y={height - barHeight} width={width} height={barHeight} fill="currentColor" />
-      {Array.from({ length: count }).map((_, i) => (
-        <rect
-          key={i}
-          x={i * gap + (gap - toothWidth) / 2}
-          y={height - barHeight - toothHeight}
-          width={toothWidth}
-          height={toothHeight + barHeight}
-          fill="currentColor"
-        />
-      ))}
-    </svg>
-  );
-}
-
-/** Short divider: rule + centered bearded mark. */
-export function SectionDivider({
-  className,
-  tone = 'dark',
-}: IconProps & { tone?: 'light' | 'dark' }) {
-  const light = tone === 'light';
-  return (
-    <div className={`flex items-center justify-center gap-5 ${className ?? ''}`} aria-hidden="true">
+    <div className={`flex items-center gap-3 ${className ?? ''}`}>
       <span
-        className={`h-px w-16 bg-gradient-to-r from-transparent sm:w-24 ${light ? 'to-creamLine' : 'to-barkLine'}`}
-      />
-      <BeardMark className={`h-5 w-5 ${light ? 'text-rustDeep' : 'text-rust'}`} />
-      <span
-        className={`h-px w-16 bg-gradient-to-l from-transparent sm:w-24 ${light ? 'to-creamLine' : 'to-barkLine'}`}
-      />
+        className={`grid h-11 w-11 shrink-0 place-items-center rounded-sm ${dark ? 'bg-charcoal' : 'bg-safety'}`}
+      >
+        <ToolMark className={`h-6 w-6 ${dark ? 'text-safety' : 'text-charcoal'}`} />
+      </span>
+      <span className="flex flex-col leading-none">
+        <span
+          className={`label-caps text-[9px] ${dark ? 'text-mist' : 'text-inkSoft'}`}
+          style={{ letterSpacing: '0.18em' }}
+        >
+          Marido de aluguel
+        </span>
+        <span
+          className={`font-display text-2xl tracking-wide ${dark ? 'text-chalk' : 'text-ink'}`}
+        >
+          OLIVEIRA
+        </span>
+      </span>
     </div>
   );
 }
 
+/** Giant faint watermark version of the tool mark, for parallax backgrounds. */
+export function ToolWatermark({ className }: IconProps) {
+  return <ToolMark className={className} />;
+}
+
 /**
- * Minimal outline glyphs for social links, drawn directly rather than
- * pulling in an icon-set dependency for two brand marks.
+ * Diagonal hazard-stripe band — the section divider, in place of a straight
+ * line or a wave. Reads as warning tape from a job site, not a comb or a
+ * wave crest.
  */
+export function HazardStripe({ className, flip = false }: IconProps & { flip?: boolean }) {
+  return (
+    <div
+      className={`h-3 w-full sm:h-4 ${flip ? 'rotate-180' : ''} ${className ?? ''}`}
+      style={{
+        backgroundImage:
+          'repeating-linear-gradient(-45deg, #181B1D 0, #181B1D 14px, #F4B400 14px, #F4B400 28px)',
+      }}
+      aria-hidden="true"
+    />
+  );
+}
+
+/**
+ * Continuous horizontal marquee — services + a call-to-action, looping
+ * forever like a strip of tape running across the page. The content array
+ * is duplicated so the loop is seamless; the animation freezes under
+ * prefers-reduced-motion (handled globally in globals.css).
+ */
+export function ServiceMarquee({ items }: { items: readonly string[] }) {
+  const doubled = [...items, ...items];
+  return (
+    <div className="overflow-hidden bg-charcoal py-3" aria-hidden="true">
+      <div className="flex w-max animate-marquee gap-10">
+        {doubled.map((item, i) => (
+          <span
+            key={i}
+            className="label-caps flex items-center gap-10 whitespace-nowrap text-[13px] text-safety"
+          >
+            {item}
+            <span className="text-mist">✦</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function InstagramGlyph({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" focusable="false">
@@ -121,58 +119,6 @@ export function FacebookGlyph({ className }: IconProps) {
         d="M14.5 21v-7.5h2.5l.4-3H14.5V8.4c0-.87.24-1.46 1.5-1.46h1.6V4.3c-.28-.04-1.22-.12-2.32-.12-2.3 0-3.88 1.4-3.88 3.98V10.5H9v3h2.4V21h3.1Z"
         fill="currentColor"
       />
-    </svg>
-  );
-}
-
-/**
- * Service icons lucide-react doesn't carry (razor, mustache, eyebrow), drawn
- * in the same 24x24 stroke style as the lucide icons they sit next to, so
- * the service list reads as one consistent set.
- */
-export function RazorGlyph({ className }: IconProps) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-      focusable="false"
-      strokeWidth={1.5}
-    >
-      <path d="M5 4v9.5" stroke="currentColor" strokeLinecap="round" />
-      <path d="M5 13.5 17 20l2-3.5-11-6.3" stroke="currentColor" strokeLinejoin="round" />
-      <path
-        d="M5 4c-1.4 0-2.4 1-2.4 2.2S3.6 8.4 5 8.4"
-        stroke="currentColor"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-export function MustacheGlyph({ className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" focusable="false">
-      <path
-        d="M2 13c1.5-3.5 4-5 6-5 2.5 0 3 2 4 2s1.5-2 4-2c2 0 4.5 1.5 6 5-2 1.5-4 0-5-1-1 1.5-2.5 2-5 2s-4-.5-5-2c-1 1-3 2.5-5 1Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-export function EyebrowGlyph({ className }: IconProps) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      className={className}
-      aria-hidden="true"
-      focusable="false"
-      strokeWidth={1.6}
-    >
-      <path d="M3 15c2.5-7 8-9.5 11-9.5S21 8 21 11.5" stroke="currentColor" strokeLinecap="round" />
     </svg>
   );
 }

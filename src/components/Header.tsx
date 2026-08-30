@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
 import { whatsappUrl } from '@/config/site.config';
+import { Wordmark } from './Brand';
 
 const LINKS = [
   { href: '#about', label: 'Sobre' },
   { href: '#services', label: 'Serviços' },
-  { href: '#reviews', label: 'Avaliações' },
+  { href: '#process', label: 'Como funciona' },
   { href: '#contact', label: 'Contato' },
 ];
 
@@ -34,7 +34,7 @@ export function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-smooth ${
-        scrolled ? 'bg-bark/92 border-b border-barkLine backdrop-blur-md' : 'bg-transparent'
+        scrolled ? 'bg-charcoal/92 border-b border-steelLine backdrop-blur-md' : 'bg-transparent'
       }`}
     >
       <nav
@@ -42,14 +42,7 @@ export function Header() {
         aria-label="Navegação principal"
       >
         <a href="#top" aria-label="Início" className="shrink-0">
-          <Image
-            src="/logo.png"
-            alt="Barbearia Lumberjack"
-            width={192}
-            height={128}
-            priority
-            className="h-[106px] w-auto object-contain"
-          />
+          <Wordmark dark />
         </a>
 
         <ul className="hidden items-center gap-9 lg:flex">
@@ -57,7 +50,7 @@ export function Header() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="label-caps text-[11px] text-fern transition-colors duration-200 hover:text-rust"
+                className="label-caps text-[11px] text-mist transition-colors duration-200 hover:text-safety"
               >
                 {link.label}
               </a>
@@ -69,15 +62,15 @@ export function Header() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="label-caps hidden min-h-11 items-center bg-rust px-6 text-[11px] text-bark transition-colors duration-200 hover:bg-paper lg:inline-flex"
+          className="label-caps hidden min-h-11 items-center bg-safety px-6 text-[11px] text-charcoal transition-colors duration-200 hover:bg-chalk lg:inline-flex"
         >
-          Agendar horário
+          Pedir orçamento
         </a>
 
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="grid h-11 w-11 place-items-center text-paper lg:hidden"
+          className="grid h-11 w-11 place-items-center text-chalk lg:hidden"
           aria-label={open ? 'Fechar menu' : 'Abrir menu'}
           aria-expanded={open}
         >
@@ -90,14 +83,14 @@ export function Header() {
       </nav>
 
       {open && (
-        <div className="border-t border-barkLine bg-bark lg:hidden">
+        <div className="border-t border-steelLine bg-charcoal lg:hidden">
           <ul className="mx-auto max-w-7xl px-5 py-4 sm:px-8">
             {LINKS.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="label-caps flex min-h-12 items-center text-xs text-fern"
+                  className="label-caps flex min-h-12 items-center text-xs text-mist"
                 >
                   {link.label}
                 </a>

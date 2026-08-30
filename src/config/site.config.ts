@@ -1,106 +1,133 @@
 /**
  * Single source of truth for the site. Change data here, never inside components.
  *
- * Data confirmed from two independent official sources: the Google Business
- * listing ("Barbearia Lumberjack", Curitiba) and the Instagram profile
- * (@lumberjackbarbershopp) / linktr.ee/lumberjackbarbearia_. Fields marked
- * TODO were not published in either source and must be confirmed with the
- * client before launch — never invent a name, price, or testimonial.
+ * Brand name, address, phone and category confirmed on the Google Business
+ * listing ("Marido de Aluguel Oliveira", Campo Largo — categorized there as
+ * "Escritório da empresa", i.e. a base of operations, not a walk-in shop).
+ * The profile shows 5,0 with only 2 reviews — real, but intentionally not
+ * surfaced as a star widget anywhere on the site (client's call: too thin a
+ * sample to lead with). The listing itself is still linked as a
+ * verification signal ("ele existe e está registrado no Google").
  */
 
 export const site = {
-  brandName: 'Lumberjack',
-  brandFull: 'Barbearia Lumberjack',
-  tagline: 'Seu estilo, nossa especialidade',
-  city: 'Curitiba',
+  brandName: 'Oliveira',
+  brandFull: 'Marido de Aluguel Oliveira',
+  tagline: 'Hidráulica, elétrica, pintura e reparos, resolvidos na sua casa.',
+  ownerFirstName: 'Isaias',
+  city: 'Campo Largo',
   state: 'PR',
 
-  // Confirmed on Google Business and Instagram (same number in both).
-  phone: '+55 41 99987-9216',
-  phoneLink: '+554199879216',
-  whatsapp: '5541999879216',
-  whatsappMessage: 'Olá! Vim pelo site e gostaria de agendar um horário na barbearia.',
-
   // Confirmed on Google Business.
+  phone: '+55 41 99723-3236',
+  phoneLink: '+554199723236',
+  whatsapp: '5541997233236',
+  whatsappMessage: 'Olá! Vim pelo site e preciso de um orçamento para um serviço em casa.',
+
+  // Confirmed on Google Business. Category there is "Escritório da empresa" —
+  // this is the base Isaias works from, not a storefront clients visit; the
+  // service happens at the client's home, so copy leans on "atende na sua
+  // casa" rather than "venha até nós".
   address: {
-    street: 'Rua Clara Polsin, 716',
-    neighborhood: 'Novo Mundo',
-    city: 'Curitiba',
+    street: 'Rua Apóstolo Pedro, 79',
+    neighborhood: 'Vila Campesi',
+    city: 'Campo Largo',
     state: 'PR',
-    zip: '81020-310',
-    mapsQuery: 'Barbearia Lumberjack, Rua Clara Polsin, 716, Novo Mundo, Curitiba - PR',
+    zip: '83604-684',
+    mapsQuery:
+      'Marido de Aluguel Oliveira, Rua Apóstolo Pedro, 79, Vila Campesi, Campo Largo - PR',
   },
 
-  // Confirmed on Google Business (matches the Instagram bio: "terça a sábado").
-  openingHours: [
-    { days: 'Terça a sexta', hours: '10h às 19h' },
-    { days: 'Sábado', hours: '09h às 20h' },
-    { days: 'Domingo e segunda', hours: 'Fechado' },
-  ],
+  // Only one data point is confirmed on Google Business: "Fecha·Abre seg. às
+  // 08:00". Full weekly hours were not published — TODO: confirm the rest
+  // (closing time, Saturday) with Isaias before launch instead of guessing.
+  openingHours: [{ days: 'Segunda a sexta', hours: 'A partir das 08h' }],
 
-  // Confirmed on Google Business.
-  rating: { value: 5.0, count: 48 },
-
-  // Empty links are not rendered.
+  // No Instagram/Facebook or own website — the Google Business listing is
+  // the only public profile that exists. TODO: confirm with Isaias if any
+  // social profile is created later.
   socialLinks: {
-    instagram: 'https://www.instagram.com/lumberjackbarbershopp/',
+    instagram: '',
     facebook: '',
   },
 
   seo: {
-    title: 'Barbearia Lumberjack | Corte, Barba e Navalha em Curitiba',
+    title: 'Marido de Aluguel Oliveira | Hidráulica, Elétrica e Reparos em Campo Largo',
     description:
-      'Barbearia Lumberjack em Curitiba (Novo Mundo). Corte masculino, degradê, barba na navalha, bigode, sobrancelha e pigmentação. 5,0 estrelas no Google. Agende pelo WhatsApp.',
-    url: 'https://barbearialumberjack.vercel.app', // confirmed live deploy domain
+      'Marido de aluguel em Campo Largo/PR. Hidráulica, elétrica, pintura, montagem de móveis e pequenos reparos residenciais, com atendimento na sua casa. Orçamento pelo WhatsApp.',
+    url: 'https://maridodealuguel-oliveira.vercel.app', // TODO: confirm final domain after deploy
   },
 } as const;
 
 /**
- * Full service menu. Categories and treatments researched against common
- * barbershop offerings in this segment (SP/PR market) — confirm with the
- * client that every item here is actually offered before publishing, since
- * only the shop name/address/phone/hours came from an official source.
+ * Service categories researched against what "marido de aluguel" / handyman
+ * businesses in this segment (BR market) commonly advertise — confirm with
+ * Isaias exactly which of these he performs before publishing, since only
+ * the name/address/phone came from an official source.
  */
 export const services = [
   {
-    icon: 'scissors' as const,
-    title: 'Corte masculino',
-    description: 'Tesoura, máquina ou degradê (fade), do clássico ao mais moderno.',
-  },
-  {
-    icon: 'razor' as const,
-    title: 'Barba na navalha',
-    description: 'Toalha quente, navalha e desenho fino para um acabamento de respeito.',
-  },
-  {
-    icon: 'mustache' as const,
-    title: 'Bigode',
-    description: 'Aparo e modelagem para manter a régua certa entre um bigode e outro.',
-  },
-  {
-    icon: 'eyebrow' as const,
-    title: 'Sobrancelha',
-    description: 'Design na navalha ou pinça, sem tirar a naturalidade do olhar.',
-  },
-  {
     icon: 'droplet' as const,
-    title: 'Pigmentação',
-    description: 'Disfarça falhas e fios brancos na barba ou no cabelo com efeito natural.',
+    title: 'Hidráulica',
+    description: 'Vazamentos, troca de registros e torneiras, sifões entupidos, caixa d’água.',
   },
   {
-    icon: 'sparkles' as const,
-    title: 'Platinado e coloração',
-    description: 'Descoloração e cor para quem quer um visual fora da régua.',
+    icon: 'zap' as const,
+    title: 'Elétrica',
+    description: 'Tomadas, disjuntores, chuveiro elétrico, ventilador de teto, troca de luminárias.',
   },
   {
-    icon: 'child' as const,
-    title: 'Corte infantil',
-    description: 'Atendimento com paciência extra para os clientes mais novos da casa.',
+    icon: 'paintbrush' as const,
+    title: 'Pintura',
+    description: 'Retoques, pintura de paredes, portões e muros — interno e externo.',
   },
   {
-    icon: 'wind' as const,
-    title: 'Acabamento e cera',
-    description: 'Pezinho, limpeza de nuca e cera para nariz e orelha — o acabamento completo.',
+    icon: 'armchair' as const,
+    title: 'Montagem de móveis',
+    description: 'Armários, guarda-roupas, estantes e móveis planejados, prontos pra usar.',
+  },
+  {
+    icon: 'hammer' as const,
+    title: 'Marcenaria e portas',
+    description: 'Dobradiças, fechaduras emperradas, portas que não fecham direito, rodapés.',
+  },
+  {
+    icon: 'lamp' as const,
+    title: 'Instalações',
+    description: 'Prateleiras, quadros, cortinas, suporte de TV — fixado com segurança.',
+  },
+  {
+    icon: 'wrench' as const,
+    title: 'Manutenção geral',
+    description: 'Aquela lista de pequenos reparos acumulados que ninguém teve tempo de resolver.',
+  },
+  {
+    icon: 'clipboard' as const,
+    title: 'Reparos residenciais',
+    description: 'Problema fora da lista? Chama no WhatsApp e descreve — provavelmente dá pra resolver.',
+  },
+] as const;
+
+export const processSteps = [
+  {
+    step: '01',
+    title: 'Chama no WhatsApp',
+    description: 'Descreve o problema e manda uma foto, se tiver. Resposta rápida, sem enrolação.',
+  },
+  {
+    step: '02',
+    title: 'Combina o orçamento',
+    description: 'Isaias avalia o serviço e passa o valor e o prazo antes de qualquer coisa.',
+  },
+  {
+    step: '03',
+    title: 'Atendimento na sua casa',
+    description: 'Ele vai até você, em Campo Largo e região, com as ferramentas certas para o serviço.',
+  },
+  {
+    step: '04',
+    title: 'Serviço resolvido',
+    description: 'Sem retrabalho, sem deixar bagunça — só o problema resolvido de verdade.',
   },
 ] as const;
 

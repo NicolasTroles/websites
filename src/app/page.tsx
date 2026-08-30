@@ -3,7 +3,7 @@ import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
-import { About, BeardBand, ServiceRibbon, Services, SocialProof } from '@/components/Sections';
+import { About, Process, Services, ServicesTicker, ToolBand } from '@/components/Sections';
 
 export default function Home() {
   return (
@@ -12,10 +12,10 @@ export default function Home() {
       <main>
         <Hero />
         <About />
-        <BeardBand />
-        <ServiceRibbon />
+        <ServicesTicker />
         <Services />
-        <SocialProof />
+        <ToolBand />
+        <Process />
         <Contact />
       </main>
       <Footer />

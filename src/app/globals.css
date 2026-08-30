@@ -9,14 +9,14 @@
 
   html {
     scroll-behavior: smooth;
-    /* Compensates the fixed header when jumping to an anchor — sized for the enlarged logo. */
-    scroll-padding-top: 8rem;
+    /* Compensates the fixed header when jumping to an anchor. */
+    scroll-padding-top: 6.5rem;
   }
 
   body {
     /* The site opens and closes dark; light sections paint their own background. */
-    @apply bg-bark text-paper antialiased;
-    /* Avoids the horizontal scroll parallax can cause on narrow screens. */
+    @apply bg-charcoal text-chalk antialiased;
+    /* Avoids the horizontal scroll parallax/marquee can cause on narrow screens. */
     overflow-x: hidden;
   }
 
@@ -26,7 +26,7 @@
   }
 
   ::selection {
-    @apply bg-rust text-bark;
+    @apply bg-safety text-charcoal;
   }
 }
 
@@ -35,33 +35,29 @@
     @apply font-sans uppercase tracking-wide2;
   }
 
-  /* Faint wood-grain texture in pure CSS — a plank, not a fabric weave. */
-  .woodgrain {
-    background-image: repeating-linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.02) 0px,
-      rgba(255, 255, 255, 0.02) 2px,
-      transparent 2px,
-      transparent 34px,
-      rgba(255, 255, 255, 0.015) 34px,
-      rgba(255, 255, 255, 0.015) 36px,
-      transparent 36px,
-      transparent 74px
-    );
+  /* Faint concrete/asphalt speckle in pure CSS — a job-site floor, not fabric or wood. */
+  .concrete {
+    background-image:
+      radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size:
+      18px 18px,
+      11px 11px;
+    background-position:
+      0 0,
+      6px 9px;
   }
 
-  .woodgrain-light {
-    background-image: repeating-linear-gradient(
-      90deg,
-      rgba(18, 22, 15, 0.035) 0px,
-      rgba(18, 22, 15, 0.035) 2px,
-      transparent 2px,
-      transparent 34px,
-      rgba(18, 22, 15, 0.025) 34px,
-      rgba(18, 22, 15, 0.025) 36px,
-      transparent 36px,
-      transparent 74px
-    );
+  .concrete-light {
+    background-image:
+      radial-gradient(rgba(27, 29, 26, 0.05) 1px, transparent 1px),
+      radial-gradient(rgba(27, 29, 26, 0.03) 1px, transparent 1px);
+    background-size:
+      18px 18px,
+      11px 11px;
+    background-position:
+      0 0,
+      6px 9px;
   }
 }
 

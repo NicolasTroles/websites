@@ -1,19 +1,19 @@
 import type { Metadata, Viewport } from 'next';
-import { Bitter, Work_Sans } from 'next/font/google';
+import { Anton, DM_Sans } from 'next/font/google';
 import { site } from '@/config/site.config';
 import './globals.css';
 
 // display: 'swap' avoids invisible text while the font loads.
-const sans = Work_Sans({
+const sans = DM_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  weight: ['400', '500', '700'],
   variable: '--font-sans',
   display: 'swap',
 });
 
-const display = Bitter({
+const display = Anton({
   subsets: ['latin'],
-  weight: ['500', '700', '800'],
+  weight: '400',
   variable: '--font-display',
   display: 'swap',
 });
@@ -23,11 +23,11 @@ export const metadata: Metadata = {
   title: site.seo.title,
   description: site.seo.description,
   keywords: [
-    'barbearia curitiba',
-    'barbearia novo mundo curitiba',
-    'corte masculino curitiba',
-    'barba navalha curitiba',
-    'barbearia lumberjack',
+    'marido de aluguel campo largo',
+    'hidráulica campo largo',
+    'eletricista campo largo',
+    'pintor campo largo',
+    'reparos residenciais campo largo pr',
   ],
   alternates: { canonical: site.seo.url },
   openGraph: {
@@ -47,20 +47,22 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#12160F',
+  themeColor: '#181B1D',
   width: 'device-width',
   initialScale: 1,
   // No maximumScale: blocking zoom breaks accessibility.
 };
 
 /**
- * Schema.org business markup. HairSalon is the closest schema.org type to a
- * barbershop (no dedicated "Barbershop" type exists) — this is what lets
- * Google surface the address, phone, and hours directly in search results.
+ * Schema.org business markup. HomeAndConstructionBusiness is the schema.org
+ * type for a general home-repair business that spans multiple trades
+ * (plumbing, electrical, painting) — more accurate than picking a single
+ * trade subtype (Plumber, Electrician, HousePainter) Isaias doesn't
+ * exclusively practice.
  */
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'HairSalon',
+  '@type': 'HomeAndConstructionBusiness',
   name: site.brandFull,
   description: site.seo.description,
   telephone: site.phone,
@@ -73,25 +75,7 @@ const jsonLd = {
     postalCode: site.address.zip,
     addressCountry: 'BR',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: site.rating.value,
-    reviewCount: site.rating.count,
-  },
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '10:00',
-      closes: '19:00',
-    },
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: 'Saturday',
-      opens: '09:00',
-      closes: '20:00',
-    },
-  ],
+  areaServed: `${site.city} e região`,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -104,7 +88,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <a
           href="#content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-paper focus:px-5 focus:py-3 focus:text-sm focus:text-bark"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-floor focus:px-5 focus:py-3 focus:text-sm focus:text-ink"
         >
           Pular para o conteúdo
         </a>

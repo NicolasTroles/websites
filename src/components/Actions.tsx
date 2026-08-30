@@ -9,17 +9,23 @@ import { site, whatsappUrl } from '@/config/site.config';
 const BASE =
   'inline-flex min-h-12 items-center justify-center gap-2.5 px-7 text-[13px] label-caps transition-all duration-200 ease-smooth cursor-pointer';
 
-/** Primary CTA. Rust on dark (4.9:1) — the color of a well-worn axe handle. */
-export function WhatsAppButton({ className }: { className?: string }) {
+/** Primary CTA. Safety yellow on dark charcoal (8.6:1) — the color of a job-site warning sign. */
+export function WhatsAppButton({
+  className,
+  label = 'Pedir orçamento no WhatsApp',
+}: {
+  className?: string;
+  label?: string;
+}) {
   return (
     <a
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className={`${BASE} bg-rust text-bark hover:bg-paper active:scale-[0.98] ${className ?? ''}`}
+      className={`${BASE} bg-safety text-charcoal hover:bg-chalk active:scale-[0.98] ${className ?? ''}`}
     >
       <MessageCircle className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
-      Agendar no WhatsApp
+      {label}
     </a>
   );
 }
@@ -34,8 +40,8 @@ export function PhoneButton({
 }) {
   const colors =
     tone === 'light'
-      ? 'border-creamLine text-rustDeep hover:border-rustDeep hover:bg-creamDeep'
-      : 'border-barkLine text-paper hover:border-rust hover:bg-pine';
+      ? 'border-floorLine text-safetyDeep hover:border-safetyDeep hover:bg-floorDeep'
+      : 'border-steelLine text-chalk hover:border-safety hover:bg-steel';
   return (
     <a
       href={`tel:${site.phoneLink}`}
@@ -53,7 +59,7 @@ export function PhoneButton({
  */
 export function MobileContactBar() {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-barkLine bg-bark/95 backdrop-blur-sm md:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-steelLine bg-charcoal/95 backdrop-blur-sm md:hidden">
       <div
         className="flex gap-2 p-3"
         style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
@@ -62,7 +68,7 @@ export function MobileContactBar() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="label-caps flex min-h-12 flex-1 items-center justify-center gap-2 bg-rust text-[12px] text-bark active:scale-[0.98]"
+          className="label-caps flex min-h-12 flex-1 items-center justify-center gap-2 bg-safety text-[12px] text-charcoal active:scale-[0.98]"
         >
           <MessageCircle className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
           WhatsApp
@@ -70,7 +76,7 @@ export function MobileContactBar() {
         <a
           href={`tel:${site.phoneLink}`}
           aria-label={`Ligar para ${site.phone}`}
-          className="grid min-h-12 w-14 place-items-center border border-barkLine text-paper active:scale-[0.98]"
+          className="grid min-h-12 w-14 place-items-center border border-steelLine text-chalk active:scale-[0.98]"
         >
           <Phone className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
         </a>
