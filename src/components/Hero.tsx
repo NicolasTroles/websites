@@ -27,7 +27,7 @@ export function Hero() {
         style={{ transform: `translate3d(0, ${background.offset}px, 0) scale(1.1)` }}
       >
         <Photo
-          src="/hero.jpg"
+          src="/cozinha.png"
           guide="Foto de fundo, cheia a tela: Isaias visto de costas, trabalhando em um reparo na casa de um cliente."
           aiPrompt="Cinematic wide photo, shot from behind: a Brazilian handyman in his 40s, back and shoulders to camera, head turned fully away so no facial features are visible, wearing a charcoal-grey work shirt and tool belt, kneeling to fix an exposed pipe under a kitchen sink in a modest Brazilian home. Use the attached reference photo only for build, posture and skin tone — keep him strictly back-facing / face not visible, do not reconstruct or guess his facial features. Warm practical light from a single window, one small flash of safety-yellow (tape measure or tool handle) as the only saturated color against a charcoal-and-concrete palette, shallow depth of field, gritty photojournalistic texture, 35mm lens look, vertical 4:5"
           alt="Marido de aluguel trabalhando em um reparo hidráulico dentro de uma residência"
@@ -72,9 +72,9 @@ export function Hero() {
           >
             Aquele reparo,
             <br />
-            resolvido de
+            resolvido com 
             <br />
-            <span className="text-safety">vez.</span>
+            <span className="text-safety">eficiência.</span>
           </h1>
 
           <div
