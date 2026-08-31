@@ -17,11 +17,16 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // Solid background only once past the hero, so the header doesn't compete with it.
-    const onScroll = () => setScrolled(window.scrollY > 80);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    // Transparent for as long as any part of the hero banner (#top) is still
+    // visible; solid only once it's fully scrolled past — not a fixed pixel
+    // threshold, so it tracks the hero's real height.
+    const hero = document.getElementById('top');
+    if (!hero) return;
+    const observer = new IntersectionObserver(([entry]) => setScrolled(!entry.isIntersecting), {
+      threshold: 0,
+    });
+    observer.observe(hero);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -34,7 +39,7 @@ export function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-smooth ${
-        scrolled ? 'bg-charcoal/50 border-b border-steelLine' : 'bg-black/50 backdrop-blur-md'
+        scrolled ? 'bg-charcoal/50 border-b border-steelLine' : 'bg-transparent'
       }`}
     >
       <nav
