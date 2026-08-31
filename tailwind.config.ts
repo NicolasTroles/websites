@@ -38,10 +38,11 @@ const config: Config = {
         steelBlueDeep: '#254A5C',
       },
       fontFamily: {
-        // Display condensado tipo placa de obra/estêncil — o oposto da slab
-        // serif de barbearia, da serifada de alfaiataria e da mono técnica
-        // de geo. Corpo em uma sans humanista neutra, ainda não usada nos
-        // outros projetos (Inter, Work Sans, Manrope e Space Grotesk já
+        // Display condensado tipo placa de obra/estêncil (Oswald é baseada na
+        // Alternate Gothic, clássica de placa de sinalização) — o oposto da
+        // slab serif de barbearia, da serifada de alfaiataria e da mono
+        // técnica de geo. Corpo em uma sans humanista neutra, ainda não usada
+        // nos outros projetos (Inter, Work Sans, Manrope e Space Grotesk já
         // foram usadas).
         display: ['var(--font-display)', 'Impact', 'sans-serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],

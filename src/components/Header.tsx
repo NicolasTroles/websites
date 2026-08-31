@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { Menu, X } from 'lucide-react';
-import { whatsappUrl } from '@/config/site.config';
-import { Wordmark } from './Brand';
+import { site, whatsappUrl } from '@/config/site.config';
 
 const LINKS = [
   { href: '#about', label: 'Sobre' },
@@ -34,15 +34,22 @@ export function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-smooth ${
-        scrolled ? 'bg-charcoal/92 border-b border-steelLine backdrop-blur-md' : 'bg-transparent'
+        scrolled ? 'bg-charcoal/50 border-b border-steelLine' : 'bg-black/50 backdrop-blur-md'
       }`}
     >
       <nav
         className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-6 px-5 py-2 sm:px-8"
         aria-label="Navegação principal"
       >
-        <a href="#top" aria-label="Início" className="shrink-0">
-          <Wordmark dark />
+        <a href="#top" aria-label="Início" className="inline-flex shrink-0 items-center">
+          <Image
+            src="/logo.png"
+            alt={site.brandFull}
+            width={2103}
+            height={748}
+            priority
+            className="h-[50px] w-auto object-contain sm:h-[59px]"
+          />
         </a>
 
         <ul className="hidden items-center gap-9 lg:flex">
@@ -50,7 +57,7 @@ export function Header() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="label-caps text-[11px] text-mist transition-colors duration-200 hover:text-safety"
+                className="label-caps text-[11px] text-chalk transition-colors duration-200 hover:text-safety"
               >
                 {link.label}
               </a>
@@ -90,7 +97,7 @@ export function Header() {
                 <a
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="label-caps flex min-h-12 items-center text-xs text-mist"
+                  className="label-caps flex min-h-12 items-center text-xs text-chalk"
                 >
                   {link.label}
                 </a>

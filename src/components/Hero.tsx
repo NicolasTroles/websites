@@ -67,7 +67,7 @@ export function Hero() {
           </p>
 
           <h1
-            className="mt-6 animate-fade-up font-display text-[clamp(2.6rem,7.5vw,4.8rem)] uppercase leading-[0.98] tracking-wide text-chalk"
+            className="mt-6 animate-fade-up font-display text-[clamp(2.6rem,7.5vw,4.8rem)] font-bold uppercase leading-[0.98] tracking-wide text-chalk"
             style={{ animationDelay: '120ms' }}
           >
             Aquele reparo,
@@ -87,7 +87,7 @@ export function Hero() {
             className="mt-7 max-w-prose animate-fade-up text-[17px] leading-relaxed text-mist"
             style={{ animationDelay: '260ms' }}
           >
-            {site.tagline} Atendimento na sua casa, em {site.city} e região.
+            {site.tagline}
           </p>
 
           <div

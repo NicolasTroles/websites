@@ -14,7 +14,7 @@ export function Contact() {
         <div className="px-5 py-24 sm:px-8 sm:py-32 lg:pr-16">
           <Reveal>
             <p className="label-caps text-[10px] text-safetyDeep">Contato</p>
-            <h2 className="mt-4 font-display text-[clamp(2rem,5vw,3.2rem)] uppercase leading-[1.05] tracking-wide text-ink">
+            <h2 className="mt-4 font-display text-[clamp(2rem,5vw,3.2rem)] font-bold uppercase leading-[1.05] tracking-wide text-ink">
               Chama e
               <br />
               resolve.
@@ -64,7 +64,7 @@ export function Contact() {
                   <h3 className="label-caps text-[10px] text-inkSoft">Telefone / WhatsApp</h3>
                   <a
                     href={`tel:${site.phoneLink}`}
-                    className="mt-3 inline-flex min-h-11 items-center font-display text-2xl uppercase tracking-wide text-ink transition-colors hover:text-safetyDeep"
+                    className="mt-3 inline-flex min-h-11 items-center font-display text-2xl font-bold uppercase tracking-wide text-ink transition-colors hover:text-safetyDeep"
                   >
                     {site.phone}
                   </a>

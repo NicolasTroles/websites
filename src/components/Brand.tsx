@@ -1,16 +1,17 @@
 /**
- * Brand marks drawn for this project: no artwork exists for Isaias's
- * business (only the Google Business listing), so the wordmark, the tool
- * emblem and the section divider are all code-drawn — construction-forward
- * (wrench/screwdriver, hazard stripe), not the comb/clipper of the barbershop
- * project or the paint-roller of Marciel Tintas.
+ * Brand marks for this project. The real logo (public/logo.png) now covers
+ * the header/footer lockup; what's left here are the construction-forward
+ * decorative marks that logo doesn't cover — the tool-mark watermark and the
+ * hazard-stripe section divider (wrench/screwdriver, warning tape), not the
+ * comb/clipper of the barbershop project or the paint-roller of Marciel
+ * Tintas.
  */
 
 type IconProps = {
   className?: string;
 };
 
-/** Crossed wrench + screwdriver — the icon mark, used standalone and inside Wordmark. */
+/** Crossed wrench + screwdriver — used as the giant parallax watermark. */
 export function ToolMark({ className }: IconProps) {
   return (
     <svg viewBox="0 0 64 64" fill="none" className={className} aria-hidden="true" focusable="false">
@@ -25,32 +26,6 @@ export function ToolMark({ className }: IconProps) {
         fill="currentColor"
       />
     </svg>
-  );
-}
-
-/** Full lockup: icon mark + two-line wordmark, used in the header and footer. */
-export function Wordmark({ className, dark = false }: IconProps & { dark?: boolean }) {
-  return (
-    <div className={`flex items-center gap-3 ${className ?? ''}`}>
-      <span
-        className={`grid h-11 w-11 shrink-0 place-items-center rounded-sm ${dark ? 'bg-charcoal' : 'bg-safety'}`}
-      >
-        <ToolMark className={`h-6 w-6 ${dark ? 'text-safety' : 'text-charcoal'}`} />
-      </span>
-      <span className="flex flex-col leading-none">
-        <span
-          className={`label-caps text-[9px] ${dark ? 'text-mist' : 'text-inkSoft'}`}
-          style={{ letterSpacing: '0.18em' }}
-        >
-          Marido de aluguel
-        </span>
-        <span
-          className={`font-display text-2xl tracking-wide ${dark ? 'text-chalk' : 'text-ink'}`}
-        >
-          OLIVEIRA
-        </span>
-      </span>
-    </div>
   );
 }
 

@@ -13,7 +13,8 @@
 export const site = {
   brandName: 'Oliveira',
   brandFull: 'Marido de Aluguel Oliveira',
-  tagline: 'Hidráulica, elétrica, pintura e reparos, resolvidos na sua casa.',
+  tagline:
+    'Hidráulica, elétrica, pintura e outros reparos residenciais, feitos com qualidade, confiança e eficiência — o marido de aluguel de Campo Largo e região.',
   ownerFirstName: 'Isaias',
   city: 'Campo Largo',
   state: 'PR',
@@ -55,7 +56,7 @@ export const site = {
     title: 'Marido de Aluguel Oliveira | Hidráulica, Elétrica e Reparos em Campo Largo',
     description:
       'Marido de aluguel em Campo Largo/PR. Hidráulica, elétrica, pintura, montagem de móveis e pequenos reparos residenciais, com atendimento na sua casa. Orçamento pelo WhatsApp.',
-    url: 'https://maridodealuguel-oliveira.vercel.app', // TODO: confirm final domain after deploy
+    url: 'https://isaiasmaridodealuguel.vercel.app',
   },
 } as const;
 

@@ -49,7 +49,7 @@ function SectionHeading({
         {eyebrow}
       </p>
       <h2
-        className={`mt-4 font-display text-[clamp(2rem,5vw,3.2rem)] uppercase leading-[1.05] tracking-wide ${
+        className={`mt-4 font-display text-[clamp(2rem,5vw,3.2rem)] font-bold uppercase leading-[1.05] tracking-wide ${
           light ? 'text-ink' : 'text-chalk'
         }`}
       >
@@ -152,7 +152,7 @@ export function Services() {
                   ))}
                   <Icon className="h-6 w-6 text-safety" strokeWidth={1.5} aria-hidden="true" />
                   <div>
-                    <h3 className="font-display text-lg uppercase tracking-wide text-chalk">
+                    <h3 className="font-display text-lg font-bold uppercase tracking-wide text-chalk">
                       {service.title}
                     </h3>
                     <p className="mt-2 text-[14px] leading-relaxed text-mist">
@@ -213,8 +213,8 @@ export function Process() {
         <div className="mt-16 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
           {processSteps.map((item, i) => (
             <Reveal key={item.step} delay={i * 80}>
-              <span className="font-display text-5xl text-floorLine">{item.step}</span>
-              <h3 className="mt-3 font-display text-lg uppercase tracking-wide text-ink">
+              <span className="font-display text-5xl font-bold text-floorLine">{item.step}</span>
+              <h3 className="mt-3 font-display text-lg font-bold uppercase tracking-wide text-ink">
                 {item.title}
               </h3>
               <p className="mt-2 max-w-prose text-[14px] leading-relaxed text-inkSoft">

@@ -1,19 +1,27 @@
 import type { Metadata, Viewport } from 'next';
-import { Anton, DM_Sans } from 'next/font/google';
-import { site } from '@/config/site.config';
+import { DM_Sans, Oswald } from 'next/font/google';
+import { mapsUrl, services, site } from '@/config/site.config';
 import './globals.css';
 
 // display: 'swap' avoids invisible text while the font loads.
 const sans = DM_Sans({
-  subsets: ['latin'],
+  // latin-ext covers the Portuguese accented capitals (Ê, Ã, Ç...) that plain
+  // 'latin' can render inconsistently, especially combined with uppercase
+  // display text.
+  subsets: ['latin', 'latin-ext'],
   weight: ['400', '500', '700'],
   variable: '--font-sans',
   display: 'swap',
 });
 
-const display = Anton({
-  subsets: ['latin'],
-  weight: '400',
+// Anton (the original pick) has a broken/misplaced accent glyph for capital
+// Ê in this weight — the circumflex renders floating and detached instead of
+// sitting on the letter. Oswald keeps the same condensed job-site-signage
+// feel (it's modeled on Alternate Gothic, a classic sign-painter face) with
+// verified full Portuguese diacritic support.
+const display = Oswald({
+  subsets: ['latin', 'latin-ext'],
+  weight: '700',
   variable: '--font-display',
   display: 'swap',
 });
@@ -28,8 +36,15 @@ export const metadata: Metadata = {
     'eletricista campo largo',
     'pintor campo largo',
     'reparos residenciais campo largo pr',
+    'faz tudo campo largo',
+    'orçamento marido de aluguel',
   ],
   alternates: { canonical: site.seo.url },
+  icons: {
+    icon: '/favicon.png',
+    shortcut: '/favicon.png',
+    apple: '/favicon.png',
+  },
   openGraph: {
     title: site.seo.title,
     description: site.seo.description,
@@ -59,14 +74,25 @@ export const viewport: Viewport = {
  * (plumbing, electrical, painting) — more accurate than picking a single
  * trade subtype (Plumber, Electrician, HousePainter) Isaias doesn't
  * exclusively practice.
+ *
+ * `sameAs`/`hasMap` point at the Google Business listing so Google can tie
+ * this page to that profile. `hasOfferCatalog` mirrors the service list so
+ * each trade (hidráulica, elétrica, pintura...) is machine-readable, not
+ * just prose. Opening hours are deliberately left out here — only one data
+ * point is confirmed (see site.config.ts), and a partial
+ * openingHoursSpecification risks Google inferring the unlisted days as
+ * closed, which is worse than omitting it until the full week is confirmed.
  */
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'HomeAndConstructionBusiness',
   name: site.brandFull,
   description: site.seo.description,
+  image: `${site.seo.url}/opengraph-image`,
   telephone: site.phone,
   url: site.seo.url,
+  sameAs: [mapsUrl],
+  hasMap: mapsUrl,
   address: {
     '@type': 'PostalAddress',
     streetAddress: site.address.street,
@@ -76,6 +102,18 @@ const jsonLd = {
     addressCountry: 'BR',
   },
   areaServed: `${site.city} e região`,
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Serviços',
+    itemListElement: services.map((service) => ({
+      '@type': 'Offer',
+      itemOffered: {
+        '@type': 'Service',
+        name: service.title,
+        description: service.description,
+      },
+    })),
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
