@@ -1,18 +1,19 @@
 'use client';
 
-import { MapPin, Navigation, Phone } from 'lucide-react';
+import { ExternalLink, MapPin, Navigation, Phone } from 'lucide-react';
 import { mapsEmbedUrl, mapsUrl, site } from '@/config/site.config';
 import { WhatsAppButton } from './Actions';
+import { CircuitWatermark } from './Brand';
 import { Reveal } from './Reveal';
 
-/** Localização — address confirmed by the client, so a real map embed is safe to show. */
+/** Localização + contato — endereço confirmado pelo cliente, então o mapa real é seguro de mostrar. */
 export function Contact() {
   return (
-    <section id="localizacao" className="bg-floor text-ink">
+    <section id="contato" className="bg-floor text-ink">
       <div className="mx-auto grid max-w-7xl lg:grid-cols-2">
         <div className="px-5 py-24 sm:px-8 sm:py-32 lg:pr-16">
           <Reveal>
-            <p className="label-caps text-[10px] text-safetyDeep">Localização</p>
+            <p className="label-caps text-[10px] text-safetyDeep">Contato</p>
             <h2 className="mt-4 font-display text-[clamp(2rem,4.6vw,3.2rem)] font-bold leading-[1.08] tracking-tight text-ink">
               Estamos em Curitiba.
             </h2>
@@ -65,6 +66,26 @@ export function Contact() {
                   </a>
                 </div>
               </div>
+
+              <a
+                href={mapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-3 border border-floorLine px-5 py-4 transition-colors hover:border-ink"
+              >
+                <span className="font-display text-2xl font-bold text-ink">
+                  {site.googleRating}
+                  <span className="ml-1 text-safetyDeep">★</span>
+                </span>
+                <span className="label-caps text-[10px] text-inkSoft">
+                  Google
+                  <ExternalLink
+                    className="ml-1 inline h-3 w-3 transition-transform group-hover:translate-x-0.5"
+                    strokeWidth={2}
+                    aria-hidden="true"
+                  />
+                </span>
+              </a>
             </div>
           </Reveal>
 
@@ -85,6 +106,25 @@ export function Contact() {
             className="absolute inset-0 h-full w-full"
             style={{ filter: 'grayscale(0.35) contrast(1.02)' }}
           />
+        </div>
+      </div>
+
+      {/* Closing band — pure black, the brand's documented "alto contraste" application. */}
+      <div className="relative overflow-hidden bg-void py-20 text-chalk sm:py-28">
+        <div className="pointer-events-none absolute -bottom-16 -right-16 opacity-[0.06]" aria-hidden="true">
+          <CircuitWatermark className="h-80 w-auto text-chalk" />
+        </div>
+        <div className="relative mx-auto max-w-2xl px-5 text-center sm:px-8">
+          <Reveal>
+            <h2 className="font-display text-[clamp(1.9rem,4.4vw,2.9rem)] font-bold leading-[1.1] tracking-tight text-chalk">
+              Seu equipamento parou? Vamos descobrir o problema.
+            </h2>
+          </Reveal>
+          <Reveal delay={100}>
+            <div className="mt-8 flex justify-center">
+              <WhatsAppButton className="px-10 text-[14px]" />
+            </div>
+          </Reveal>
         </div>
       </div>
     </section>

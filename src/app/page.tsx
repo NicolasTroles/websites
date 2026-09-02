@@ -1,22 +1,18 @@
+import dynamic from 'next/dynamic';
 import { MobileContactBar } from '@/components/Actions';
-import { CircuitDivider } from '@/components/Brand';
-import { CTAFinal } from '@/components/CTAFinal';
 import { Contact } from '@/components/Contact';
-import { FAQ } from '@/components/FAQ';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
-import {
-  Authority,
-  DiagnoseCTA,
-  Differentiators,
-  HowItWorks,
-  Problems,
-  ProblemTicker,
-  Services,
-  TrustBar,
-} from '@/components/Sections';
-import { Testimonials } from '@/components/Testimonials';
+import { Services } from '@/components/Sections';
+
+// WebGL/three.js — client-only, code-split so its ~150KB never blocks the
+// initial page render; it loads in the background while the hero is already
+// interactive.
+const CircuitSection = dynamic(
+  () => import('@/components/CircuitSection').then((mod) => mod.CircuitSection),
+  { ssr: false },
+);
 
 export default function Home() {
   return (
@@ -24,24 +20,9 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <TrustBar />
-        <Problems />
+        <CircuitSection />
         <Services />
-        <ProblemTicker />
-        <DiagnoseCTA />
-        <HowItWorks />
-        <div className="bg-floor py-2">
-          <CircuitDivider tone="light" />
-        </div>
-        <Differentiators />
-        <Testimonials />
-        <Authority />
-        <FAQ />
-        <div className="bg-floor py-2">
-          <CircuitDivider tone="light" />
-        </div>
         <Contact />
-        <CTAFinal />
       </main>
       <Footer />
       {/* Reserved space so the fixed mobile bar never covers the footer. */}

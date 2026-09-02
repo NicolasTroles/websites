@@ -12,7 +12,7 @@ const BASE =
 /** Primary CTA. Amarelo energia — the brand's "ponto de ativação" color — on petrol text (8:1+). */
 export function WhatsAppButton({
   className,
-  label = 'Solicitar orçamento pelo WhatsApp',
+  label = 'Falar no WhatsApp',
 }: {
   className?: string;
   label?: string;

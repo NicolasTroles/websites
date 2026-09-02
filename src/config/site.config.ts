@@ -41,192 +41,61 @@ export const site = {
     title: 'Activa Eletrônica | Assistência Técnica em Curitiba',
     description:
       'Assistência técnica especializada em eletrônicos, computadores e equipamentos em Curitiba. Diagnóstico e reparo. Entre em contato com a Activa Eletrônica.',
-    // TODO: replace with the real production domain after the first deploy
-    // (see skill step 5) and redeploy once it's set.
+    // Confirmed production domain — Vercel project subdomains are always
+    // *.vercel.app (there's no *.vercel.com equivalent), so that's the
+    // suffix used here even though it was requested as ".com".
     url: 'https://activaeletronica.vercel.app',
   },
 } as const;
 
 /**
- * Symptoms a customer recognizes without needing to know what's actually
- * wrong — mirrors how people describe the problem before any diagnosis.
+ * Confirmed categories of equipment the client repairs/services. Cross-
+ * checked against how comparable Brazilian assistências técnicas (TV +
+ * micro-ondas shops) structure their own service lists — same shape, only
+ * categories the client actually confirmed. "Outros equipamentos
+ * eletrônicos" is deliberately open-ended — evaluated case by case, never
+ * promised as "conserta qualquer coisa".
  */
-export const symptoms = [
-  { icon: 'power' as const, title: 'Não liga' },
-  { icon: 'restart' as const, title: 'Desliga sozinho' },
-  { icon: 'imageOff' as const, title: 'Não apresenta imagem' },
-  { icon: 'thermometer' as const, title: 'Não aquece' },
-  { icon: 'alert' as const, title: 'Apresenta falhas' },
-  { icon: 'volume' as const, title: 'Faz barulho' },
-  { icon: 'block' as const, title: 'Não responde' },
-  { icon: 'stop' as const, title: 'Parou completamente' },
-] as const;
-
-/**
- * Confirmed categories of equipment the client repairs/services. "Outros
- * equipamentos eletrônicos" is deliberately open-ended — evaluated case by
- * case, never promised as "conserta qualquer coisa".
- */
+// Only three real photos exist so far (public/servicos1.png, servicos2.png,
+// servico4.png) — client's call to reuse them across all six cards rather
+// than leave placeholders, so each appears twice, arranged so the same
+// photo never lands on two cards next to each other in the grid.
 export const services = [
   {
     icon: 'tv' as const,
     title: 'Televisores e eletrônicos',
     description: 'Diagnóstico e reparo de equipamentos eletrônicos.',
+    image: '/servicos1.png',
   },
   {
     icon: 'circuit' as const,
     title: 'Placas e componentes',
     description: 'Investigação de falhas em placas e componentes eletrônicos.',
+    image: '/servicos2.png',
   },
   {
     icon: 'microwave' as const,
     title: 'Micro-ondas',
     description: 'Diagnóstico e manutenção de equipamentos.',
+    image: '/servico4.png',
   },
   {
     icon: 'computer' as const,
     title: 'Computadores',
     description: 'Manutenção e reparo de computadores e periféricos.',
+    image: '/servico4.png',
   },
   {
     icon: 'plug' as const,
     title: 'Fontes e componentes',
     description: 'Diagnóstico e reparo relacionado a alimentação e componentes eletrônicos.',
+    image: '/servicos1.png',
   },
   {
     icon: 'search' as const,
     title: 'Outros equipamentos eletrônicos',
     description: 'Equipamento fora da lista? Avaliamos caso a caso antes de qualquer resposta.',
-  },
-] as const;
-
-export const processSteps = [
-  {
-    step: '01',
-    title: 'Entre em contato',
-    description: 'Conte para nós qual equipamento apresentou problema.',
-  },
-  {
-    step: '02',
-    title: 'Faça o diagnóstico',
-    description: 'A equipe avalia o equipamento e identifica a possível origem da falha.',
-  },
-  {
-    step: '03',
-    title: 'Receba o orçamento',
-    description: 'Você recebe as informações necessárias antes da execução do reparo.',
-  },
-  {
-    step: '04',
-    title: 'Aprovou? Nós repararemos.',
-    description: 'Após a aprovação, o equipamento segue para o serviço.',
-  },
-] as const;
-
-export const differentiators = [
-  {
-    icon: 'search' as const,
-    title: 'Conhecimento técnico',
-    description: 'Reparos baseados em diagnóstico, não em tentativa e erro.',
-  },
-  {
-    icon: 'pin' as const,
-    title: 'Atendimento próximo',
-    description: 'Uma empresa local para atender Curitiba.',
-  },
-  {
-    icon: 'check' as const,
-    title: 'Diagnóstico antes da decisão',
-    description: 'Entenda o problema antes de decidir pelo reparo ou substituição.',
-  },
-  {
-    icon: 'circuit' as const,
-    title: 'Peças e componentes',
-    description: 'Experiência com componentes e sistemas eletrônicos.',
-  },
-  {
-    icon: 'eye' as const,
-    title: 'Transparência',
-    description: 'O cliente precisa entender o que está acontecendo com seu equipamento.',
-  },
-  {
-    icon: 'target' as const,
-    title: 'Foco em solução',
-    description: 'O objetivo é encontrar a melhor solução para cada caso.',
-  },
-] as const;
-
-/**
- * Placeholders only — no testimonial text is invented. Replace with real
- * Google reviews before launch; keep the same shape (name/rating/text/date).
- */
-export const testimonials = [
-  {
-    name: 'EXEMPLO — substituir por avaliação real do Google',
-    rating: 5,
-    text: 'EXEMPLO — substituir por um trecho real de avaliação do Google antes de publicar.',
-    date: '—',
-  },
-  {
-    name: 'EXEMPLO — substituir por avaliação real do Google',
-    rating: 5,
-    text: 'EXEMPLO — substituir por um trecho real de avaliação do Google antes de publicar.',
-    date: '—',
-  },
-  {
-    name: 'EXEMPLO — substituir por avaliação real do Google',
-    rating: 5,
-    text: 'EXEMPLO — substituir por um trecho real de avaliação do Google antes de publicar.',
-    date: '—',
-  },
-] as const;
-
-export const faq = [
-  {
-    question: 'Vocês fazem orçamento?',
-    answer:
-      'Sim. Depois da avaliação do equipamento, você recebe o orçamento antes de qualquer reparo ser executado.',
-  },
-  {
-    question: 'Preciso saber qual é o defeito antes de levar?',
-    answer:
-      'Não. Basta descrever os sintomas que você percebeu — não liga, desliga sozinho, faz barulho — e o diagnóstico técnico identifica a possível origem do problema.',
-  },
-  {
-    question: 'Vocês consertam qualquer equipamento eletrônico?',
-    answer:
-      'Cada caso passa por uma avaliação técnica antes de qualquer resposta. Isso depende da avaliação do equipamento.',
-  },
-  {
-    question: 'Quanto custa um reparo?',
-    answer:
-      'Isso depende da avaliação do equipamento e da origem do problema. O valor é sempre informado antes da execução do serviço.',
-  },
-  {
-    question: 'Quanto tempo demora?',
-    answer:
-      'O prazo depende do diagnóstico e da disponibilidade de peças em cada caso — é informado junto com o orçamento.',
-  },
-  {
-    question: 'Vocês trabalham com quais marcas?',
-    answer: 'Isso depende do equipamento e é avaliado caso a caso — entre em contato para confirmar.',
-  },
-  {
-    question: 'Onde fica a Activa?',
-    answer: `${site.address.street}, ${site.address.city}/${site.address.state}.`,
-  },
-  {
-    question: 'Posso entrar em contato pelo WhatsApp?',
-    answer: 'Sim — é a forma mais rápida de falar com a equipe e enviar fotos ou vídeos do problema.',
-  },
-  {
-    question: 'Vale a pena consertar ou comprar outro?',
-    answer:
-      'Na maioria dos casos, essa resposta só existe depois do diagnóstico: ele mostra a origem do problema e ajuda a decidir entre reparar ou substituir o equipamento.',
-  },
-  {
-    question: 'Vocês fazem manutenção em computadores?',
-    answer: 'Sim, manutenção e reparo de computadores e periféricos fazem parte da atuação da Activa.',
+    image: '/servicos2.png',
   },
 ] as const;
 

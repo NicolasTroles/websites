@@ -6,29 +6,21 @@ import { Menu, X } from 'lucide-react';
 import { site, whatsappUrl } from '@/config/site.config';
 
 const LINKS = [
-  { href: '#problemas', label: 'Problemas' },
   { href: '#services', label: 'Serviços' },
-  { href: '#process', label: 'Como funciona' },
-  { href: '#faq', label: 'FAQ' },
-  { href: '#localizacao', label: 'Localização' },
+  { href: '#contato', label: 'Contato' },
 ];
 
+/**
+ * Frosted glass, always on: a translucent wash of the page's own light
+ * background (not a flat opaque bar), blurred so whatever sits behind it —
+ * the dark hero photo, or a lighter section further down — softens into a
+ * tint rather than showing through sharp. Never fully transparent: the logo
+ * is petrol-on-light and the hero is a dark full-bleed photo
+ * (public/reparo.png), so the glass needs enough of its own fill to keep
+ * text/logo legible over any background.
+ */
 export function Header() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    // Solid only once the hero (#top) has scrolled fully out of view — the
-    // logo needs a light background to read, and the hero already is one, so
-    // the header can stay transparent for as long as it's over it.
-    const hero = document.getElementById('top');
-    if (!hero) return;
-    const observer = new IntersectionObserver(([entry]) => setScrolled(!entry.isIntersecting), {
-      threshold: 0,
-    });
-    observer.observe(hero);
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
@@ -38,11 +30,7 @@ export function Header() {
   }, [open]);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-smooth ${
-        scrolled ? 'border-b border-floorLine bg-floor/90 backdrop-blur-sm' : 'bg-transparent'
-      }`}
-    >
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-floorLine/60 bg-floor/60 backdrop-blur-md">
       <nav
         className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-6 px-5 py-2 sm:px-8"
         aria-label="Navegação principal"

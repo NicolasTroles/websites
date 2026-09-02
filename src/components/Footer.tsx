@@ -1,12 +1,10 @@
 import Image from 'next/image';
-import { site, whatsappUrl } from '@/config/site.config';
+import { mapsUrl, site, whatsappUrl } from '@/config/site.config';
 
 const LINKS = [
   { href: '#services', label: 'Serviços' },
-  { href: '#autoridade', label: 'Sobre' },
-  { href: '#avaliacoes', label: 'Avaliações' },
-  { href: '#faq', label: 'FAQ' },
-  { href: '#localizacao', label: 'Localização' },
+  { href: '#contato', label: 'Contato' },
+  { href: mapsUrl, label: 'Google', external: true },
   { href: whatsappUrl, label: 'WhatsApp', external: true },
 ];
 
