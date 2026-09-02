@@ -37,6 +37,7 @@ export function CircuitSection() {
       <div className="sticky top-0 h-screen overflow-hidden bg-charcoal">
         <CircuitScene progressRef={progressRef} />
         <div className="relative z-10 mx-auto flex h-full max-w-2xl items-center justify-center px-5 text-center sm:px-8">
+         
           {/* Plain rectangle, partial opacity — no mask, no border. */}
           <div className="bg-charcoal/85 px-7 py-10 backdrop-blur-md sm:px-14 sm:py-14">
             <p className="label-caps text-[11px] text-safety">Diagnóstico em tempo real</p>
