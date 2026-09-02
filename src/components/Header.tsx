@@ -6,10 +6,11 @@ import { Menu, X } from 'lucide-react';
 import { site, whatsappUrl } from '@/config/site.config';
 
 const LINKS = [
-  { href: '#about', label: 'Sobre' },
+  { href: '#problemas', label: 'Problemas' },
   { href: '#services', label: 'Serviços' },
   { href: '#process', label: 'Como funciona' },
-  { href: '#contact', label: 'Contato' },
+  { href: '#faq', label: 'FAQ' },
+  { href: '#localizacao', label: 'Localização' },
 ];
 
 export function Header() {
@@ -17,9 +18,9 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // Transparent for as long as any part of the hero banner (#top) is still
-    // visible; solid only once it's fully scrolled past — not a fixed pixel
-    // threshold, so it tracks the hero's real height.
+    // Solid only once the hero (#top) has scrolled fully out of view — the
+    // logo needs a light background to read, and the hero already is one, so
+    // the header can stay transparent for as long as it's over it.
     const hero = document.getElementById('top');
     if (!hero) return;
     const observer = new IntersectionObserver(([entry]) => setScrolled(!entry.isIntersecting), {
@@ -39,7 +40,7 @@ export function Header() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-smooth ${
-        scrolled ? 'bg-charcoal/50 border-b border-steelLine' : 'bg-transparent'
+        scrolled ? 'border-b border-floorLine bg-floor/90 backdrop-blur-sm' : 'bg-transparent'
       }`}
     >
       <nav
@@ -50,10 +51,10 @@ export function Header() {
           <Image
             src="/logo.png"
             alt={site.brandFull}
-            width={2103}
-            height={748}
+            width={2172}
+            height={724}
             priority
-            className="h-[50px] w-auto object-contain sm:h-[59px]"
+            className="h-10 w-auto object-contain sm:h-12"
           />
         </a>
 
@@ -62,7 +63,7 @@ export function Header() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="label-caps text-[11px] text-chalk transition-colors duration-200 hover:text-safety"
+                className="label-caps text-[11px] text-ink transition-colors duration-200 hover:text-safetyDeep"
               >
                 {link.label}
               </a>
@@ -74,15 +75,15 @@ export function Header() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="label-caps hidden min-h-11 items-center bg-safety px-6 text-[11px] text-charcoal transition-colors duration-200 hover:bg-chalk lg:inline-flex"
+          className="label-caps hidden min-h-11 items-center bg-safety px-6 text-[11px] text-charcoal transition-colors duration-200 hover:bg-charcoal hover:text-safety lg:inline-flex"
         >
-          Pedir orçamento
+          Solicitar orçamento
         </a>
 
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="grid h-11 w-11 place-items-center text-chalk lg:hidden"
+          className="grid h-11 w-11 place-items-center text-ink lg:hidden"
           aria-label={open ? 'Fechar menu' : 'Abrir menu'}
           aria-expanded={open}
         >
@@ -95,14 +96,14 @@ export function Header() {
       </nav>
 
       {open && (
-        <div className="border-t border-steelLine bg-charcoal lg:hidden">
+        <div className="border-t border-floorLine bg-floor lg:hidden">
           <ul className="mx-auto max-w-7xl px-5 py-4 sm:px-8">
             {LINKS.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="label-caps flex min-h-12 items-center text-xs text-chalk"
+                  className="label-caps flex min-h-12 items-center text-xs text-ink"
                 >
                   {link.label}
                 </a>

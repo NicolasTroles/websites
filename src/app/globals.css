@@ -4,18 +4,18 @@
 
 @layer base {
   :root {
-    color-scheme: dark;
+    color-scheme: light;
   }
 
   html {
     scroll-behavior: smooth;
     /* Compensates the fixed header when jumping to an anchor. */
-    scroll-padding-top: 6.5rem;
+    scroll-padding-top: 5.5rem;
   }
 
   body {
-    /* The site opens and closes dark; light sections paint their own background. */
-    @apply bg-charcoal text-chalk antialiased;
+    /* The site is white-dominant; dark sections paint their own background. */
+    @apply bg-floor text-ink antialiased;
     /* Avoids the horizontal scroll parallax/marquee can cause on narrow screens. */
     overflow-x: hidden;
   }
@@ -35,29 +35,31 @@
     @apply font-sans uppercase tracking-wide2;
   }
 
-  /* Faint concrete/asphalt speckle in pure CSS — a job-site floor, not fabric or wood. */
-  .concrete {
+  /*
+   * Faint circuit-board grid in pure CSS: a dot lattice with occasional
+   * crossing lines, standing in for a PCB via pattern — never rendered above
+   * ~6% opacity, so it reads as texture, not decoration.
+   */
+  .circuit-grid {
     background-image:
-      radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      radial-gradient(rgba(255, 255, 255, 0.09) 1.5px, transparent 1.5px);
     background-size:
-      18px 18px,
-      11px 11px;
-    background-position:
-      0 0,
-      6px 9px;
+      64px 64px,
+      64px 64px,
+      64px 64px;
   }
 
-  .concrete-light {
+  .circuit-grid-light {
     background-image:
-      radial-gradient(rgba(27, 29, 26, 0.05) 1px, transparent 1px),
-      radial-gradient(rgba(27, 29, 26, 0.03) 1px, transparent 1px);
+      linear-gradient(rgba(11, 43, 58, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(11, 43, 58, 0.05) 1px, transparent 1px),
+      radial-gradient(rgba(11, 43, 58, 0.1) 1.5px, transparent 1.5px);
     background-size:
-      18px 18px,
-      11px 11px;
-    background-position:
-      0 0,
-      6px 9px;
+      64px 64px,
+      64px 64px,
+      64px 64px;
   }
 }
 

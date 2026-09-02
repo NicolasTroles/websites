@@ -1,4 +1,4 @@
-import { mapsUrl, services, site, whatsappUrl } from '@/config/site.config';
+import { faq, mapsUrl, services, site, whatsappUrl } from '@/config/site.config';
 
 /**
  * llms.txt — an emerging (not yet officially adopted by any major AI
@@ -12,15 +12,17 @@ export async function GET() {
 > ${site.tagline}
 
 ## Sobre
-- Responsável: ${site.ownerFirstName}
 - Cidade: ${site.city}, ${site.state}
-- Endereço: ${site.address.street}, ${site.address.neighborhood}, ${site.address.city} - ${site.address.state}, ${site.address.zip}
-- Telefone / WhatsApp: ${site.phone}
+- Endereço: ${site.address.street}, ${site.address.city} - ${site.address.state}
+- Telefone: ${site.phone}
 - Site: ${site.seo.url}
 - Perfil no Google Maps: ${mapsUrl}
 
 ## Serviços
 ${services.map((s) => `- ${s.title}: ${s.description}`).join('\n')}
+
+## Perguntas frequentes
+${faq.map((item) => `- ${item.question} ${item.answer}`).join('\n')}
 
 ## Contato
 - WhatsApp: ${whatsappUrl}

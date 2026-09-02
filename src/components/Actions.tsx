@@ -9,10 +9,10 @@ import { site, whatsappUrl } from '@/config/site.config';
 const BASE =
   'inline-flex min-h-12 items-center justify-center gap-2.5 px-7 text-[13px] label-caps transition-all duration-200 ease-smooth cursor-pointer';
 
-/** Primary CTA. Safety yellow on dark charcoal (8.6:1) — the color of a job-site warning sign. */
+/** Primary CTA. Amarelo energia — the brand's "ponto de ativação" color — on petrol text (8:1+). */
 export function WhatsAppButton({
   className,
-  label = 'Pedir orçamento no WhatsApp',
+  label = 'Solicitar orçamento pelo WhatsApp',
 }: {
   className?: string;
   label?: string;
@@ -33,14 +33,14 @@ export function WhatsAppButton({
 /** Secondary button. `tone` adapts the border/text to the section's background. */
 export function PhoneButton({
   className,
-  tone = 'dark',
+  tone = 'light',
 }: {
   className?: string;
   tone?: 'light' | 'dark';
 }) {
   const colors =
     tone === 'light'
-      ? 'border-floorLine text-safetyDeep hover:border-safetyDeep hover:bg-floorDeep'
+      ? 'border-floorLine text-ink hover:border-ink hover:bg-floorDeep'
       : 'border-steelLine text-chalk hover:border-safety hover:bg-steel';
   return (
     <a
@@ -68,10 +68,10 @@ export function MobileContactBar() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="label-caps flex min-h-12 flex-1 items-center justify-center gap-2 bg-safety text-[12px] text-charcoal active:scale-[0.98]"
+          className="label-caps flex min-h-12 flex-1 items-center justify-center gap-2 bg-safety text-[13px] text-charcoal active:scale-[0.98]"
         >
-          <MessageCircle className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
-          WhatsApp
+          <span aria-hidden="true">💬</span>
+          Falar no WhatsApp
         </a>
         <a
           href={`tel:${site.phoneLink}`}

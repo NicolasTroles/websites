@@ -1,134 +1,232 @@
 /**
  * Single source of truth for the site. Change data here, never inside components.
  *
- * Brand name, address, phone and category confirmed on the Google Business
- * listing ("Marido de Aluguel Oliveira", Campo Largo — categorized there as
- * "Escritório da empresa", i.e. a base of operations, not a walk-in shop).
- * The profile shows 5,0 with only 2 reviews — real, but intentionally not
- * surfaced as a star widget anywhere on the site (client's call: too thin a
- * sample to lead with). The listing itself is still linked as a
- * verification signal ("ele existe e está registrado no Google").
+ * Confirmed by the client directly (name, city, address, phone) — see individual
+ * comments below for what still needs a TODO. Nothing about review counts, years
+ * in business, warranties, certifications, authorized brands or pricing was
+ * confirmed, so none of that appears anywhere in this config or the copy that
+ * reads from it.
  */
 
 export const site = {
-  brandName: 'Oliveira',
-  brandFull: 'Marido de Aluguel Oliveira',
+  brandName: 'Activa',
+  brandFull: 'Activa Eletrônica',
   tagline:
-    'Hidráulica, elétrica, pintura e outros reparos residenciais, feitos com qualidade, confiança e eficiência — o marido de aluguel de Campo Largo e região.',
-  ownerFirstName: 'Isaias',
-  city: 'Campo Largo',
+    'Assistência técnica especializada em eletrônicos, eletrodomésticos e informática em Curitiba.',
+  city: 'Curitiba',
   state: 'PR',
 
-  // Confirmed on Google Business.
-  phone: '+55 41 99723-3236',
-  phoneLink: '+554199723236',
-  whatsapp: '5541997233236',
-  whatsappMessage: 'Olá! Vim pelo site e preciso de um orçamento para um serviço em casa.',
+  phone: '(41) 3153-4809',
+  phoneLink: '554131534809',
+  // TODO(client): replace with the real WhatsApp number before launch. This
+  // is currently the landline above (8 digits, no 9th digit) reused as a
+  // placeholder — every "Falar no WhatsApp" button on the site is broken
+  // until this is a real WhatsApp-enabled number in `55DDNNNNNNNNN` format
+  // (country code + area code + number, digits only, e.g. '5541999998888').
+  whatsapp: '554131534809',
+  whatsappMessage: 'Olá! Vim pelo site e preciso de um orçamento para o reparo do meu equipamento.',
 
-  // Confirmed on Google Business. Category there is "Escritório da empresa" —
-  // this is the base Isaias works from, not a storefront clients visit; the
-  // service happens at the client's home, so copy leans on "atende na sua
-  // casa" rather than "venha até nós".
   address: {
-    street: 'Rua Apóstolo Pedro, 79',
-    neighborhood: 'Vila Campesi',
-    city: 'Campo Largo',
+    street: 'Rua Coronel José Carvalho de Oliveira, 449',
+    city: 'Curitiba',
     state: 'PR',
-    zip: '83604-684',
-    mapsQuery:
-      'Marido de Aluguel Oliveira, Rua Apóstolo Pedro, 79, Vila Campesi, Campo Largo - PR',
+    mapsQuery: 'Activa Eletrônica, Rua Coronel José Carvalho de Oliveira, 449, Curitiba - PR',
   },
 
-  // Only one data point is confirmed on Google Business: "Fecha·Abre seg. às
-  // 08:00". Full weekly hours were not published — TODO: confirm the rest
-  // (closing time, Saturday) with Isaias before launch instead of guessing.
-  openingHours: [{ days: 'Segunda a sexta', hours: 'A partir das 08h' }],
-
-  // No Instagram/Facebook or own website — the Google Business listing is
-  // the only public profile that exists. TODO: confirm with Isaias if any
-  // social profile is created later.
-  socialLinks: {
-    instagram: '',
-    facebook: '',
-  },
+  // Confirmed rating value only — review count was not provided, so it's
+  // never printed alongside the rating.
+  googleRating: '4,3',
 
   seo: {
-    title: 'Marido de Aluguel Oliveira | Hidráulica, Elétrica e Reparos em Campo Largo',
+    title: 'Activa Eletrônica | Assistência Técnica em Curitiba',
     description:
-      'Marido de aluguel em Campo Largo/PR. Hidráulica, elétrica, pintura, montagem de móveis e pequenos reparos residenciais, com atendimento na sua casa. Orçamento pelo WhatsApp.',
-    url: 'https://isaiasmaridodealuguel.vercel.app',
+      'Assistência técnica especializada em eletrônicos, computadores e equipamentos em Curitiba. Diagnóstico e reparo. Entre em contato com a Activa Eletrônica.',
+    // TODO: replace with the real production domain after the first deploy
+    // (see skill step 5) and redeploy once it's set.
+    url: 'https://activaeletronica.vercel.app',
   },
 } as const;
 
 /**
- * Service categories researched against what "marido de aluguel" / handyman
- * businesses in this segment (BR market) commonly advertise — confirm with
- * Isaias exactly which of these he performs before publishing, since only
- * the name/address/phone came from an official source.
+ * Symptoms a customer recognizes without needing to know what's actually
+ * wrong — mirrors how people describe the problem before any diagnosis.
+ */
+export const symptoms = [
+  { icon: 'power' as const, title: 'Não liga' },
+  { icon: 'restart' as const, title: 'Desliga sozinho' },
+  { icon: 'imageOff' as const, title: 'Não apresenta imagem' },
+  { icon: 'thermometer' as const, title: 'Não aquece' },
+  { icon: 'alert' as const, title: 'Apresenta falhas' },
+  { icon: 'volume' as const, title: 'Faz barulho' },
+  { icon: 'block' as const, title: 'Não responde' },
+  { icon: 'stop' as const, title: 'Parou completamente' },
+] as const;
+
+/**
+ * Confirmed categories of equipment the client repairs/services. "Outros
+ * equipamentos eletrônicos" is deliberately open-ended — evaluated case by
+ * case, never promised as "conserta qualquer coisa".
  */
 export const services = [
   {
-    icon: 'droplet' as const,
-    title: 'Hidráulica',
-    description: 'Vazamentos, troca de registros e torneiras, sifões entupidos, caixa d’água.',
+    icon: 'tv' as const,
+    title: 'Televisores e eletrônicos',
+    description: 'Diagnóstico e reparo de equipamentos eletrônicos.',
   },
   {
-    icon: 'zap' as const,
-    title: 'Elétrica',
-    description: 'Tomadas, disjuntores, chuveiro elétrico, ventilador de teto, troca de luminárias.',
+    icon: 'circuit' as const,
+    title: 'Placas e componentes',
+    description: 'Investigação de falhas em placas e componentes eletrônicos.',
   },
   {
-    icon: 'paintbrush' as const,
-    title: 'Pintura',
-    description: 'Retoques, pintura de paredes, portões e muros — interno e externo.',
+    icon: 'microwave' as const,
+    title: 'Micro-ondas',
+    description: 'Diagnóstico e manutenção de equipamentos.',
   },
   {
-    icon: 'armchair' as const,
-    title: 'Montagem de móveis',
-    description: 'Armários, guarda-roupas, estantes e móveis planejados, prontos pra usar.',
+    icon: 'computer' as const,
+    title: 'Computadores',
+    description: 'Manutenção e reparo de computadores e periféricos.',
   },
   {
-    icon: 'hammer' as const,
-    title: 'Marcenaria e portas',
-    description: 'Dobradiças, fechaduras emperradas, portas que não fecham direito, rodapés.',
+    icon: 'plug' as const,
+    title: 'Fontes e componentes',
+    description: 'Diagnóstico e reparo relacionado a alimentação e componentes eletrônicos.',
   },
   {
-    icon: 'lamp' as const,
-    title: 'Instalações',
-    description: 'Prateleiras, quadros, cortinas, suporte de TV — fixado com segurança.',
-  },
-  {
-    icon: 'wrench' as const,
-    title: 'Manutenção geral',
-    description: 'Aquela lista de pequenos reparos acumulados que ninguém teve tempo de resolver.',
-  },
-  {
-    icon: 'clipboard' as const,
-    title: 'Reparos residenciais',
-    description: 'Problema fora da lista? Chama no WhatsApp e descreve — provavelmente dá pra resolver.',
+    icon: 'search' as const,
+    title: 'Outros equipamentos eletrônicos',
+    description: 'Equipamento fora da lista? Avaliamos caso a caso antes de qualquer resposta.',
   },
 ] as const;
 
 export const processSteps = [
   {
     step: '01',
-    title: 'Chama no WhatsApp',
-    description: 'Descreve o problema e manda uma foto, se tiver. Resposta rápida, sem enrolação.',
+    title: 'Entre em contato',
+    description: 'Conte para nós qual equipamento apresentou problema.',
   },
   {
     step: '02',
-    title: 'Combina o orçamento',
-    description: 'Isaias avalia o serviço e passa o valor e o prazo antes de qualquer coisa.',
+    title: 'Faça o diagnóstico',
+    description: 'A equipe avalia o equipamento e identifica a possível origem da falha.',
   },
   {
     step: '03',
-    title: 'Atendimento na sua casa',
-    description: 'Ele vai até você, em Campo Largo e região, com as ferramentas certas para o serviço.',
+    title: 'Receba o orçamento',
+    description: 'Você recebe as informações necessárias antes da execução do reparo.',
   },
   {
     step: '04',
-    title: 'Serviço resolvido',
-    description: 'Sem retrabalho, sem deixar bagunça — só o problema resolvido de verdade.',
+    title: 'Aprovou? Nós repararemos.',
+    description: 'Após a aprovação, o equipamento segue para o serviço.',
+  },
+] as const;
+
+export const differentiators = [
+  {
+    icon: 'search' as const,
+    title: 'Conhecimento técnico',
+    description: 'Reparos baseados em diagnóstico, não em tentativa e erro.',
+  },
+  {
+    icon: 'pin' as const,
+    title: 'Atendimento próximo',
+    description: 'Uma empresa local para atender Curitiba.',
+  },
+  {
+    icon: 'check' as const,
+    title: 'Diagnóstico antes da decisão',
+    description: 'Entenda o problema antes de decidir pelo reparo ou substituição.',
+  },
+  {
+    icon: 'circuit' as const,
+    title: 'Peças e componentes',
+    description: 'Experiência com componentes e sistemas eletrônicos.',
+  },
+  {
+    icon: 'eye' as const,
+    title: 'Transparência',
+    description: 'O cliente precisa entender o que está acontecendo com seu equipamento.',
+  },
+  {
+    icon: 'target' as const,
+    title: 'Foco em solução',
+    description: 'O objetivo é encontrar a melhor solução para cada caso.',
+  },
+] as const;
+
+/**
+ * Placeholders only — no testimonial text is invented. Replace with real
+ * Google reviews before launch; keep the same shape (name/rating/text/date).
+ */
+export const testimonials = [
+  {
+    name: 'EXEMPLO — substituir por avaliação real do Google',
+    rating: 5,
+    text: 'EXEMPLO — substituir por um trecho real de avaliação do Google antes de publicar.',
+    date: '—',
+  },
+  {
+    name: 'EXEMPLO — substituir por avaliação real do Google',
+    rating: 5,
+    text: 'EXEMPLO — substituir por um trecho real de avaliação do Google antes de publicar.',
+    date: '—',
+  },
+  {
+    name: 'EXEMPLO — substituir por avaliação real do Google',
+    rating: 5,
+    text: 'EXEMPLO — substituir por um trecho real de avaliação do Google antes de publicar.',
+    date: '—',
+  },
+] as const;
+
+export const faq = [
+  {
+    question: 'Vocês fazem orçamento?',
+    answer:
+      'Sim. Depois da avaliação do equipamento, você recebe o orçamento antes de qualquer reparo ser executado.',
+  },
+  {
+    question: 'Preciso saber qual é o defeito antes de levar?',
+    answer:
+      'Não. Basta descrever os sintomas que você percebeu — não liga, desliga sozinho, faz barulho — e o diagnóstico técnico identifica a possível origem do problema.',
+  },
+  {
+    question: 'Vocês consertam qualquer equipamento eletrônico?',
+    answer:
+      'Cada caso passa por uma avaliação técnica antes de qualquer resposta. Isso depende da avaliação do equipamento.',
+  },
+  {
+    question: 'Quanto custa um reparo?',
+    answer:
+      'Isso depende da avaliação do equipamento e da origem do problema. O valor é sempre informado antes da execução do serviço.',
+  },
+  {
+    question: 'Quanto tempo demora?',
+    answer:
+      'O prazo depende do diagnóstico e da disponibilidade de peças em cada caso — é informado junto com o orçamento.',
+  },
+  {
+    question: 'Vocês trabalham com quais marcas?',
+    answer: 'Isso depende do equipamento e é avaliado caso a caso — entre em contato para confirmar.',
+  },
+  {
+    question: 'Onde fica a Activa?',
+    answer: `${site.address.street}, ${site.address.city}/${site.address.state}.`,
+  },
+  {
+    question: 'Posso entrar em contato pelo WhatsApp?',
+    answer: 'Sim — é a forma mais rápida de falar com a equipe e enviar fotos ou vídeos do problema.',
+  },
+  {
+    question: 'Vale a pena consertar ou comprar outro?',
+    answer:
+      'Na maioria dos casos, essa resposta só existe depois do diagnóstico: ele mostra a origem do problema e ajuda a decidir entre reparar ou substituir o equipamento.',
+  },
+  {
+    question: 'Vocês fazem manutenção em computadores?',
+    answer: 'Sim, manutenção e reparo de computadores e periféricos fazem parte da atuação da Activa.',
   },
 ] as const;
 

@@ -1,27 +1,22 @@
 import type { Metadata, Viewport } from 'next';
-import { DM_Sans, Oswald } from 'next/font/google';
+import { Archivo, Manrope } from 'next/font/google';
 import { mapsUrl, services, site } from '@/config/site.config';
 import './globals.css';
 
 // display: 'swap' avoids invisible text while the font loads.
-const sans = DM_Sans({
+const sans = Manrope({
   // latin-ext covers the Portuguese accented capitals (Ê, Ã, Ç...) that plain
   // 'latin' can render inconsistently, especially combined with uppercase
   // display text.
   subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '700'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-sans',
   display: 'swap',
 });
 
-// Anton (the original pick) has a broken/misplaced accent glyph for capital
-// Ê in this weight — the circumflex renders floating and detached instead of
-// sitting on the letter. Oswald keeps the same condensed job-site-signage
-// feel (it's modeled on Alternate Gothic, a classic sign-painter face) with
-// verified full Portuguese diacritic support.
-const display = Oswald({
+const display = Archivo({
   subsets: ['latin', 'latin-ext'],
-  weight: '700',
+  weight: ['600', '700', '800'],
   variable: '--font-display',
   display: 'swap',
 });
@@ -31,13 +26,14 @@ export const metadata: Metadata = {
   title: site.seo.title,
   description: site.seo.description,
   keywords: [
-    'marido de aluguel campo largo',
-    'hidráulica campo largo',
-    'eletricista campo largo',
-    'pintor campo largo',
-    'reparos residenciais campo largo pr',
-    'faz tudo campo largo',
-    'orçamento marido de aluguel',
+    'assistência técnica em Curitiba',
+    'assistência técnica eletrônica',
+    'conserto de eletrônicos',
+    'conserto de TV',
+    'conserto de micro-ondas',
+    'manutenção eletrônica',
+    'reparo de placas eletrônicas',
+    'manutenção de computadores',
   ],
   alternates: { canonical: site.seo.url },
   icons: {
@@ -62,30 +58,23 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#181B1D',
+  themeColor: '#0B2B3A',
   width: 'device-width',
   initialScale: 1,
   // No maximumScale: blocking zoom breaks accessibility.
 };
 
 /**
- * Schema.org business markup. HomeAndConstructionBusiness is the schema.org
- * type for a general home-repair business that spans multiple trades
- * (plumbing, electrical, painting) — more accurate than picking a single
- * trade subtype (Plumber, Electrician, HousePainter) Isaias doesn't
- * exclusively practice.
- *
- * `sameAs`/`hasMap` point at the Google Business listing so Google can tie
- * this page to that profile. `hasOfferCatalog` mirrors the service list so
- * each trade (hidráulica, elétrica, pintura...) is machine-readable, not
- * just prose. Opening hours are deliberately left out here — only one data
- * point is confirmed (see site.config.ts), and a partial
- * openingHoursSpecification risks Google inferring the unlisted days as
- * closed, which is worse than omitting it until the full week is confirmed.
+ * Schema.org business markup. There's no schema.org type specific to
+ * electronics repair, so LocalBusiness (the documented generic fallback) is
+ * used, with the service catalog spelled out via hasOfferCatalog so each
+ * repair category is machine-readable. Opening hours are intentionally
+ * omitted — not confirmed by the client, and a partial
+ * openingHoursSpecification risks Google inferring unlisted days as closed.
  */
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'HomeAndConstructionBusiness',
+  '@type': 'LocalBusiness',
   name: site.brandFull,
   description: site.seo.description,
   image: `${site.seo.url}/opengraph-image`,
@@ -98,7 +87,6 @@ const jsonLd = {
     streetAddress: site.address.street,
     addressLocality: site.address.city,
     addressRegion: site.address.state,
-    postalCode: site.address.zip,
     addressCountry: 'BR',
   },
   areaServed: `${site.city} e região`,

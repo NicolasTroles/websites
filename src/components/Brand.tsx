@@ -1,64 +1,60 @@
 /**
- * Brand marks for this project. The real logo (public/logo.png) now covers
- * the header/footer lockup; what's left here are the construction-forward
- * decorative marks that logo doesn't cover — the tool-mark watermark and the
- * hazard-stripe section divider (wrench/screwdriver, warning tape), not the
- * comb/clipper of the barbershop project or the paint-roller of Marciel
- * Tintas.
+ * Decorative technical marks for this project — a hexagon + waveform motif
+ * echoing the diagnostic "pulse" in the real logo (public/logo.png), redrawn
+ * from scratch as an abstract watermark/divider, not a copy of the logo
+ * artwork itself. Deliberately not the wrench/screwdriver of the handyman
+ * project, the comb of the barbershop, or the paint-roller of Marciel Tintas.
  */
 
 type IconProps = {
   className?: string;
 };
 
-/** Crossed wrench + screwdriver — used as the giant parallax watermark. */
-export function ToolMark({ className }: IconProps) {
+/** Giant, near-invisible parallax watermark: hexagon outline + a single waveform trace. */
+export function CircuitWatermark({ className }: IconProps) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" className={className} aria-hidden="true" focusable="false">
-      {/* screwdriver, back to front */}
+    <svg viewBox="0 0 120 120" fill="none" className={className} aria-hidden="true" focusable="false">
       <path
-        d="M10 10 26 26 23 29 7 13Z M23 29 29 23 33 27 27 33Z M33 27 50 44 47.5 51 40 53.5 22.5 36"
-        fill="currentColor"
+        d="M40 12h40l30 30v36l-30 30H40l-30-30V42Z"
+        stroke="currentColor"
+        strokeWidth="1.5"
       />
-      {/* wrench, front to back */}
       <path
-        d="M46 8c-6 0-11 5-11 11 0 1.6.3 3.1.9 4.5L13 46.4l4.6 4.6L40.5 28c1.4.6 2.9.9 4.5.9 6 0 11-5 11-11 0-1.7-.4-3.3-1.1-4.7l-6.2 6.2-5-5 6.2-6.2C48.7 8.4 47.4 8 46 8Z"
-        fill="currentColor"
+        d="M8 60h22l8-18 10 34 9-22 6 6h57"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
+      <circle cx="8" cy="60" r="3.5" fill="currentColor" />
+      <circle cx="112" cy="60" r="3.5" fill="currentColor" />
     </svg>
   );
 }
 
-/** Giant faint watermark version of the tool mark, for parallax backgrounds. */
-export function ToolWatermark({ className }: IconProps) {
-  return <ToolMark className={className} />;
-}
-
 /**
- * Diagonal hazard-stripe band — the section divider, in place of a straight
- * line or a wave. Reads as warning tape from a job site, not a comb or a
- * wave crest.
+ * Thin technical divider — a hairline with a solder-point at center and two
+ * short ticks either side, standing in for a section break the way a PCB
+ * trace would, in place of a straight rule, a wave, or hazard tape.
  */
-export function HazardStripe({ className, flip = false }: IconProps & { flip?: boolean }) {
+export function CircuitDivider({ className, tone = 'light' }: IconProps & { tone?: 'light' | 'dark' }) {
+  const color = tone === 'light' ? 'text-floorLine' : 'text-steelLine';
   return (
-    <div
-      className={`h-3 w-full sm:h-4 ${flip ? 'rotate-180' : ''} ${className ?? ''}`}
-      style={{
-        backgroundImage:
-          'repeating-linear-gradient(-45deg, #181B1D 0, #181B1D 14px, #F4B400 14px, #F4B400 28px)',
-      }}
-      aria-hidden="true"
-    />
+    <div className={`flex items-center justify-center gap-3 ${className ?? ''}`} aria-hidden="true">
+      <span className={`h-px w-16 sm:w-28 ${tone === 'light' ? 'bg-floorLine' : 'bg-steelLine'}`} />
+      <span className={`h-1.5 w-1.5 rounded-full bg-safety ${color}`} />
+      <span className={`h-px w-16 sm:w-28 ${tone === 'light' ? 'bg-floorLine' : 'bg-steelLine'}`} />
+    </div>
   );
 }
 
 /**
- * Continuous horizontal marquee — services + a call-to-action, looping
- * forever like a strip of tape running across the page. The content array
- * is duplicated so the loop is seamless; the animation freezes under
- * prefers-reduced-motion (handled globally in globals.css).
+ * Continuous horizontal marquee — a strip of category/keyword text looping
+ * forever, used once as a texture band, not as primary navigation. Content
+ * is duplicated so the loop is seamless; frozen under prefers-reduced-motion
+ * (handled globally in globals.css).
  */
-export function ServiceMarquee({ items }: { items: readonly string[] }) {
+export function Marquee({ items }: { items: readonly string[] }) {
   const doubled = [...items, ...items];
   return (
     <div className="overflow-hidden bg-charcoal py-3" aria-hidden="true">
@@ -74,26 +70,5 @@ export function ServiceMarquee({ items }: { items: readonly string[] }) {
         ))}
       </div>
     </div>
-  );
-}
-
-export function InstagramGlyph({ className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" focusable="false">
-      <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
-    </svg>
-  );
-}
-
-export function FacebookGlyph({ className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" focusable="false">
-      <path
-        d="M14.5 21v-7.5h2.5l.4-3H14.5V8.4c0-.87.24-1.46 1.5-1.46h1.6V4.3c-.28-.04-1.22-.12-2.32-.12-2.3 0-3.88 1.4-3.88 3.98V10.5H9v3h2.4V21h3.1Z"
-        fill="currentColor"
-      />
-    </svg>
   );
 }

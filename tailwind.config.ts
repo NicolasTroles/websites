@@ -6,49 +6,62 @@ const config: Config = {
     extend: {
       colors: {
         /*
-         * Paleta "canteiro de obra": grafite/asfalto + amarelo de segurança,
-         * não o marrom de barbearia/alfaiataria, o âmbar de chopp, nem o
-         * verde/azul-petróleo já usados em outros projetos. A base escura
-         * puxa pro cinza-chumbo neutro (ferramenta, metal), não pro
-         * verde-preto ou marrom quente.
+         * Palette handed down by the client's brand guide — four fixed
+         * values, not a free choice:
+         *   Azul petróleo #0B2B3A — symbol, "ACTIVA" wordmark, institutional text
+         *   Amarelo energia #F4B41A — activation point, accents, highlights
+         *   Branco #FFFFFF — primary background, breathing room
+         *   Preto #000000 — monochrome / high-contrast applications
+         *
+         * The real logo (public/logo.png) is petrol + amber on a transparent/
+         * light ground, so it only reads on light backgrounds — that fixes
+         * white as the dominant field, not petrol. Petrol is reserved for
+         * text-on-white (matches "textos institucionais" in the brand table)
+         * and for the one or two darker, moodier sections (the technical-
+         * authority band, the mobile bar); pure black is kept for exactly one
+         * section — the closing CTA — as the deliberate "alto contraste"
+         * moment the brand table calls out, distinct from the everyday petrol
+         * dark tone.
+         *
+         * `charcoal`/`steel`/`chalk`/`mist` etc. keep the same names used
+         * across Photo/Reveal/Actions so those shared components need no
+         * changes — only the hex values move to this palette.
          */
-        charcoal: '#181B1D', // fundo escuro principal (asfalto)
-        steel: '#232830', // cards/elevação sobre o escuro (caixa de ferramentas)
-        steelLine: '#333A44', // divisores no escuro
-        chalk: '#F3EFE4', // texto principal no escuro (giz de obra, não branco)
-        mist: '#AFB6B8', // texto secundário no escuro (7.1:1 sobre charcoal)
 
-        /* Família clara: piso de concreto claro / papel de projeto. */
-        floor: '#F1ECDF', // fundo claro
-        floorDeep: '#E4DCC7', // cards sobre o claro
-        floorLine: '#D3C7A9', // divisores no claro
-        ink: '#1B1D1A', // texto principal no claro
-        inkSoft: '#5A5648', // texto secundário no claro (5.3:1 sobre floor)
+        // Light family — carries most of the page.
+        floor: '#FFFFFF', // primary background (branco)
+        floorDeep: '#EEF3F5', // cards / alternate panels on white
+        floorLine: '#DCE6EA', // dividers on white
+        ink: '#0B2B3A', // primary text on white — azul petróleo, as specified
+        inkSoft: '#3F5D69', // secondary text on white (7.2:1)
 
-        /*
-         * Acento duplo: amarelo de segurança (uso principal, CTAs, fita
-         * zebrada) + azul-aço (uso pontual, tags e ícones decorativos, cor
-         * de macacão/caixa de ferramentas). safety só com texto escuro em
-         * cima (8.6:1). Texto corrido sobre floor usa obrigatoriamente
-         * safetyDeep (6.1:1) ou steelBlueDeep.
-         */
-        safety: '#F4B400',
-        safetyDeep: '#8A5E00',
-        steelBlue: '#3E6B85',
-        steelBlueDeep: '#254A5C',
+        // Dark family — petrol, used sparingly (authority section, mobile bar, header-on-scroll never needed since header sits on white).
+        charcoal: '#0B2B3A', // azul petróleo — dark section background
+        steel: '#123244', // cards / elevation on petrol
+        steelLine: '#28536A', // dividers on petrol
+        chalk: '#FFFFFF', // primary text on petrol / on black (branco)
+        mist: '#A9C0C9', // secondary text on petrol (7.6:1)
+
+        // Single accent — amarelo energia. safetyDeep is the AA-on-white
+        // text variant (F4B41A fails contrast on white at ~1.9:1).
+        safety: '#F4B41A',
+        safetyDeep: '#7A5A0D',
+
+        // Preto — reserved for the one high-contrast section (final CTA).
+        void: '#000000',
       },
       fontFamily: {
-        // Display condensado tipo placa de obra/estêncil (Oswald é baseada na
-        // Alternate Gothic, clássica de placa de sinalização) — o oposto da
-        // slab serif de barbearia, da serifada de alfaiataria e da mono
-        // técnica de geo. Corpo em uma sans humanista neutra, ainda não usada
-        // nos outros projetos (Inter, Work Sans, Manrope e Space Grotesk já
-        // foram usadas).
-        display: ['var(--font-display)', 'Impact', 'sans-serif'],
+        // Archivo: a bold, technical grotesk — engineering nameplate energy
+        // without the construction-signage cliché of a condensed face.
+        // Manrope: a clean geometric sans for body copy, legible and
+        // unfussy. Neither pairing has been used on a prior client site
+        // (Inter, Playfair Display, Space Grotesk, Oswald, DM Sans, IBM
+        // Plex Mono all already spoken for).
+        display: ['var(--font-display)', 'Arial', 'sans-serif'],
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
-        wide2: '0.16em',
+        wide2: '0.14em',
       },
       maxWidth: {
         prose: '62ch',
@@ -69,11 +82,16 @@ const config: Config = {
           from: { transform: 'translate3d(0, 0, 0)' },
           to: { transform: 'translate3d(-50%, 0, 0)' },
         },
+        pulse: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.35' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 700ms cubic-bezier(0.22, 1, 0.36, 1) both',
         'draw-line': 'draw-line 900ms cubic-bezier(0.22, 1, 0.36, 1) both',
-        marquee: 'marquee 22s linear infinite',
+        marquee: 'marquee 26s linear infinite',
+        'pulse-slow': 'pulse 2.4s ease-in-out infinite',
       },
     },
   },
