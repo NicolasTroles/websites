@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { whatsappUrl } from '@/config/site.config';
+import { trackWhatsAppClick } from '@/lib/analytics';
 import { LogoImage } from './Brand';
 
 const LINKS = [
@@ -65,6 +66,7 @@ export function Header() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackWhatsAppClick('header_button')}
           className="hidden min-h-11 items-center bg-clay px-6 text-[11px] uppercase tracking-wide2 text-ink transition-colors duration-200 hover:bg-clayDeep hover:text-bone lg:inline-flex"
         >
           Solicitar orçamento

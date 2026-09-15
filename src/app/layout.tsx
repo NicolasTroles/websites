@@ -1,7 +1,10 @@
 import type { Metadata, Viewport } from 'next';
 import { IBM_Plex_Mono, Inter, Space_Grotesk } from 'next/font/google';
+import Script from 'next/script';
 import { areaServedStates, services, site } from '@/config/site.config';
 import './globals.css';
+
+const GA_MEASUREMENT_ID = 'G-3RMN27XF9E';
 
 // display: 'swap' avoids invisible text while the font loads.
 const sans = Inter({
@@ -102,6 +105,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={`${sans.variable} ${display.variable} ${mono.variable}`}>
       <body className="font-sans">
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

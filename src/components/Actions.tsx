@@ -1,5 +1,8 @@
+'use client';
+
 import { MessageCircle, Phone } from 'lucide-react';
 import { site, whatsappUrl } from '@/config/site.config';
+import { trackWhatsAppClick } from '@/lib/analytics';
 
 /**
  * Contact buttons. All at a minimum height of 48px (min-h-12) to meet the
@@ -16,6 +19,7 @@ export function WhatsAppButton({ className }: { className?: string }) {
       href={whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackWhatsAppClick('main_button')}
       className={`${BASE} bg-clay text-ink hover:bg-clayDeep hover:text-bone active:scale-[0.98] ${className ?? ''}`}
     >
       <MessageCircle className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
@@ -63,6 +67,7 @@ export function MobileContactBar() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => trackWhatsAppClick('mobile_bar')}
           className="flex min-h-12 flex-1 items-center justify-center gap-2 bg-clay text-[12px] uppercase tracking-wide2 text-ink active:scale-[0.98]"
         >
           <MessageCircle className="h-4 w-4" strokeWidth={2} aria-hidden="true" />
