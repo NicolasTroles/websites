@@ -38,10 +38,16 @@ export function Contact() {
 
     setErrors(next);
     if (Object.keys(next).length > 0) {
-      // Move focus to the first field that failed, rather than only painting a
-      // message the visitor may have already scrolled past.
-      const firstInvalid = event.currentTarget.querySelector<HTMLElement>('[aria-invalid="true"]');
-      firstInvalid?.focus();
+      /*
+       * Move focus to the first field that failed, rather than only painting a
+       * message the visitor may have already scrolled past. The field is picked
+       * from `next` and not by querying [aria-invalid] — React has not
+       * re-rendered with those attributes yet at this point in the handler.
+       */
+      const firstInvalid = (['name', 'contact', 'subject'] as const).find((key) => next[key]);
+      const fieldName = firstInvalid === 'contact' ? 'phone' : firstInvalid;
+      const field = event.currentTarget.elements.namedItem(fieldName ?? '');
+      if (field instanceof HTMLElement) field.focus();
       return;
     }
 
