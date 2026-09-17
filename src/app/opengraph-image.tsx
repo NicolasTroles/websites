@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
 import { site } from '@/config/site.config';
 
@@ -7,6 +9,17 @@ import { site } from '@/config/site.config';
  * a webfont here would add a network fetch to every build for a 1200x630 image
  * nobody zooms into.
  */
+/*
+ * The client's real lockup, read off disk and inlined as a data URI. It lives
+ * in design/ rather than public/ because nothing should serve it: this route is
+ * prerendered at build time, when the repo is on disk, so the bytes never need
+ * to exist at runtime. Satori decodes PNG, not WebP — do not point this at the
+ * .webp the site itself uses.
+ */
+const logoDataUri = `data:image/png;base64,${readFileSync(
+  join(process.cwd(), 'design', 'logo-og.png'),
+).toString('base64')}`;
+
 export const alt = `${site.brandFull} — ${site.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
@@ -40,36 +53,9 @@ export default function OpenGraphImage() {
           }}
         />
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
-          <svg width="64" height="60" viewBox="0 0 64 60">
-            <g transform="translate(24 8) scale(0.78)">
-              <path
-                fill="#3FA98A"
-                fillRule="evenodd"
-                d="M0 0 H23 A13 13 0 0 1 23 26 H14 L38 52 H24 L9 33 V52 H0 Z M9 8 H21 A5 5 0 0 1 21 18 H9 Z"
-              />
-            </g>
-            <g transform="translate(0 4)">
-              <path
-                fill="#E8EEF3"
-                fillRule="evenodd"
-                d="M0 0 H23 A13 13 0 0 1 23 26 H14 L38 52 H24 L9 33 V52 H0 Z M9 8 H21 A5 5 0 0 1 21 18 H9 Z"
-              />
-            </g>
-          </svg>
-          <div style={{ width: 1, height: 52, background: '#20394C' }} />
-          <div
-            style={{
-              color: '#E8EEF3',
-              fontSize: 30,
-              fontWeight: 700,
-              letterSpacing: 4,
-              textTransform: 'uppercase',
-            }}
-          >
-            Rodrigues Rangel
-          </div>
-        </div>
+        {/* A plain img: Satori has no next/image, and this never runs in a
+            browser. */}
+        <img src={logoDataUri} alt="" width={420} height={116} />
 
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ color: '#E8EEF3', fontSize: 60, fontWeight: 700, lineHeight: 1.1 }}>

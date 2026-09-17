@@ -9,7 +9,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
           <div>
-            <Brand withSubtitle />
+            <Brand alt={site.brandFull} className="h-16 w-auto" />
             <p className="mt-6 max-w-sm text-sm leading-relaxed text-slate">{site.promise}</p>
             <p className="mt-4 font-mono text-[11px] uppercase tracking-label text-dim">
               {site.tagline}

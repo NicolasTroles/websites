@@ -53,10 +53,11 @@ export const site = {
       'Rodrigues Rangel Consultoria | Segurança do Trabalho, Gestão de Terceiros e SG3',
     description:
       'Consultoria em Segurança do Trabalho, gestão documental de terceiros, acompanhamento de pendências e vencimentos e suporte às rotinas do Sistema SG3. Diagnóstico de conformidade documental e acompanhamento contínuo.',
-    // TODO: confirm with client — replace with the real domain before launch,
-    // and redeploy. This value feeds the canonical URL, the sitemap, the
-    // llms.txt links and the JSON-LD.
-    url: 'https://www.rodriguesrangel.com.br',
+    // Production domain. This one value feeds metadataBase (and therefore the
+    // absolute og:image URL that WhatsApp fetches), the canonical URL, the
+    // sitemap, the llms.txt links and the JSON-LD — change it here only, and
+    // redeploy if it ever moves to a custom domain.
+    url: 'https://rodrigues-rangel.vercel.app',
     // Date of the last real content change — NOT the build date. Bump it by
     // hand when the copy actually changes.
     lastModified: '2026-09-16',

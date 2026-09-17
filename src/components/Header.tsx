@@ -44,7 +44,7 @@ export function Header() {
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-5 sm:h-20 sm:px-8">
         <a href="#topo" className="shrink-0" aria-label="Rodrigues Rangel Consultoria, ir ao topo">
-          <Brand />
+          <Brand priority className="h-10 w-auto sm:h-14" />
         </a>
 
         <nav aria-label="Principal" className="hidden lg:block">

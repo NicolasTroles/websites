@@ -1,16 +1,21 @@
+import Image from 'next/image';
+
 /*
- * The mark, drawn in code.
+ * The mark.
  *
- * It reproduces the client's lockup: two overlapping angular "R"s, the back one
- * emerald and the front one light, next to a wide-tracked wordmark. Keeping it
- * as SVG means it stays crisp at every size, inherits the section's colours and
- * costs no image request — which matters because it sits in the header on every
- * screen.
+ * `Brand` is the client's real artwork — the full lockup (monogram, wordmark
+ * and "Consultoria"), light-on-dark, so it only ever sits on a navy surface.
+ * The file is a 722x200 WebP with an alpha channel, 23kB; next/image resizes it
+ * per breakpoint from there.
  *
- * When the client's own artwork is approved, drop the file at public/logo.png
- * and swap `<Monogram />` for a next/image — the surrounding layout already
- * reserves the same square.
+ * `Monogram` is a hand-drawn SVG of the same two overlapping R's, kept for the
+ * one place a bitmap cannot serve: the giant ghost layer in the hero, where it
+ * inherits the section's text colour and scales to 36rem with no resampling.
+ * The favicon and the share card use the real artwork. If the brand's
+ * proportions ever change, the SVG has to follow.
  */
+
+const LOGO = { src: '/logo.webp', width: 722, height: 200 } as const;
 
 /** One angular R. `evenodd` cuts the bowl's counter out of the solid shape. */
 function Letter({ className }: { className?: string }) {
@@ -25,17 +30,12 @@ function Letter({ className }: { className?: string }) {
 
 export function Monogram({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 64 60"
-      role="img"
-      aria-label="Rodrigues Rangel Consultoria"
-      className={className}
-    >
+    <svg viewBox="0 0 64 60" aria-hidden="true" className={className}>
       {/* Back letter: the emerald half of the mark. */}
       <g transform="translate(24 8) scale(0.78)">
         <Letter className="fill-emerald" />
       </g>
-      {/* Front letter, in the current text colour so it works on navy and on
+      {/* Front letter, in the current text colour, so it works on navy and on
           paper without a second component. */}
       <g transform="translate(0 4)">
         <Letter className="fill-current" />
@@ -45,33 +45,30 @@ export function Monogram({ className }: { className?: string }) {
 }
 
 type BrandProps = {
-  /** `full` adds the wordmark; `mark` is the monogram alone (mobile bar, icons). */
-  variant?: 'full' | 'mark';
-  /** Renders the "Consultoria" line under the name. Off in the tight header. */
-  withSubtitle?: boolean;
+  /**
+   * Empty when an ancestor already names the destination (the header's logo
+   * link carries an aria-label) — otherwise the logo would be announced twice.
+   */
+  alt?: string;
+  /** Set on the header logo only: it is in the first viewport. */
+  priority?: boolean;
+  /** Controls the height; width stays auto so the 3.61 ratio is never squashed. */
   className?: string;
 };
 
-export function Brand({ variant = 'full', withSubtitle = false, className }: BrandProps) {
-  if (variant === 'mark') {
-    return <Monogram className={className ?? 'h-8 w-8'} />;
-  }
-
+export function Brand({ alt = '', priority = false, className }: BrandProps) {
   return (
-    <span className={`flex items-center gap-3 ${className ?? ''}`}>
-      <Monogram className="h-9 w-9 shrink-0" />
-      {/* The divider rule is part of the client's own lockup. */}
-      <span aria-hidden="true" className="h-8 w-px bg-current opacity-25" />
-      <span className="flex flex-col leading-none">
-        <span className="font-display text-[15px] font-semibold uppercase tracking-[0.12em] sm:text-base">
-          Rodrigues Rangel
-        </span>
-        {withSubtitle && (
-          <span className="mt-1.5 font-display text-[10px] uppercase tracking-label opacity-70">
-            Consultoria
-          </span>
-        )}
-      </span>
-    </span>
+    <Image
+      src={LOGO.src}
+      width={LOGO.width}
+      height={LOGO.height}
+      alt={alt}
+      priority={priority}
+      // The lockup is 3.61:1 and the wordmark sits in a thin central band, so
+      // it has to be rendered tall enough to stay legible: 36px of height is
+      // already too small to read "Rodrigues Rangel".
+      sizes="(max-width: 640px) 160px, 260px"
+      className={className ?? 'h-9 w-auto'}
+    />
   );
 }

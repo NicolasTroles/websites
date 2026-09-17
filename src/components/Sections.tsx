@@ -282,8 +282,8 @@ export function WorkBand() {
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <Reveal variant="wipe">
           <Photo
-            // TODO: ask the client for the photo, then set src="/documentacao.jpg".
-            alt="Documentação de segurança do trabalho sendo conferida sobre uma mesa"
+            src="/documentacao.webp"
+            alt="Pastas de documentos, checklist de conformidade e capacete de segurança sobre uma mesa de escritório"
             aspect="landscape"
             tone="light"
             guide="Foto horizontal de documentos de SST sobre uma mesa clara — pastas, checklist e um capacete ao fundo, luz natural, sem rosto em destaque."
@@ -338,7 +338,7 @@ export function Owner() {
         <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
           <Reveal variant="wipe">
             <Photo
-              // TODO: ask the client for the photo, then set src="/valder.jpg".
+              src="/valder.webp"
               alt={`${owner.name}, ${owner.role}`}
               aspect="portrait"
               tone="light"

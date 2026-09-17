@@ -6,15 +6,16 @@ Nano Banana e afins entregam o melhor resultado. Eles não são conteúdo do sit
 Todos já carregam a paleta do projeto (azul-marinho `#0A1E2C`, verde `#3FA98A`,
 cinza-claro `#F5F7F9`), para as imagens nascerem coerentes com o layout.
 
-Os dois primeiros também aparecem dentro do próprio site, no lugar onde a foto vai
-entrar, com botão de copiar — é só abrir a página e clicar.
+> **As imagens 1 e 2 já foram geradas e estão no site.** Este arquivo fica como registro
+> do que foi pedido e para quando alguma delas precisar ser refeita. O placeholder com
+> botão de copiar volta a aparecer na página se o `src` for esvaziado no componente.
 
 ---
 
-## 1. Retrato do Valder — seção "Sobre o profissional"
+## 1. Retrato do Valder — seção "Sobre o profissional" ✅ feito
 
-Salvar em `public/valder.jpg` e preencher `src=` no `<Photo>` de `Owner()`
-(`src/components/Sections.tsx`). Proporção **3:4 (retrato)**.
+Em uso: `public/valder.webp` (900x1200), original em `design/valder.png`.
+Proporção **3:4 (retrato)**.
 
 > Professional corporate headshot of a Brazilian man in his 40s, wearing a plain navy
 > polo shirt, standing against a clean light grey studio background, soft even key light
@@ -26,9 +27,9 @@ para cima. Uma foto de verdade vale mais que qualquer geração aqui.
 
 ---
 
-## 2. Banda documental — entre "O que pode ser acompanhado" e "Para quem é"
+## 2. Banda documental — entre "O que pode ser acompanhado" e "Para quem é" ✅ feito
 
-Salvar em `public/documentacao.jpg` e preencher `src=` no `<Photo>` de `WorkBand()`.
+Em uso: `public/documentacao.webp` (1586x992), original em `design/banner.png`.
 Proporção **16:10 (paisagem)**.
 
 > Wide documentary photograph of occupational safety paperwork on a light desk: an organised
@@ -67,21 +68,12 @@ Essa é a tradução literal da animação da seção "Como funciona" — serve 
 
 ---
 
-## 5. Favicon e imagem de compartilhamento
+## 5. Favicon e imagem de compartilhamento ✅ feito
 
-**Já estão prontos, não precisa gerar:**
+Nada a gerar — os dois saem da logo oficial:
 
-- `src/app/icon.svg` — o monograma RR em SVG, gerado em código.
-- `src/app/opengraph-image.tsx` — o card do WhatsApp/LinkedIn, montado no build a partir
-  do `site.config.ts`. Se a tagline mudar, o card muda junto, sem precisar reexportar nada.
-
----
-
-## Quando a logo oficial chegar
-
-Hoje o monograma do cabeçalho é desenhado em SVG (`src/components/Brand.tsx`) como
-aproximação da marca. Com o arquivo oficial em mãos:
-
-1. Salve como `public/logo.png` (fundo transparente, pelo menos 512px de altura).
-2. Em `Brand.tsx`, troque `<Monogram />` por um `next/image` apontando para o arquivo — o
-   espaço já está reservado com as mesmas dimensões, o layout não mexe.
+- `src/app/icon.png` e `apple-icon.png` — o monograma RR recortado da logo, sobre o
+  azul-marinho da marca.
+- `src/app/opengraph-image.tsx` — o card do WhatsApp/LinkedIn, montado no build com a
+  logo real inlinada e os textos vindos do `site.config.ts`. Se a tagline mudar, o card
+  muda junto, sem reexportar nada.

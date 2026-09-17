@@ -36,10 +36,30 @@ placeholder e **precisam ser trocados**:
 - [ ] `city`, `state`, `areaServed`
 - [ ] `openingHours`
 - [ ] `socialLinks.linkedin` / `.instagram` (deixar vazio esconde o link)
-- [ ] `seo.url` — domínio real, depois do primeiro deploy
 - [ ] `owner.education` — confirmar instituição e redação
-- [ ] Fotos: `public/valder.jpg` e `public/documentacao.jpg` (ver `PROMPTS-IMAGENS.md`)
-- [ ] Logo oficial em `public/logo.png` (hoje o monograma é SVG em `Brand.tsx`)
+- [x] `seo.url` — https://rodrigues-rangel.vercel.app
+- [x] Logo, retrato e foto documental — ver "Imagens" abaixo
+
+## Imagens
+
+Os originais ficam em `design/` (fora do `public/`, portanto não são servidos) e o que
+o site usa são versões WebP redimensionadas em `public/`:
+
+| Original | Servido | Onde |
+| --- | --- | --- |
+| `design/logo.png` 2129x739 | `public/logo.webp` 722x200 · 23kB | header e rodapé |
+| `design/valder.png` 1086x1448 | `public/valder.webp` 900x1200 · 41kB | seção "Sobre" |
+| `design/banner.png` 1586x992 | `public/documentacao.webp` · 87kB | banda documental |
+| `design/logo-og.png` 520x144 | — | inlinado no card de compartilhamento, em build |
+| `design/monogram.png` | `src/app/icon.png` · `apple-icon.png` | favicon |
+
+Para regerar depois de trocar um original:
+
+```bash
+magick design/logo.png  -trim +repage -resize x200 -define webp:near-lossless=60 -quality 92 public/logo.webp
+magick design/valder.png -resize 900x -quality 82 public/valder.webp
+magick design/banner.png -resize 1586x -quality 80 public/documentacao.webp
+```
 
 ## Analytics
 
