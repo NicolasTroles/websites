@@ -42,9 +42,9 @@ export function Header() {
         scrolled || open ? 'border-b border-navyLine bg-navy/95 backdrop-blur-md' : 'bg-transparent'
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-5 sm:h-20 sm:px-8">
+      <div className="mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-6 px-5 sm:h-24 sm:px-8">
         <a href="#topo" className="shrink-0" aria-label="Rodrigues Rangel Consultoria, ir ao topo">
-          <Brand priority className="h-10 w-auto sm:h-14" />
+          <Brand priority className="h-12 w-auto sm:h-16" />
         </a>
 
         <nav aria-label="Principal" className="hidden lg:block">

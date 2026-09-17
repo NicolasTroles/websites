@@ -18,6 +18,24 @@ export function prefersReducedMotion() {
  *              0.35 is strong. On this site the hero layers use 0.06-0.18:
  *              the effect should read as depth, not as a ride.
  */
+/**
+ * Document-relative top of an element, walking the offsetParent chain.
+ *
+ * This is deliberately NOT getBoundingClientRect(): that reports the element
+ * after its own transform, so a parallax layer measuring itself reads back its
+ * own output. offsetTop is a layout value, untouched by transforms, so the
+ * measurement stays independent of whatever the hook last applied.
+ */
+function layoutTop(el: HTMLElement) {
+  let top = 0;
+  let node: HTMLElement | null = el;
+  while (node) {
+    top += node.offsetTop;
+    node = node.offsetParent as HTMLElement | null;
+  }
+  return top;
+}
+
 export function useParallax<T extends HTMLElement>(speed = 0.15) {
   const ref = useRef<T>(null);
   const [offset, setOffset] = useState(0);
@@ -31,9 +49,22 @@ export function useParallax<T extends HTMLElement>(speed = 0.15) {
 
     const update = () => {
       frame = 0;
-      const rect = el.getBoundingClientRect();
-      const fromCenter = rect.top + rect.height / 2 - window.innerHeight / 2;
-      setOffset(fromCenter * speed * -1);
+      const height = el.offsetHeight;
+      const viewport = window.innerHeight;
+      const top = layoutTop(el) - window.scrollY;
+      const fromCenter = top + height / 2 - viewport / 2;
+
+      /*
+       * Clamped to the largest displacement the effect can legitimately produce
+       * while the element is on screen. Without it, one measurement taken far
+       * off-screen — during an anchor jump, or the scroll position a browser
+       * restores on reload — would translate the layer clean out of its own
+       * IntersectionObserver window, where `visible` goes false and it freezes
+       * hundreds of pixels out of place, with no scroll able to recover it.
+       */
+      const limit = (viewport + height) * speed;
+      const next = Math.max(-limit, Math.min(limit, fromCenter * speed * -1));
+      setOffset(next);
     };
 
     const onScroll = () => {
@@ -42,17 +73,20 @@ export function useParallax<T extends HTMLElement>(speed = 0.15) {
       frame = requestAnimationFrame(update);
     };
 
+    // The margin exceeds the clamp above, so a layer can never transform itself
+    // outside the window that keeps it updating.
     const observer = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
         if (visible) update();
       },
-      { rootMargin: '200px 0px' },
+      { rootMargin: '400px 0px' },
     );
     observer.observe(el);
 
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll, { passive: true });
+    update();
 
     return () => {
       observer.disconnect();

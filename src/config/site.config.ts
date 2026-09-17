@@ -35,12 +35,6 @@ export const site = {
   state: 'PR',
   areaServed: 'Curitiba, região metropolitana e atendimento remoto para todo o Brasil',
 
-  // TODO: confirm with client.
-  openingHours: [
-    { days: 'Segunda a sexta', hours: '08h às 18h' },
-    { days: 'Sábado', hours: 'Sob agendamento' },
-  ],
-
   // Empty links are not rendered anywhere. Fill in when the profiles are
   // confirmed — do not guess a handle.
   socialLinks: {

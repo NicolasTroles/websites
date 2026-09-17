@@ -34,7 +34,6 @@ Os campos marcados com `// TODO: confirm with client` no `site.config.ts` ainda 
 placeholder e **precisam ser trocados**:
 
 - [ ] `city`, `state`, `areaServed`
-- [ ] `openingHours`
 - [ ] `socialLinks.linkedin` / `.instagram` (deixar vazio esconde o link)
 - [ ] `owner.education` — confirmar instituição e redação
 - [x] `seo.url` — https://rodrigues-rangel.vercel.app

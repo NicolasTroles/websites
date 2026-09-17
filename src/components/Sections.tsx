@@ -54,9 +54,12 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 /* ------------------------------------------------------------------ */
 
+// No bottom padding on this section: the ticker band closes it flush, so the
+// space before the services list belongs to that section alone instead of the
+// two stacking into a 200px void.
 export function About() {
   return (
-    <section id="atuacao" className="relative bg-paper py-20 sm:py-28 lg:py-32">
+    <section id="atuacao" className="relative bg-paper pt-20 sm:pt-28 lg:pt-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <Reveal>
@@ -68,8 +71,9 @@ export function About() {
 
           <Reveal delay={90} className="max-w-prose">
             <p className="text-lg leading-relaxed text-ink">
-              A {site.brandFull} atua na análise, organização e acompanhamento de documentos e
-              requisitos relacionados à Segurança do Trabalho e à gestão de terceiros.
+              A <strong className="font-semibold">{site.brandFull}</strong> atua na análise,
+              organização e acompanhamento de documentos e requisitos relacionados à Segurança
+              do Trabalho e à gestão de terceiros.
             </p>
             <p className="mt-5 text-base leading-relaxed text-inkSoft">
               O trabalho pode abranger desde a identificação inicial de pendências até o
@@ -85,17 +89,17 @@ export function About() {
         we deal with" faster than a paragraph would, and it is duplicated so the
         loop has no visible seam.
       */}
-      <div className="mt-16 border-y border-paperLine bg-paperDeep py-4 sm:mt-20">
-        <p className="mx-auto max-w-6xl px-5 font-mono text-[10px] uppercase tracking-label text-inkSoft sm:px-8">
+      <div className="mt-14 border-y border-paperLine bg-paperDeep py-6 sm:mt-16">
+        <p className="mx-auto max-w-6xl px-5 font-mono text-xs uppercase tracking-label text-inkSoft sm:px-8 sm:text-[13px]">
           Itens que podem entrar no acompanhamento
         </p>
-        <div className="fade-x mt-3 overflow-hidden" aria-hidden="true">
-          <div className="flex w-max animate-marquee gap-10 pr-10">
+        <div className="fade-x mt-5 overflow-hidden" aria-hidden="true">
+          <div className="flex w-max animate-marquee gap-12 pr-12">
             {[...DOCUMENT_TICKER, ...DOCUMENT_TICKER].map((item, index) => (
               <span
                 key={`${item}-${index}`}
                 // 65% is the lightest this can go and still clear AA (5.3:1) on paperDeep.
-                className="whitespace-nowrap font-display text-lg font-medium text-ink/65"
+                className="whitespace-nowrap font-display text-2xl font-medium text-ink/65 sm:text-3xl"
               >
                 {item}
               </span>
@@ -111,12 +115,12 @@ export function About() {
 
 export function Services() {
   return (
-    <section id="servicos" className="bg-paper pb-20 pt-4 sm:pb-28 lg:pb-32">
+    <section id="servicos" className="bg-paper pb-20 sm:pb-28 lg:pb-32">
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
-        <Reveal className="max-w-prose pt-16 sm:pt-20">
+        <Reveal className="max-w-prose pt-14 sm:pt-16">
           <SectionLabel>Serviços</SectionLabel>
           <h2 className="mt-5 font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">
-            Seis frentes de atendimento
+            Frentes de atendimento
           </h2>
           <p className="mt-5 text-base leading-relaxed text-inkSoft">
             O escopo é definido caso a caso. Uma empresa pode contratar apenas o diagnóstico
@@ -129,7 +133,7 @@ export function Services() {
           white space, and the index in monospace. Closer to a document index
           than to a product page, which is the register this business speaks in.
         */}
-        <div className="mt-14 grid gap-x-16 sm:mt-16 lg:grid-cols-2">
+        <div className="mt-10 grid gap-x-16 sm:mt-12 lg:grid-cols-2">
           {services.map((service, index) => {
             const Icon = SERVICE_ICONS[service.icon] ?? CheckCircle2;
             return (
@@ -170,8 +174,6 @@ export function Services() {
 export function SG3({ whatsappSg3Url }: { whatsappSg3Url: string }) {
   return (
     <section id="sg3" className="relative overflow-hidden bg-navy py-20 text-mist sm:py-28">
-      <div aria-hidden="true" className="grid-dark absolute inset-0 opacity-60" />
-
       <div className="relative mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:items-center lg:gap-20">
         <Reveal>
           <p className="font-mono text-[11px] uppercase tracking-label text-emerald">

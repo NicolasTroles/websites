@@ -27,9 +27,6 @@ export function Hero() {
 
   return (
     <section id="topo" className="relative overflow-hidden bg-navy text-mist">
-      {/* Ruled-paper base layer, static. */}
-      <div aria-hidden="true" className="ruled-dark absolute inset-0" />
-
       {/* The emerald wedge from the client's banner, cutting in from the right. */}
       <div
         ref={wedgeRef}

@@ -1,4 +1,4 @@
-import { ArrowUpRight, Clock, MapPin, MessageCircle, Phone } from 'lucide-react';
+import { ArrowUpRight, MapPin, MessageCircle, Phone } from 'lucide-react';
 import { Reveal } from '@/components/Reveal';
 import { contactTopics, phoneUrl, site, whatsappUrl, whatsappUrlWith } from '@/config/site.config';
 
@@ -14,8 +14,6 @@ import { contactTopics, phoneUrl, site, whatsappUrl, whatsappUrlWith } from '@/c
 export function Contact() {
   return (
     <section id="contato" className="relative overflow-hidden bg-navy py-20 text-mist sm:py-28">
-      <div aria-hidden="true" className="ruled-dark absolute inset-0" />
-
       <div className="relative mx-auto grid max-w-6xl gap-14 px-5 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
         <Reveal>
           <p className="font-mono text-[11px] uppercase tracking-label text-emerald">Contato</p>
@@ -57,18 +55,6 @@ export function Contact() {
               Atendimento
             </dt>
             <dd className="mt-1 pl-7 text-[15px] leading-relaxed text-slate">{site.areaServed}</dd>
-
-            <dt className="mt-5 flex items-center gap-3 font-mono text-[11px] uppercase tracking-label text-slate">
-              <Clock className="h-4 w-4 shrink-0 text-emerald" strokeWidth={1.75} aria-hidden="true" />
-              Horário
-            </dt>
-            <dd className="mt-1 space-y-1 pl-7 text-[15px] text-slate">
-              {site.openingHours.map((entry) => (
-                <p key={entry.days}>
-                  {entry.days}: {entry.hours}
-                </p>
-              ))}
-            </dd>
           </dl>
         </Reveal>
 

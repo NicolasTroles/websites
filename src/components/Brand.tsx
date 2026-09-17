@@ -67,7 +67,7 @@ export function Brand({ alt = '', priority = false, className }: BrandProps) {
       // The lockup is 3.61:1 and the wordmark sits in a thin central band, so
       // it has to be rendered tall enough to stay legible: 36px of height is
       // already too small to read "Rodrigues Rangel".
-      sizes="(max-width: 640px) 160px, 260px"
+      sizes="(max-width: 640px) 200px, 300px"
       className={className ?? 'h-9 w-auto'}
     />
   );

@@ -84,7 +84,7 @@ void main() {
   if (mask <= 0.01) discard;
 
   vec3 color = mix(uPending, uRegular, vResolved);
-  float alpha = mask * (0.30 + 0.44 * vSettled + 0.26 * vResolved);
+  float alpha = mask * (0.20 + 0.32 * vSettled + 0.20 * vResolved);
   gl_FragColor = vec4(color * alpha, alpha);
 }
 `;
@@ -111,8 +111,10 @@ function compile(gl: WebGLRenderingContext, type: number, source: string) {
  */
 function buildField(width: number, height: number) {
   const aspect = width / Math.max(height, 1);
-  // Fewer particles on a phone: this runs on the same GPU budget as scrolling.
-  const target = width < 720 ? 1100 : 2600;
+  // Density was cut after the first round of feedback: the field read as noise
+  // competing with the copy rather than as a backdrop. Fewer, and a phone gets
+  // fewer still — it runs on the same GPU budget as scrolling.
+  const target = width < 720 ? 420 : 1400;
   const columns = Math.max(8, Math.round(Math.sqrt(target * aspect)));
   const rows = Math.max(6, Math.round(target / columns));
   const count = columns * rows;
@@ -298,10 +300,10 @@ export function ComplianceField() {
     <section id="como-funciona" className="relative bg-navy text-mist">
       {/*
         The tall element is the scroll track; the sticky child is what the
-        visitor actually sees. 380vh gives each of the four stages roughly a
-        screen of scroll, which is slow enough to read the copy.
+        visitor actually sees. Shorter on a phone: a long pin there reads as the
+        page having frozen rather than as an effect.
       */}
-      <div ref={pinRef} className="relative h-[380vh]">
+      <div ref={pinRef} className="relative h-[250vh] sm:h-[340vh]">
         <div className="sticky top-0 flex h-screen flex-col overflow-hidden">
           <canvas
             ref={canvasRef}
@@ -317,10 +319,14 @@ export function ComplianceField() {
             />
           )}
 
-          {/* Keeps text legible over the densest part of the field. */}
+          {/*
+            Opaque at both ends, thinnest in the middle: the copy sits in the
+            top and bottom bands, so the field is only allowed to show through
+            the empty strip between them.
+          */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy/85 via-navy/35 to-navy/90"
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-navy via-navy/45 to-navy"
           />
 
           {/* pb-24 on a phone clears the fixed WhatsApp bar, which would otherwise
@@ -351,7 +357,7 @@ export function ComplianceField() {
                   <li
                     key={item.step}
                     aria-current={isActive ? 'step' : undefined}
-                    className={`relative bg-navy/80 p-4 backdrop-blur-sm sm:p-5 transition-colors duration-500 ease-smooth lg:p-6 ${
+                    className={`relative bg-navy/80 p-3.5 backdrop-blur-sm sm:p-5 transition-colors duration-500 ease-smooth lg:p-6 ${
                       isActive ? 'bg-navySoft/90' : ''
                     }`}
                   >
@@ -385,16 +391,17 @@ export function ComplianceField() {
                       {item.title}
                     </h3>
                     {/*
-                      On a phone four open cards do not fit the sticky screen,
-                      so the inactive descriptions collapse to zero height.
-                      max-height (not `hidden`) keeps them in the accessibility
-                      tree and in the crawled markup.
+                      Four open cards do not fit a phone screen, and collapsing
+                      only the inactive ones made the active card balloon to
+                      twice the height of its neighbours. So on a phone the
+                      descriptions leave the cards entirely — sr-only keeps every
+                      one of them in the accessibility tree and in the crawled
+                      markup — and the active one is echoed in a fixed slot below
+                      the list, where changing it moves nothing.
                     */}
                     <p
-                      className={`overflow-hidden text-sm leading-relaxed transition-all duration-500 ease-smooth sm:mt-2 sm:max-h-48 ${
-                        isActive
-                          ? 'mt-2 max-h-48 text-slate opacity-100'
-                          : 'mt-0 max-h-0 text-dim opacity-70 sm:mt-2 sm:opacity-70'
+                      className={`sr-only text-sm leading-relaxed transition-opacity duration-500 sm:not-sr-only sm:mt-2 ${
+                        isActive ? 'sm:text-slate sm:opacity-100' : 'sm:text-dim sm:opacity-70'
                       }`}
                     >
                       {item.description}
@@ -404,9 +411,23 @@ export function ComplianceField() {
               })}
             </ol>
 
-            <p className="font-mono text-[11px] uppercase tracking-label text-dim">
-              <span className="text-emerald">{active.step}</span> — {active.state}
-            </p>
+            <div>
+              {/*
+                aria-hidden: this is a visual echo of the active card's own
+                description, which screen readers already reach inside the list.
+                min-height reserves three lines so the block never reflows as
+                the stage changes.
+              */}
+              <p
+                aria-hidden="true"
+                className="min-h-[4.5rem] text-sm leading-relaxed text-slate sm:hidden"
+              >
+                {active.description}
+              </p>
+              <p className="mt-3 font-mono text-[11px] uppercase tracking-label text-dim sm:mt-0">
+                <span className="text-emerald">{active.step}</span> — {active.state}
+              </p>
+            </div>
           </div>
         </div>
       </div>
