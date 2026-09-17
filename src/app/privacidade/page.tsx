@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { Footer } from '@/components/Footer';
-import { emailUrl, site } from '@/config/site.config';
+import { site, whatsappUrl } from '@/config/site.config';
 
 export const metadata: Metadata = {
   title: `Política de privacidade | ${site.brandFull}`,
@@ -13,8 +13,8 @@ export const metadata: Metadata = {
 
 /**
  * Deliberately short, because the site really does almost nothing with data:
- * the contact form composes a WhatsApp message in the visitor's own browser and
- * stores nothing. Do not pad this with boilerplate about data we never collect.
+ * there is no form, no account and no database — every contact link just opens
+ * WhatsApp. Do not pad this with boilerplate about data we never collect.
  */
 export default function PrivacyPage() {
   return (
@@ -40,10 +40,9 @@ export default function PrivacyPage() {
             <section>
               <h2 className="font-display text-xl font-semibold text-ink">Dados coletados</h2>
               <p className="mt-3">
-                Este site não possui cadastro, login nem banco de dados. O formulário de contato
-                não envia informações para nenhum servidor: os campos preenchidos são usados
-                apenas para montar, no próprio navegador, uma mensagem de WhatsApp que você
-                confere e envia manualmente.
+                Este site não coleta dados. Não há formulário, cadastro, login nem banco de
+                dados. Os botões de contato apenas abrem uma conversa no WhatsApp com uma
+                mensagem já escrita, que você confere e envia — nada é registrado aqui.
               </p>
             </section>
 
@@ -52,8 +51,8 @@ export default function PrivacyPage() {
                 Dados enviados por você
               </h2>
               <p className="mt-3">
-                Ao entrar em contato por WhatsApp, telefone ou e-mail, os dados informados
-                (nome, empresa, contato e a descrição da necessidade) são utilizados
+                Ao entrar em contato por WhatsApp ou telefone, os dados que você informar na
+                conversa (nome, empresa, contato e a descrição da necessidade) são utilizados
                 exclusivamente para responder à solicitação e avaliar o escopo do atendimento.
                 Não são compartilhados com terceiros nem usados para outra finalidade.
               </p>
@@ -75,10 +74,15 @@ export default function PrivacyPage() {
               <h2 className="font-display text-xl font-semibold text-ink">Seus direitos</h2>
               <p className="mt-3">
                 Conforme a Lei nº 13.709/2018 (LGPD), você pode solicitar a confirmação, o
-                acesso, a correção ou a exclusão dos dados que tenha enviado. Para isso, escreva
-                para{' '}
-                <a href={emailUrl} className="text-emeraldDeep underline underline-offset-4">
-                  {site.email}
+                acesso, a correção ou a exclusão dos dados que tenha enviado na conversa. Para
+                isso, fale{' '}
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-emeraldDeep underline underline-offset-4"
+                >
+                  pelo WhatsApp {site.phone}
                 </a>
                 .
               </p>

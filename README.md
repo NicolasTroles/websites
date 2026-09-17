@@ -33,8 +33,6 @@ direto em componente — o mesmo objeto alimenta a página, o JSON-LD, o sitemap
 Os campos marcados com `// TODO: confirm with client` no `site.config.ts` ainda são
 placeholder e **precisam ser trocados**:
 
-- [ ] `phone`, `phoneLink`, `whatsapp` — telefone real
-- [ ] `email`
 - [ ] `city`, `state`, `areaServed`
 - [ ] `openingHours`
 - [ ] `socialLinks.linkedin` / `.instagram` (deixar vazio esconde o link)
@@ -48,11 +46,12 @@ placeholder e **precisam ser trocados**:
 Desligado por padrão. Para ligar, defina `NEXT_PUBLIC_GA_ID` na Vercel (e em
 `.env.local` para rodar local). Sem a variável, nenhuma tag é injetada.
 
-## O formulário de contato
+## Contato
 
-Não tem backend, e isso é intencional: os campos são compostos em uma mensagem de
-WhatsApp no próprio navegador, com o assunto selecionado já na primeira linha. Nada
-é armazenado — a página de privacidade diz exatamente isso.
+Não há formulário: por decisão do cliente, todo contato é WhatsApp. O que o formulário
+fazia de útil era qualificar o lead, e isso continua — a lista `contactTopics` no
+`site.config.ts` gera um botão por assunto, cada um abrindo a conversa com a mensagem
+já escrita. Para mudar os textos, mexa só nessa lista.
 
 ## Rotas geradas
 

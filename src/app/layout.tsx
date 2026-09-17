@@ -85,7 +85,6 @@ const jsonLd = {
   description: site.seo.description,
   url: site.seo.url,
   telephone: site.phone,
-  email: site.email,
   areaServed: site.areaServed,
   address: {
     '@type': 'PostalAddress',

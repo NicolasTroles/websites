@@ -23,15 +23,12 @@ export const site = {
   owner: 'Valder Rangel',
   ownerRole: 'Técnico em Segurança do Trabalho',
 
-  // TODO: confirm with client — no phone was published in the material.
-  phone: '+55 41 90000-0000',
-  phoneLink: '+5541900000000',
-  whatsapp: '5541900000000',
+  // Confirmed with the client.
+  phone: '+55 41 99188-0363',
+  phoneLink: '+5541991880363',
+  whatsapp: '5541991880363',
   whatsappMessage:
     'Olá! Vim pelo site da Rodrigues Rangel Consultoria e gostaria de falar sobre a documentação de SST da minha empresa.',
-
-  // TODO: confirm with client.
-  email: 'contato@rodriguesrangel.com.br',
 
   // TODO: confirm with client — city/region and whether the work is remote.
   city: 'Curitiba',
@@ -217,17 +214,48 @@ export const owner = {
 } as const;
 
 /**
- * Subjects offered in the contact form. They double as lead qualification —
- * the selected value is carried into the WhatsApp message, so the first reply
- * already knows what the conversation is about.
+ * Entry points into the WhatsApp conversation, one per subject.
+ *
+ * This is what replaced the contact form. A form with no backend could only
+ * ever compose a WhatsApp message anyway, and asking someone to fill five
+ * fields first is friction for nothing — but the form's one real benefit was
+ * qualifying the lead. These buttons keep that: each opens the conversation
+ * already saying what it is about, so the first reply is informed.
+ *
+ * Keep each message in the first person and specific. A generic "Olá, gostaria
+ * de mais informações" throws away the whole point.
  */
-export const contactSubjects = [
-  'Diagnóstico documental',
-  'Gestão de terceiros',
-  'Suporte no SG3',
-  'Regularização de pendências',
-  'Documentos de SST',
-  'Outro assunto',
+export const contactTopics = [
+  {
+    label: 'Diagnóstico documental',
+    message:
+      'Gostaria de um diagnóstico da documentação de SST da minha empresa, para saber o que está pendente, vencido ou fora dos requisitos.',
+  },
+  {
+    label: 'Gestão de terceiros',
+    message:
+      'Preciso de apoio na organização dos documentos exigidos pelos contratantes da minha empresa na gestão de terceiros.',
+  },
+  {
+    label: 'Suporte no SG3',
+    message:
+      'Gostaria de falar sobre apoio nas rotinas do Sistema SG3: organização dos documentos, pendências e requisitos.',
+  },
+  {
+    label: 'Regularização de pendências',
+    message:
+      'Temos pendências documentais apontadas e gostaria de apoio para tratá-las e acompanhar a regularização.',
+  },
+  {
+    label: 'Documentos de SST',
+    message:
+      'Preciso de apoio para elaborar, revisar ou atualizar documentos de Segurança do Trabalho.',
+  },
+  {
+    label: 'Acompanhamento contínuo',
+    message:
+      'Gostaria de falar sobre acompanhamento periódico de documentos, prazos, treinamentos e vencimentos.',
+  },
 ] as const;
 
 /** Main navigation. Same list feeds the header, the footer and llms.txt. */
@@ -240,17 +268,21 @@ export const navLinks = [
   { href: '#contato', label: 'Contato' },
 ] as const;
 
+/**
+ * Builds a WhatsApp link. Every message opens the same way — the visitor should
+ * never have to explain where they came from — and then says what the
+ * conversation is about.
+ */
+export function whatsappUrlWith(subject: string) {
+  const text = `Olá! Vim pelo site da ${site.brandFull}. ${subject}`;
+  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(text)}`;
+}
+
 export const whatsappUrl = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
   site.whatsappMessage,
 )}`;
 
-/** Builds a WhatsApp link with a custom message (used by the contact form). */
-export function whatsappUrlWith(message: string) {
-  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
-}
-
 export const phoneUrl = `tel:${site.phoneLink}`;
-export const emailUrl = `mailto:${site.email}`;
 
 /**
  * Indexable routes. One entry per real URL — anchors are not pages and must

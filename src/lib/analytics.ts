@@ -11,11 +11,3 @@ export function trackWhatsAppClick(origin: string) {
     event_label: origin,
   });
 }
-
-/** Fires when the contact form is submitted, with the chosen subject. */
-export function trackFormSubmit(subject: string) {
-  window.gtag?.('event', 'contact_form_submit', {
-    event_category: 'contact',
-    event_label: subject,
-  });
-}

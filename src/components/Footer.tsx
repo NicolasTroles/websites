@@ -1,5 +1,5 @@
 import { Brand } from '@/components/Brand';
-import { emailUrl, navLinks, phoneUrl, site } from '@/config/site.config';
+import { navLinks, phoneUrl, site, whatsappUrl } from '@/config/site.config';
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -42,10 +42,12 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href={emailUrl}
-                  className="break-all transition-colors duration-200 hover:text-emerald"
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors duration-200 hover:text-emerald"
                 >
-                  {site.email}
+                  WhatsApp
                 </a>
               </li>
               <li className="pt-2 leading-relaxed text-dim">{site.areaServed}</li>
