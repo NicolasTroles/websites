@@ -74,14 +74,14 @@ export function useReveal<T extends HTMLElement>(threshold = 0.12) {
   const ref = useRef<T>(null);
   const [shown, setShown] = useState(false);
 
+  // No reduced-motion branch here on purpose: the global
+  // prefers-reduced-motion rule in globals.css collapses the transition to
+  // ~0ms, so the element still appears the moment it enters the viewport — it
+  // just does not travel. Special-casing it in JS would mean writing state
+  // synchronously inside the effect for no visible gain.
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
-    if (prefersReducedMotion()) {
-      setShown(true);
-      return;
-    }
 
     const observer = new IntersectionObserver(([entry]) => setShown(entry.isIntersecting), {
       threshold,
@@ -99,15 +99,16 @@ export function useReveal<T extends HTMLElement>(threshold = 0.12) {
  * can travel under a `position: sticky` child: 0 when its top reaches the top
  * of the viewport, 1 when its bottom does.
  *
- * This is what drives the WebGL compliance field. It reports through a ref
- * callback instead of state on purpose — the shader reads the value every
- * frame, and re-rendering React 60 times a second to move a uniform would be
- * pure waste.
+ * This is what drives the WebGL compliance field. It reports through a callback
+ * instead of state on purpose — the shader reads the value every frame, and
+ * re-rendering React 60 times a second to move a uniform would be pure waste.
+ *
+ * `onProgress` must be stable (wrap it in useCallback): it is an effect
+ * dependency, so a new function identity on every render would tear down and rebuild
+ * the observer on every frame.
  */
 export function usePinProgress<T extends HTMLElement>(onProgress: (value: number) => void) {
   const ref = useRef<T>(null);
-  const callback = useRef(onProgress);
-  callback.current = onProgress;
 
   useEffect(() => {
     const el = ref.current;
@@ -115,7 +116,7 @@ export function usePinProgress<T extends HTMLElement>(onProgress: (value: number
 
     if (prefersReducedMotion()) {
       // Freeze at the resolved end state: organised and under control.
-      callback.current(1);
+      onProgress(1);
       return;
     }
 
@@ -127,10 +128,10 @@ export function usePinProgress<T extends HTMLElement>(onProgress: (value: number
       const rect = el.getBoundingClientRect();
       const travel = rect.height - window.innerHeight;
       if (travel <= 0) {
-        callback.current(rect.top <= 0 ? 1 : 0);
+        onProgress(rect.top <= 0 ? 1 : 0);
         return;
       }
-      callback.current(Math.min(1, Math.max(0, -rect.top / travel)));
+      onProgress(Math.min(1, Math.max(0, -rect.top / travel)));
     };
 
     const onScroll = () => {
@@ -157,7 +158,7 @@ export function usePinProgress<T extends HTMLElement>(onProgress: (value: number
       window.removeEventListener('resize', onScroll);
       if (frame) cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [onProgress]);
 
   return ref;
 }

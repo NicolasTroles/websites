@@ -21,9 +21,9 @@ const SAMPLE_ROWS = [
 export function Hero() {
   // Three depths, all subtle. The wedge barely moves, the panel moves most —
   // that difference is what reads as depth instead of as a gimmick.
-  const wedge = useParallax<HTMLDivElement>(0.06);
-  const ghost = useParallax<HTMLDivElement>(0.11);
-  const panel = useParallax<HTMLDivElement>(0.18);
+  const { ref: wedgeRef, offset: wedgeOffset } = useParallax<HTMLDivElement>(0.06);
+  const { ref: ghostRef, offset: ghostOffset } = useParallax<HTMLDivElement>(0.11);
+  const { ref: panelRef, offset: panelOffset } = useParallax<HTMLDivElement>(0.18);
 
   return (
     <section id="topo" className="relative overflow-hidden bg-navy text-mist">
@@ -32,10 +32,10 @@ export function Hero() {
 
       {/* The emerald wedge from the client's banner, cutting in from the right. */}
       <div
-        ref={wedge.ref}
+        ref={wedgeRef}
         aria-hidden="true"
         style={{
-          transform: `translate3d(0, ${wedge.offset}px, 0)`,
+          transform: `translate3d(0, ${wedgeOffset}px, 0)`,
           // The diagonal is the one shape carried over literally from the
           // client's banner, so it stays a hand-written polygon rather than a
           // utility class.
@@ -44,9 +44,9 @@ export function Hero() {
         className="absolute -right-24 bottom-[-20%] hidden h-[78%] w-[46%] bg-emerald/10 lg:block"
       />
       <div
-        ref={ghost.ref}
+        ref={ghostRef}
         aria-hidden="true"
-        style={{ transform: `translate3d(0, ${ghost.offset}px, 0)` }}
+        style={{ transform: `translate3d(0, ${ghostOffset}px, 0)` }}
         className="absolute -left-16 top-[18%] hidden opacity-[0.045] md:block"
       >
         <Monogram className="h-[36rem] w-[36rem] text-mist" />
@@ -108,8 +108,8 @@ export function Hero() {
 
         {/* The deepest parallax layer: a mock reading of document status. */}
         <div
-          ref={panel.ref}
-          style={{ transform: `translate3d(0, ${panel.offset}px, 0)` }}
+          ref={panelRef}
+          style={{ transform: `translate3d(0, ${panelOffset}px, 0)` }}
           className="relative hidden lg:block"
         >
           <div className="border border-navyLine bg-navySoft/80 backdrop-blur-sm">

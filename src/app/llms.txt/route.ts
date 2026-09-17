@@ -8,6 +8,11 @@ import { monitoredItems, process, services, site, whatsappUrl } from '@/config/s
  *
  * Every anchor linked below must exist as an `id` in the rendered page.
  */
+// Next 16 treats route handlers as dynamic by default. Nothing here reads the
+// request, so pin it back to static: the file is generated once at build time
+// like the sitemap, instead of being rendered on every crawl.
+export const dynamic = 'force-static';
+
 const { url } = site.seo;
 
 export function GET() {
