@@ -4,26 +4,25 @@
 
 @layer base {
   :root {
-    color-scheme: dark;
+    /* The page is predominantly light; only the framing bands are dark. */
+    color-scheme: light;
   }
 
   html {
     scroll-behavior: smooth;
     /* Compensates for the fixed header when jumping to an anchor. */
-    scroll-padding-top: 5rem;
+    scroll-padding-top: 5.5rem;
   }
 
   body {
-    /* The site opens and closes dark; light sections paint their own background. */
-    @apply bg-ink text-bone antialiased;
-    /* Avoids the horizontal scroll parallax can cause on narrow screens. */
+    @apply bg-paper text-ink antialiased;
+    /* Parallax layers can overhang their container on narrow screens. */
     overflow-x: hidden;
   }
 
   /*
-   * Visible focus ring for keyboard navigation.
-   * `outline` with currentColor works on both backgrounds without needing a
-   * per-section variant — the ring inherits the local text color.
+   * Focus ring inherits the local text color, so it stays visible on both the
+   * navy and the paper families without a per-section variant.
    */
   :focus-visible {
     outline: 2px solid currentColor;
@@ -31,34 +30,50 @@
   }
 
   ::selection {
-    @apply bg-clay text-ink;
+    @apply bg-emerald text-navy;
   }
 }
 
 @layer utilities {
   /*
-   * Faint blueprint-style grid, in CSS only, for photo placeholders — a nod
-   * to engineering drawings instead of a generic empty box. One variant per
-   * background.
+   * Ruled-paper texture — the site's one recurring background motif. It reads
+   * as a document sheet, which is what the whole business is about. One
+   * variant per background family.
    */
-  .grid-texture {
-    background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-    background-size: 24px 24px;
+  .ruled-light {
+    background-image: linear-gradient(to bottom, rgba(12, 24, 34, 0.05) 1px, transparent 1px);
+    background-size: 100% 32px;
   }
 
-  .grid-texture-light {
+  .ruled-dark {
+    background-image: linear-gradient(to bottom, rgba(232, 238, 243, 0.05) 1px, transparent 1px);
+    background-size: 100% 32px;
+  }
+
+  /* Blueprint grid, used behind photo placeholders and the SG3 panel. */
+  .grid-dark {
     background-image:
-      linear-gradient(to right, rgba(36, 39, 43, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(36, 39, 43, 0.05) 1px, transparent 1px);
-    background-size: 24px 24px;
+      linear-gradient(to right, rgba(232, 238, 243, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(232, 238, 243, 0.04) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .grid-light {
+    background-image:
+      linear-gradient(to right, rgba(12, 24, 34, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(12, 24, 34, 0.045) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* Masks the marquee's hard edges into the background it sits on. */
+  .fade-x {
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
   }
 }
 
 /*
- * Turns off all motion when the user asks for reduced motion.
- * Parallax is also disabled in JS; this is the CSS safety net.
+ * Motion kill-switch. The parallax hook and the WebGL field also check this in
+ * JS (they freeze at their resolved end state); this is the CSS safety net.
  */
 @media (prefers-reduced-motion: reduce) {
   html {

@@ -1,210 +1,159 @@
-'use client';
-
 import {
-  Drill,
-  Droplets,
-  FileCheck,
-  FlaskConical,
-  Layers,
-  Ruler,
-  TestTube2,
+  ArrowUpRight,
+  CheckCircle2,
+  FileCheck2,
+  FolderTree,
+  LayoutGrid,
+  Search,
+  Users,
+  type LucideIcon,
 } from 'lucide-react';
-import { process, services, site } from '@/config/site.config';
-import { useParallax } from '@/lib/useParallax';
-import { RigSilhouette } from './Brand';
-import {
-  FieldCrewIllustration,
-  LandscapeStripIllustration,
-  ReportIllustration,
-  RigStandingIllustration,
-  SamplerCloseupIllustration,
-  SoilSamplesIllustration,
-  SptOperatorIllustration,
-  TransportIllustration,
-} from './Illustrations';
-import { Photo } from './Photo';
-import { Reveal } from './Reveal';
+import { Photo } from '@/components/Photo';
+import { Reveal } from '@/components/Reveal';
+import { audiences, monitoredItems, owner, services, site } from '@/config/site.config';
 
-const ICONS = {
-  coreSample: TestTube2,
-  drill: Drill,
-  ruler: Ruler,
-  layers: Layers,
-  droplets: Droplets,
-  flask: FlaskConical,
-  fileCheck: FileCheck,
-} as const;
+/** Maps the icon key in site.config to a concrete lucide component. */
+const SERVICE_ICONS: Record<string, LucideIcon> = {
+  search: Search,
+  folder: FolderTree,
+  users: Users,
+  system: LayoutGrid,
+  check: CheckCircle2,
+  file: FileCheck2,
+};
 
 /**
- * The three brand accents (orange / blue / green, from the AlfaGeo mark),
- * cycled across list items instead of one accent repeated — a direct,
- * literal "follow the AlfaGeo colors" rather than a single-accent palette.
- * Written as full literal class strings (not template-interpolated) so
- * Tailwind's static build-time scan picks them up.
+ * Acronyms that commonly appear in this kind of engagement. Deliberately framed
+ * as "podem entrar no acompanhamento" — the site must not imply that every one
+ * of these is inside every contract.
  */
-const ACCENT_ICON = ['text-clayDeep', 'text-blueDeep', 'text-greenDeep'] as const;
-const ACCENT_NUMBER = ['text-clay/60', 'text-blue/60', 'text-green/60'] as const;
-const ACCENT_HOVER_BORDER = ['hover:border-clay/50', 'hover:border-blue/50', 'hover:border-green/50'] as const;
+const DOCUMENT_TICKER = [
+  'PGR',
+  'LTCAT',
+  'PCMSO',
+  'ASO',
+  'NR-06',
+  'NR-10',
+  'NR-12',
+  'NR-18',
+  'NR-33',
+  'NR-35',
+  'CIPA',
+  'Ficha de EPI',
+  'PPP',
+  'PCA',
+  'PPR',
+  'SG3',
+];
 
-/**
- * Standard section heading.
- * `tone` swaps text colors for light vs. dark sections — the page alternates
- * between the two background families.
- */
-function SectionHeading({
-  eyebrow,
-  title,
-  description,
-  center = false,
-  tone = 'light',
-}: {
-  eyebrow: string;
-  title: string;
-  description?: string;
-  center?: boolean;
-  tone?: 'light' | 'dark';
-}) {
-  const isLight = tone === 'light';
+function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className={center ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl'}>
-      <p
-        className={`text-[10px] uppercase tracking-wide2 ${isLight ? 'text-clayDeep' : 'text-clay'}`}
-      >
-        {eyebrow}
-      </p>
-      <h2
-        className={`mt-5 font-display text-[clamp(1.9rem,4.6vw,3.1rem)] font-semibold leading-[1.1] ${
-          isLight ? 'text-graphite' : 'text-bone'
-        }`}
-      >
-        {title}
-      </h2>
-      {description && (
-        <p
-          className={`mt-6 max-w-prose text-[17px] leading-relaxed ${
-            isLight ? 'text-graphiteSoft' : 'text-silver'
-          } ${center ? 'mx-auto' : ''}`}
-        >
-          {description}
-        </p>
-      )}
-    </div>
+    <p className="font-mono text-[11px] uppercase tracking-label text-emeraldDeep">{children}</p>
   );
 }
 
-/** Section 2 — LIGHT. Who we are, with photos of the crew at work. */
-export function About() {
-  const mark = useParallax<HTMLDivElement>(0.12);
+/* ------------------------------------------------------------------ */
 
+export function About() {
   return (
-    <section id="sobre" className="relative overflow-hidden bg-stone py-28 text-graphite sm:py-36">
-      {/* Watermark of the rig silhouette, drifting slowly in the background. */}
-      <div
-        ref={mark.ref}
-        className="pointer-events-none absolute -right-24 top-0 hidden opacity-[0.06] will-change-transform lg:block"
-        style={{ transform: `translate3d(0, ${mark.offset}px, 0)` }}
-        aria-hidden="true"
-      >
-        <RigSilhouette className="h-[42rem] w-auto text-graphite" />
+    <section id="atuacao" className="relative bg-paper py-20 sm:py-28 lg:py-32">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+          <Reveal>
+            <SectionLabel>Apoio técnico</SectionLabel>
+            <h2 className="mt-5 font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">
+              Organização e conformidade documental
+            </h2>
+          </Reveal>
+
+          <Reveal delay={90} className="max-w-prose">
+            <p className="text-lg leading-relaxed text-ink">
+              A {site.brandFull} atua na análise, organização e acompanhamento de documentos e
+              requisitos relacionados à Segurança do Trabalho e à gestão de terceiros.
+            </p>
+            <p className="mt-5 text-base leading-relaxed text-inkSoft">
+              O trabalho pode abranger desde a identificação inicial de pendências até o
+              acompanhamento das correções, dos vencimentos e das atualizações necessárias —
+              conforme o escopo definido com cada empresa.
+            </p>
+          </Reveal>
+        </div>
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Sobre a AlfaGeo"
-              title="Dado de campo confiável, antes do projeto sair do papel."
-              description="Toda fundação começa com uma pergunta: o que tem embaixo do terreno? A AlfaGeo responde essa pergunta com sondagem SPT, rotativa e ensaios complementares, seguindo as normas técnicas da ABNT, para que engenheiros e arquitetos projetem com segurança."
-            />
-            <div className="mt-10 space-y-6 border-l-2 border-clay/50 pl-7">
-              <p className="max-w-prose leading-relaxed text-graphiteSoft">
-                Baseada em {site.city}, {site.state}, a equipe da {site.brandName} atende obras em
-                todo o Paraná, Santa Catarina, Rio Grande do Sul e São Paulo, com equipamento
-                próprio e atendimento direto — do primeiro contato à entrega do laudo assinado.
-              </p>
-              <p className="max-w-prose leading-relaxed text-graphiteSoft">
-                {/* TODO: confirm years of experience / team size with the client before publishing a number. */}
-                O objetivo é simples: dado de campo preciso, entregue no prazo combinado, para que a
-                fundação seja dimensionada com o solo real — não com uma estimativa.
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={120}>
-            <div className="grid grid-cols-2 gap-4">
-              <Photo
-                src="/dados1.jpg"
-                guide="Detalhe da equipe operando o amostrador SPT durante a cravação, com o tripé e o cabo de aço em primeiro plano."
-                illustration={<SptOperatorIllustration tone="light" />}
-                alt="Equipe da AlfaGeo operando o tripé de sondagem SPT no cabo de aço"
-                aspect="tall"
-                tone="light"
-                sizes="(max-width: 1024px) 50vw, 25vw"
-                className="mt-10"
-              />
-              <Photo
-                src="/dados2.jpg"
-                guide="Amostras de solo (testemunhos) organizadas em caixas, prontas para classificação."
-                illustration={<SoilSamplesIllustration tone="light" />}
-                alt="Testemunhos de solo organizados em caixas para classificação"
-                aspect="tall"
-                tone="light"
-                sizes="(max-width: 1024px) 50vw, 25vw"
-              />
-            </div>
-          </Reveal>
+      {/*
+        Ticker of document acronyms. Pure texture: it says "this is the material
+        we deal with" faster than a paragraph would, and it is duplicated so the
+        loop has no visible seam.
+      */}
+      <div className="mt-16 border-y border-paperLine bg-paperDeep py-4 sm:mt-20">
+        <p className="mx-auto max-w-6xl px-5 font-mono text-[10px] uppercase tracking-label text-inkSoft sm:px-8">
+          Itens que podem entrar no acompanhamento
+        </p>
+        <div className="fade-x mt-3 overflow-hidden" aria-hidden="true">
+          <div className="flex w-max animate-marquee gap-10 pr-10">
+            {[...DOCUMENT_TICKER, ...DOCUMENT_TICKER].map((item, index) => (
+              <span
+                key={`${item}-${index}`}
+                // 65% is the lightest this can go and still clear AA (5.3:1) on paperDeep.
+                className="whitespace-nowrap font-display text-lg font-medium text-ink/65"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-/** Section 3 — LIGHT. Services. */
+/* ------------------------------------------------------------------ */
+
 export function Services() {
   return (
-    <section
-      id="servicos"
-      className="border-t border-stoneLine bg-stone py-28 text-graphite sm:py-36"
-    >
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <Reveal>
-          <SectionHeading eyebrow="Serviços" title="O que a AlfaGeo executa em campo." center />
+    <section id="servicos" className="bg-paper pb-20 pt-4 sm:pb-28 lg:pb-32">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <Reveal className="max-w-prose pt-16 sm:pt-20">
+          <SectionLabel>Serviços</SectionLabel>
+          <h2 className="mt-5 font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">
+            Seis frentes de atendimento
+          </h2>
+          <p className="mt-5 text-base leading-relaxed text-inkSoft">
+            O escopo é definido caso a caso. Uma empresa pode contratar apenas o diagnóstico
+            inicial, ou o acompanhamento contínuo de toda a documentação.
+          </p>
         </Reveal>
 
-        {/* Bento grid: the first service (the flagship SPT test) spans two
-            columns, the rest fall into an even grid — asymmetric on purpose. */}
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, i) => {
-            const Icon = ICONS[service.icon];
-            const accent = i % 3;
+        {/*
+          An editorial ledger, not a card grid: a hairline per row, generous
+          white space, and the index in monospace. Closer to a document index
+          than to a product page, which is the register this business speaks in.
+        */}
+        <div className="mt-14 grid gap-x-16 sm:mt-16 lg:grid-cols-2">
+          {services.map((service, index) => {
+            const Icon = SERVICE_ICONS[service.icon] ?? CheckCircle2;
             return (
-              <Reveal
-                key={service.title}
-                delay={i * 70}
-                className={i === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}
-              >
-                <article
-                  className={`group h-full border border-stoneLine bg-stoneDeep transition-all duration-300 hover:-translate-y-1 hover:bg-stone ${ACCENT_HOVER_BORDER[accent]}`}
-                >
-                  {/* photoSrc is only set on services with a matching photo in
-                      /public already — the rest (see site.config.ts) fall
-                      back to the plain "Foto aqui" guide since Photo has no
-                      illustration to show while the file is missing. */}
-                  <Photo
-                    src={service.photoSrc}
-                    aiPrompt={service.aiPrompt}
-                    alt={service.photoAlt}
-                    guide={service.photoGuide}
-                    aspect="landscape"
-                    tone="light"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                  />
-                  <div className="p-9 sm:p-11">
-                    <Icon className={`h-6 w-6 ${ACCENT_ICON[accent]}`} strokeWidth={1.5} aria-hidden="true" />
-                    <h3 className="mt-7 font-display text-2xl text-graphite">{service.title}</h3>
-                    <p className="mt-4 max-w-prose leading-relaxed text-graphiteSoft">
-                      {service.description}
-                    </p>
+              <Reveal key={service.id} variant="wipe" delay={(index % 2) * 80}>
+                <article className="group border-t border-paperLine py-8 transition-colors duration-300 ease-smooth hover:border-emeraldDeep">
+                  <div className="flex items-start gap-5">
+                    <span className="mt-1 font-mono text-xs text-inkSoft transition-colors duration-300 group-hover:text-emeraldDeep">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start gap-3">
+                        <Icon
+                          className="mt-0.5 h-5 w-5 shrink-0 text-emeraldDeep"
+                          strokeWidth={1.5}
+                          aria-hidden="true"
+                        />
+                        <h3 className="font-display text-xl font-semibold leading-snug text-ink">
+                          {service.title}
+                        </h3>
+                      </div>
+                      <p className="mt-3 max-w-prose text-[15px] leading-relaxed text-inkSoft">
+                        {service.description}
+                      </p>
+                    </div>
                   </div>
                 </article>
               </Reveal>
@@ -216,67 +165,163 @@ export function Services() {
   );
 }
 
-/** Section 4 — DARK. Field gallery: the dark background makes the photos pop. */
-export function Gallery() {
+/* ------------------------------------------------------------------ */
+
+export function SG3({ whatsappSg3Url }: { whatsappSg3Url: string }) {
   return (
-    <section id="trabalhos" className="bg-ink py-28 text-bone sm:py-36">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
+    <section id="sg3" className="relative overflow-hidden bg-navy py-20 text-mist sm:py-28">
+      <div aria-hidden="true" className="grid-dark absolute inset-0 opacity-60" />
+
+      <div className="relative mx-auto grid max-w-6xl gap-12 px-5 sm:px-8 lg:grid-cols-2 lg:items-center lg:gap-20">
         <Reveal>
-          <SectionHeading
-            eyebrow="Trabalhos"
-            title="Sondagens executadas em campo."
-            description="Fotos de referência do tipo de registro que a AlfaGeo vai gerar em cada visita técnica, até termos um ensaio fotográfico próprio."
-            tone="dark"
-          />
+          <p className="font-mono text-[11px] uppercase tracking-label text-emerald">
+            Sistema de gestão de terceiros
+          </p>
+          <h2 className="mt-5 font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] sm:text-4xl">
+            Gestão e acompanhamento no SG3
+          </h2>
+          <p className="mt-6 max-w-prose text-base leading-relaxed text-slate">
+            Apoio às empresas que utilizam o Sistema SG3 na gestão de terceiros. O atendimento
+            pode envolver orientação na organização dos documentos, acompanhamento de
+            pendências, conferência das informações necessárias ao processo e suporte às
+            rotinas relacionadas à utilização do sistema.
+          </p>
+
+          <a
+            href={whatsappSg3Url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group mt-9 inline-flex min-h-12 items-center gap-2 border border-emerald px-7 font-display text-sm font-semibold uppercase tracking-[0.08em] text-emerald transition-colors duration-200 hover:bg-emerald hover:text-navy"
+          >
+            Falar sobre suporte no SG3
+            <ArrowUpRight
+              className="h-4 w-4 transition-transform duration-200 ease-smooth group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              strokeWidth={2}
+              aria-hidden="true"
+            />
+          </a>
         </Reveal>
 
-        {/* Asymmetric grid: more interesting than a uniform one. */}
-        <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          <Reveal className="lg:row-span-2">
-            <Photo
-              src="/galeria1.jpg"
-              guide="Foto vertical em destaque: equipamento de sondagem montado, tripé completo, em pé no terreno."
-              illustration={<RigStandingIllustration />}
-              alt="Tripé de sondagem SPT montado em campo, sob céu aberto"
-              aspect="tall"
-              className="h-full"
-            />
+        <Reveal delay={120} variant="wipe">
+          <div className="border border-navyLine bg-navySoft/70">
+            <p className="border-b border-navyLine px-6 py-4 font-mono text-[10px] uppercase tracking-label text-dim">
+              O que costuma ser tratado no sistema
+            </p>
+            <ul className="divide-y divide-navyLine">
+              {[
+                'Cadastro e envio de documentos da empresa e dos colaboradores',
+                'Conferência das informações exigidas em cada requisito',
+                'Acompanhamento das pendências apontadas pelo contratante',
+                'Reenvio e correção de documentos reprovados',
+                'Controle de validades para evitar bloqueio de acesso',
+              ].map((item) => (
+                <li key={item} className="flex gap-4 px-6 py-4">
+                  <CheckCircle2
+                    className="mt-0.5 h-4 w-4 shrink-0 text-emerald"
+                    strokeWidth={1.75}
+                    aria-hidden="true"
+                  />
+                  <span className="text-sm leading-relaxed text-slate">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+
+export function Monitored() {
+  return (
+    <section id="acompanhamento" className="bg-paper py-20 sm:py-28 lg:py-32">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <Reveal className="max-w-prose">
+          <SectionLabel>Controle de documentos e requisitos</SectionLabel>
+          <h2 className="mt-5 font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">
+            O que pode ser acompanhado
+          </h2>
+          <p className="mt-5 text-base leading-relaxed text-inkSoft">
+            Conforme a necessidade de cada empresa ou contrato, o acompanhamento pode envolver:
+          </p>
+        </Reveal>
+
+        <ul className="mt-12 grid gap-px border border-paperLine bg-paperLine sm:grid-cols-2">
+          {monitoredItems.map((item, index) => (
+            <li key={item.code} className="bg-paper">
+              <Reveal delay={(index % 2) * 60}>
+                <div className="flex items-start gap-4 p-6">
+                  <span className="mt-0.5 min-w-[3.25rem] font-mono text-[11px] uppercase tracking-[0.1em] text-emeraldDeep">
+                    {item.code}
+                  </span>
+                  <span className="text-[15px] leading-relaxed text-ink">{item.label}</span>
+                </div>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+
+/**
+ * One documentary photograph, full width. The rest of the site is type,
+ * hairlines and the WebGL field; a single real image of the work stops it from
+ * reading as an abstraction. Until the client sends the photo, the frame holds
+ * the brief and the generator prompt at the right aspect ratio, so nothing
+ * shifts when the file lands.
+ */
+export function WorkBand() {
+  return (
+    <section className="bg-paper pb-4 sm:pb-8">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <Reveal variant="wipe">
+          <Photo
+            // TODO: ask the client for the photo, then set src="/documentacao.jpg".
+            alt="Documentação de segurança do trabalho sendo conferida sobre uma mesa"
+            aspect="landscape"
+            tone="light"
+            guide="Foto horizontal de documentos de SST sobre uma mesa clara — pastas, checklist e um capacete ao fundo, luz natural, sem rosto em destaque."
+            aiPrompt="Wide documentary photograph of occupational safety paperwork on a light desk: an organised stack of folders, a printed compliance checklist with a pen resting on it, and a white hard hat slightly out of focus in the background. Natural window light from the left, calm neutral colour grade with deep navy and muted emerald accents, shallow depth of field, no faces, no text legible, 16:10 landscape, photorealistic"
+            sizes="(max-width: 1024px) 100vw, 1088px"
+          />
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+
+export function Audiences() {
+  return (
+    <section id="para-quem" className="bg-paperDeep py-20 sm:py-28">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+          <Reveal>
+            <SectionLabel>Para quem é</SectionLabel>
+            <h2 className="mt-5 font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">
+              Empresas que precisam organizar e acompanhar exigências de SST
+            </h2>
           </Reveal>
-          <Reveal delay={80}>
-            <Photo
-              src="/galeria2.jpg"
-              guide="Detalhe do amostrador SPT sendo extraído do solo, com marcas de profundidade visíveis."
-              illustration={<SamplerCloseupIllustration />}
-              alt="Caixa de testemunhos com etiquetas de profundidade de cada amostra"
-              aspect="square"
-            />
-          </Reveal>
-          <Reveal delay={160}>
-            <Photo
-              src="/galeria3.jpg"
-              guide="Equipe técnica trabalhando em conjunto durante a sondagem, com equipamentos de segurança."
-              illustration={<FieldCrewIllustration />}
-              alt="Equipe da AlfaGeo trabalhando em conjunto em obra de contenção de talude"
-              aspect="square"
-            />
-          </Reveal>
-          <Reveal delay={240}>
-            <Photo
-              src="/galeria4.jpg"
-              guide="Equipamento de sondagem sendo transportado ou montado em um veículo utilitário."
-              illustration={<TransportIllustration />}
-              alt="Caminhonete da AlfaGeo Sondagens com o equipamento de sondagem na carreta"
-              aspect="landscape"
-            />
-          </Reveal>
-          <Reveal delay={320}>
-            <Photo
-              src="/galeria5.png"
-              guide="Laudo técnico impresso sobre uma mesa, ao lado de um capacete de segurança."
-              illustration={<ReportIllustration />}
-              alt="Ilustração de um laudo geotécnico com gráfico de perfil de solo, pronto para entrega"
-              aspect="landscape"
-            />
+
+          <Reveal delay={90}>
+            <p className="text-base leading-relaxed text-inkSoft">A consultoria pode atender empresas que:</p>
+            <ul className="mt-6 divide-y divide-paperLine border-y border-paperLine">
+              {audiences.map((item, index) => (
+                <li key={item} className="flex gap-5 py-5">
+                  <span className="font-mono text-xs text-emeraldDeep">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span className="max-w-prose text-[15px] leading-relaxed text-ink">{item}</span>
+                </li>
+              ))}
+            </ul>
           </Reveal>
         </div>
       </div>
@@ -284,63 +329,67 @@ export function Gallery() {
   );
 }
 
-/** Section 5 — DARK photo strip, then LIGHT process steps. */
-export function Process() {
-  const strip = useParallax<HTMLDivElement>(0.22);
+/* ------------------------------------------------------------------ */
 
+export function Owner() {
   return (
-    <section id="processo">
-      {/* Parallax photo strip: transition between dark and light. */}
-      <div className="relative h-[45vh] overflow-hidden bg-ink sm:h-[60vh]">
-        <div
-          ref={strip.ref}
-          className="absolute inset-0 scale-125 will-change-transform"
-          style={{ transform: `translate3d(0, ${strip.offset}px, 0) scale(1.25)` }}
-        >
-          <Photo
-            src="/banner2.png"
-            guide="Foto larga e atmosférica do canteiro de obras ou paisagem próxima a Curitiba, servindo de respiro entre seções."
-            illustration={<LandscapeStripIllustration />}
-            alt="Ilustração topográfica de um canteiro de obras com equipamento de sondagem ao fundo"
-            aspect="landscape"
-            sizes="100vw"
-            className="!aspect-auto h-full w-full"
-          />
-        </div>
-        <div className="absolute inset-0 bg-ink/55" aria-hidden="true" />
-      </div>
-
-      <div className="bg-stone text-graphite">
-        <div className="mx-auto max-w-7xl px-5 py-28 sm:px-8 sm:py-36">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Como funciona"
-              title="Do primeiro contato ao laudo assinado."
-              description="Quatro etapas, com prazo combinado desde o início."
-              center
+    <section id="sobre" className="bg-paper py-20 sm:py-28 lg:py-32">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:gap-20">
+          <Reveal variant="wipe">
+            <Photo
+              // TODO: ask the client for the photo, then set src="/valder.jpg".
+              alt={`${owner.name}, ${owner.role}`}
+              aspect="portrait"
+              tone="light"
+              guide="Foto do Valder em fundo neutro claro, camisa social ou polo, enquadramento do peito para cima, olhando para a câmera."
+              aiPrompt="Professional corporate headshot of a Brazilian man in his 40s, wearing a plain navy polo shirt, standing against a clean light grey studio background, soft even key light from the left, shallow depth of field, chest-up framing, calm confident expression, neutral colour grade with deep navy and muted emerald accents, photorealistic, 4:3 portrait"
+              sizes="(max-width: 1024px) 100vw, 30vw"
             />
           </Reveal>
 
-          <ol className="mt-16 grid gap-px border border-stoneLine bg-stoneLine md:grid-cols-2 lg:grid-cols-4">
-            {process.map((step, i) => (
-              // The <li> stays a direct child of the <ol> — a wrapping <div>
-              // here breaks the list semantics screen readers rely on.
-              <li key={step.number} className="bg-stone">
-                <Reveal delay={i * 80} className="h-full p-9">
-                  <span
-                    className={`font-mono text-5xl ${ACCENT_NUMBER[i % 3]}`}
-                    aria-hidden="true"
-                  >
-                    {step.number}
-                  </span>
-                  <h3 className="mt-5 font-display text-xl text-graphite">{step.title}</h3>
-                  <p className="mt-4 text-[15px] leading-relaxed text-graphiteSoft">
-                    {step.description}
-                  </p>
-                </Reveal>
-              </li>
+          <Reveal delay={100}>
+            <SectionLabel>Sobre o profissional</SectionLabel>
+            <h2 className="mt-5 font-display text-3xl font-semibold leading-[1.12] tracking-[-0.015em] text-ink sm:text-4xl">
+              {owner.name}
+            </h2>
+            <p className="mt-3 font-display text-base text-emeraldDeep">{owner.role}</p>
+
+            {owner.paragraphs.map((paragraph) => (
+              <p key={paragraph} className="mt-6 max-w-prose text-base leading-relaxed text-inkSoft">
+                {paragraph}
+              </p>
             ))}
-          </ol>
+
+            <p className="mt-6 max-w-prose text-base leading-relaxed text-ink">{owner.education}</p>
+
+            <ul className="mt-8 flex flex-wrap gap-2" aria-label="Temas de atuação">
+              {owner.topics.map((topic) => (
+                <li
+                  key={topic}
+                  className="border border-paperLine px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.1em] text-inkSoft"
+                >
+                  {topic}
+                </li>
+              ))}
+            </ul>
+
+            {site.socialLinks.linkedin && (
+              <a
+                href={site.socialLinks.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group mt-8 inline-flex min-h-11 items-center gap-2 font-display text-sm font-semibold uppercase tracking-[0.08em] text-emeraldDeep"
+              >
+                Ver perfil no LinkedIn
+                <ArrowUpRight
+                  className="h-4 w-4 transition-transform duration-200 ease-smooth group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  strokeWidth={2}
+                  aria-hidden="true"
+                />
+              </a>
+            )}
+          </Reveal>
         </div>
       </div>
     </section>

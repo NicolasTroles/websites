@@ -1,67 +1,91 @@
-import { site } from '@/config/site.config';
-import { FacebookGlyph, InstagramGlyph, LogoImage } from './Brand';
-
-const developerWhatsappUrl = `https://wa.me/5541999447746?text=${encodeURIComponent(
-  'Olá Nicolas! Vi o site da AlfaGeo e queria saber mais sobre criar um site assim.',
-)}`;
+import { Brand } from '@/components/Brand';
+import { emailUrl, navLinks, phoneUrl, site } from '@/config/site.config';
 
 export function Footer() {
   const year = new Date().getFullYear();
-  const hasSocialLinks = site.socialLinks.instagram || site.socialLinks.facebook;
 
   return (
-    <footer className="border-t border-line bg-ink py-16 text-bone">
-      <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="flex flex-col items-center gap-8 text-center md:flex-row md:justify-between md:text-left">
-          <div className="flex items-center gap-2.5">
-            <LogoImage className="h-[54px] w-auto" />
+    <footer className="border-t border-navyLine bg-navy pb-24 pt-16 text-mist sm:pb-16">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr_0.8fr]">
+          <div>
+            <Brand withSubtitle />
+            <p className="mt-6 max-w-sm text-sm leading-relaxed text-slate">{site.promise}</p>
+            <p className="mt-4 font-mono text-[11px] uppercase tracking-label text-dim">
+              {site.tagline}
+            </p>
           </div>
 
-          {hasSocialLinks && (
-            <div className="flex gap-2">
+          <nav aria-label="Rodapé">
+            <p className="font-mono text-[11px] uppercase tracking-label text-dim">Navegação</p>
+            <ul className="mt-5 space-y-3">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-slate transition-colors duration-200 hover:text-emerald"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-label text-dim">Contato</p>
+            <ul className="mt-5 space-y-3 text-sm text-slate">
+              <li>
+                <a href={phoneUrl} className="transition-colors duration-200 hover:text-emerald">
+                  {site.phone}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={emailUrl}
+                  className="break-all transition-colors duration-200 hover:text-emerald"
+                >
+                  {site.email}
+                </a>
+              </li>
+              <li className="pt-2 leading-relaxed text-dim">{site.areaServed}</li>
+              {site.socialLinks.linkedin && (
+                <li>
+                  <a
+                    href={site.socialLinks.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors duration-200 hover:text-emerald"
+                  >
+                    LinkedIn
+                  </a>
+                </li>
+              )}
               {site.socialLinks.instagram && (
-                <a
-                  href={site.socialLinks.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram"
-                  className="grid h-12 w-12 place-items-center border border-line text-silver transition-colors hover:border-silver hover:text-bone"
-                >
-                  <InstagramGlyph className="h-4 w-4" />
-                </a>
+                <li>
+                  <a
+                    href={site.socialLinks.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors duration-200 hover:text-emerald"
+                  >
+                    Instagram
+                  </a>
+                </li>
               )}
-              {site.socialLinks.facebook && (
-                <a
-                  href={site.socialLinks.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Facebook"
-                  className="grid h-12 w-12 place-items-center border border-line text-silver transition-colors hover:border-silver hover:text-bone"
-                >
-                  <FacebookGlyph className="h-4 w-4" />
-                </a>
-              )}
-            </div>
-          )}
+            </ul>
+          </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-line pt-8 text-center text-[13px] text-muted md:flex-row md:justify-between md:text-left">
-          <p>
-            © {year} {site.brandFull}
+        <div className="mt-14 flex flex-col gap-3 border-t border-navyLine pt-7 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-[13px] text-dim">
+            © {year} {site.brandFull}. Todos os direitos reservados.
           </p>
-          <p>{site.areaServed}</p>
-        </div>
-
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-1.5 text-center text-[12px] text-muted md:justify-start">
-          <p>Desenvolvido por Nicolas Troles</p>
-          <span aria-hidden="true">·</span>
           <a
-            href={developerWhatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors hover:text-bone"
+            href="/privacidade"
+            className="text-[13px] text-dim transition-colors duration-200 hover:text-emerald"
           >
-            Entrar em contato
+            Política de privacidade
           </a>
         </div>
       </div>

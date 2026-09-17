@@ -1,182 +1,263 @@
 /**
- * Single source of truth for the site. Change data here, never inside components.
+ * Single source of truth for the site. Change data here, never inside a
+ * component.
  *
- * Brand name, owner and phone taken from the public Instagram bio
- * (instagram.com/alfageo_sondagens). Fields marked TODO were not published
- * there and must be validated with AlfaGeo before launch — never invent a
- * street address, opening hours, or testimonial.
+ * Positioning, service list and the wording of the three brand pillars come
+ * from the material the client supplied (logo lockup + institutional banner:
+ * "Segurança do Trabalho | Gestão de Terceiros | SG3" and "Transformando
+ * exigências em organização, conformidade e controle").
+ *
+ * Every field marked `TODO: confirm with client` was NOT in that material and
+ * is a placeholder. Do not publish with those still in place — an invented
+ * phone number or address is worse than an empty section.
  */
 
 export const site = {
-  brandName: 'AlfaGeo',
-  brandFull: 'AlfaGeo Sondagens',
-  tagline: 'Sondagens e investigação geotécnica',
+  brandName: 'Rodrigues Rangel',
+  brandFull: 'Rodrigues Rangel Consultoria',
+  // The three verticals, exactly as they appear on the client's banner.
+  tagline: 'Segurança do Trabalho | Gestão de Terceiros | SG3',
+  // The banner's own line. Used as the closing statement of the hero.
+  promise: 'Transformando exigências em organização, conformidade e controle.',
+
+  owner: 'Valder Rangel',
+  ownerRole: 'Técnico em Segurança do Trabalho',
+
+  // TODO: confirm with client — no phone was published in the material.
+  phone: '+55 41 90000-0000',
+  phoneLink: '+5541900000000',
+  whatsapp: '5541900000000',
+  whatsappMessage:
+    'Olá! Vim pelo site da Rodrigues Rangel Consultoria e gostaria de falar sobre a documentação de SST da minha empresa.',
+
+  // TODO: confirm with client.
+  email: 'contato@rodriguesrangel.com.br',
+
+  // TODO: confirm with client — city/region and whether the work is remote.
   city: 'Curitiba',
   state: 'PR',
+  areaServed: 'Curitiba, região metropolitana e atendimento remoto para todo o Brasil',
 
-  // Confirmed on the Instagram bio.
-  phone: '+55 41 99657-6854',
-  phoneLink: '+5541996576854',
-  whatsapp: '5541996576854',
-  whatsappMessage:
-    'Olá! Vim pelo site e gostaria de solicitar um orçamento de sondagem geotécnica.',
-
-  // Confirmed with the client: the crew travels across the whole South
-  // region plus São Paulo, not just metro Curitiba — do not narrow this
-  // back to a single city.
-  areaServed: 'Paraná, Santa Catarina, Rio Grande do Sul e São Paulo',
-
-  // TODO: confirm business hours with the client — not published on Instagram.
+  // TODO: confirm with client.
   openingHours: [
     { days: 'Segunda a sexta', hours: '08h às 18h' },
-    { days: 'Sábado e domingo', hours: 'Plantão sob consulta' },
+    { days: 'Sábado', hours: 'Sob agendamento' },
   ],
 
-  // Empty links are not rendered. Fill in when official profiles are confirmed.
+  // Empty links are not rendered anywhere. Fill in when the profiles are
+  // confirmed — do not guess a handle.
   socialLinks: {
-    instagram: 'https://www.instagram.com/alfageo_sondagens/',
-    facebook: '',
+    linkedin: '', // TODO: confirm with client
+    instagram: '', // TODO: confirm with client
   },
 
   seo: {
-    title: 'AlfaGeo Sondagens | Sondagem SPT, Rotativa e Laudo Geotécnico no Sul do Brasil',
+    title:
+      'Rodrigues Rangel Consultoria | Segurança do Trabalho, Gestão de Terceiros e SG3',
     description:
-      'AlfaGeo Sondagens executa sondagem SPT, sondagem rotativa, poços de inspeção, ensaio de percolação do solo e laudo geológico-geotécnico no Paraná, Santa Catarina, Rio Grande do Sul e São Paulo. Orçamento pelo WhatsApp.',
-    url: 'https://www.alfageosondagem.com.br',
+      'Consultoria em Segurança do Trabalho, gestão documental de terceiros, acompanhamento de pendências e vencimentos e suporte às rotinas do Sistema SG3. Diagnóstico de conformidade documental e acompanhamento contínuo.',
+    // TODO: confirm with client — replace with the real domain before launch,
+    // and redeploy. This value feeds the canonical URL, the sitemap, the
+    // llms.txt links and the JSON-LD.
+    url: 'https://www.rodriguesrangel.com.br',
+    // Date of the last real content change — NOT the build date. Bump it by
+    // hand when the copy actually changes.
+    lastModified: '2026-09-16',
   },
 } as const;
 
-// Full state names for the JSON-LD areaServed list, matching site.areaServed
-// above and the sigla keys in serviceRegion below.
-export const areaServedStates = ['Paraná', 'Santa Catarina', 'Rio Grande do Sul', 'São Paulo'];
-
 /**
- * States covered by the map in ServiceMap, keyed by the same two-letter
- * `sigla` used in src/data/brazilMapShapes.ts. A few representative cities
- * per state, shown in the hover/tap tooltip — not an exhaustive service
- * list, just enough to make the coverage feel concrete.
+ * The three words on the client's own banner. They are the spine of the whole
+ * site: the intro section states them, the process delivers them, and the
+ * scroll-driven compliance field animates the move from one to the next.
  */
-export const serviceRegion = [
-  { sigla: 'PR', cities: ['Curitiba', 'Londrina', 'Maringá', 'Cascavel'] },
-  { sigla: 'SC', cities: ['Florianópolis', 'Joinville', 'Blumenau', 'Chapecó'] },
-  { sigla: 'RS', cities: ['Porto Alegre', 'Caxias do Sul', 'Pelotas', 'Santa Maria'] },
-  { sigla: 'SP', cities: ['São Paulo', 'Campinas', 'Sorocaba', 'São José dos Campos'] },
+export const pillars = [
+  {
+    label: 'Organização',
+    description:
+      'Centralização e classificação dos documentos e informações necessários ao processo.',
+  },
+  {
+    label: 'Conformidade',
+    description:
+      'Análise do que está regular, pendente ou próximo do vencimento diante dos requisitos aplicáveis.',
+  },
+  {
+    label: 'Controle',
+    description:
+      'Acompanhamento periódico de prazos e pendências para reduzir recorrências.',
+  },
 ] as const;
 
 export const services = [
   {
-    icon: 'coreSample' as const,
-    title: 'Sondagem SPT',
+    id: 'diagnostico',
+    icon: 'search' as const,
+    title: 'Diagnóstico de conformidade documental',
     description:
-      'Sondagem de simples reconhecimento à percussão, conforme NBR 6484, para definir o perfil do solo e a capacidade de carga antes da fundação.',
-    photoSrc: '/servico-spt.jpg',
-    photoAlt: 'Amostrador SPT sendo cravado no solo durante a sondagem',
-    photoGuide:
-      'Amostrador SPT sendo cravado, com o tripé montado e o operador manuseando o cabo de aço ou o martelo — a haste de perfuração precisa aparecer entrando no solo.',
-    aiPrompt: undefined as string | undefined,
+      'Análise da documentação de SST para identificação de pendências, vencimentos, não conformidades e requisitos aplicáveis à empresa ou ao contrato.',
   },
   {
-    icon: 'drill' as const,
-    title: 'Sondagem rotativa',
+    id: 'gestao-documental',
+    icon: 'folder' as const,
+    title: 'Gestão documental',
     description:
-      'Perfuração em rocha e solos de alta resistência, com extração de testemunhos, para investigações mais profundas ou terrenos com matacões.',
-    photoSrc: '/servico-rotativa.jpg',
-    photoAlt: 'Sonda rotativa em operação com testemunhos de rocha extraídos',
-    photoGuide:
-      'Sonda rotativa em operação (barrilete e coroa visíveis) ou os testemunhos de rocha cilíndricos organizados na caixa — o que deixa claro que é rocha, não solo.',
-    aiPrompt: undefined as string | undefined,
-  },
-  // Trado and lab tests are common complementary services offered alongside
-  // SPT/rotativa by geotechnical providers in this segment (per market
-  // research on similar companies) — confirm with AlfaGeo that these are
-  // actually part of the service list before publishing.
-  {
-    icon: 'ruler' as const,
-    title: 'Sondagem a trado',
-    description:
-      'Perfuração manual para reconhecimento raso em terrenos de fácil acesso, indicada para investigações preliminares e obras de menor porte.',
-    photoSrc: '/servico-trado.jpg',
-    photoAlt: 'Trado manual sendo girado por um técnico durante a perfuração',
-    photoGuide:
-      'Trado manual (cruzeta, haste e hélice) sendo girado por um técnico, ou o trado retirado do furo com a amostra de solo presa nele — sem tripé, é perfuração manual.',
-    aiPrompt: undefined as string | undefined,
+      'Organização, atualização e acompanhamento dos documentos necessários para atendimento às exigências de clientes, contratantes e processos internos.',
   },
   {
-    icon: 'layers' as const,
-    title: 'Poços de inspeção',
+    id: 'terceiros',
+    icon: 'users' as const,
+    title: 'Gestão de terceiros',
     description:
-      'Poços e trincheiras de inspeção visual para reconhecimento raso do solo, complementando os dados da sondagem à percussão.',
-    photoSrc: '/servico-poco.jpg',
-    photoAlt: 'Poço de inspeção aberto mostrando as camadas de solo expostas',
-    photoGuide:
-      'Poço ou trincheira já aberta no terreno, com a seção do solo exposta nas paredes bem visível — de preferência com um técnico ao lado para dar escala de profundidade.',
-    aiPrompt: undefined as string | undefined,
+      'Apoio a empresas prestadoras de serviços na organização de documentos e no atendimento aos requisitos estabelecidos por seus contratantes.',
   },
   {
-    icon: 'droplets' as const,
-    title: 'Ensaio de percolação do solo',
+    id: 'sg3',
+    icon: 'system' as const,
+    title: 'Suporte ao Sistema SG3',
     description:
-      // NBR 13969:1997 (Anexo A) is the Brazilian standard for sizing
-      // sumidouros/valas de infiltração — the client's draft text cited the
-      // British standard BS 6297:2007, which doesn't apply here.
-      'Ensaio de infiltração conforme a NBR 13969, que mede o tempo de rebaixamento da água na cova-teste para dimensionar sumidouros e valas de infiltração e evitar a contaminação do lençol freático.',
-    photoSrc: '/servico-percolacao.jpg',
-    photoAlt: 'Cova de ensaio de percolação com medição do nível de água',
-    photoGuide:
-      'Cova do ensaio já escavada e revestida de brita, com a régua/trena marcando o nível da água, ou o técnico anotando a leitura do tempo de rebaixamento.',
-    aiPrompt: undefined as string | undefined,
+      'Apoio na utilização e no acompanhamento do SG3, incluindo organização das informações, documentos, pendências e requisitos relacionados à gestão de terceiros.',
   },
   {
-    icon: 'flask' as const,
-    title: 'Ensaios de laboratório',
+    id: 'regularizacao',
+    icon: 'check' as const,
+    title: 'Regularização de pendências',
     description:
-      'Classificação, umidade e compactação das amostras coletadas em campo, complementando os índices de resistência com a caracterização física do solo.',
-    photoSrc: '/servico-ensaios-de-laboratorio.png',
-    photoAlt: 'Amostras de solo sendo analisadas em bancada de laboratório',
-    photoGuide:
-      'Amostras de solo em sacos ou cápsulas identificadas, ou um ensaio de bancada (peneiramento, umidade, compactação) — algo que mostre trabalho de laboratório, não de campo.',
-    aiPrompt: undefined as string | undefined,
+      'Análise das não conformidades identificadas, orientação sobre os ajustes necessários e acompanhamento do processo de regularização.',
   },
   {
-    icon: 'fileCheck' as const,
-    title: 'Laudo geológico-geotécnico',
+    id: 'documentos-sst',
+    icon: 'file' as const,
+    title: 'Documentos e controles de SST',
     description:
-      'Relatório técnico assinado por engenheiro responsável, com os resultados de campo e as recomendações para o projeto de fundação.',
-    photoSrc: '/servico-laudo-geologico-geotecnico.png',
-    photoAlt: 'Boletim de sondagem impresso com o perfil de resistência do solo',
-    photoGuide:
-      'Boletim de sondagem (prancha com o perfil/gráfico de resistência por profundidade) sobre a mesa, de preferência com régua ou lapiseira ao lado para dar contexto técnico.',
-    aiPrompt: undefined as string | undefined,
+      'Apoio na elaboração, revisão e atualização de documentos, além do acompanhamento de vencimentos de documentos, exames, treinamentos e demais requisitos aplicáveis.',
   },
 ] as const;
 
+/**
+ * The four stages of the engagement. This list drives two things at once: the
+ * "Como funciona" copy and the scroll positions of the WebGL compliance field
+ * — `state` is what the shader interpolates towards at each stage, so keep the
+ * array length and order in sync with ComplianceField.
+ */
 export const process = [
   {
-    number: '01',
-    title: 'Contato e diagnóstico',
+    step: '01',
+    title: 'Levantamento',
     description:
-      'Você conta o tipo de obra, o endereço e a fase do projeto. Definimos juntos qual ensaio atende a necessidade e o prazo.',
+      'Identificação do cenário atual: documentos disponíveis, exigências aplicáveis e pendências já existentes.',
+    state: 'Documentos dispersos',
   },
   {
-    number: '02',
-    title: 'Visita técnica e execução',
+    step: '02',
+    title: 'Diagnóstico',
     description:
-      'Equipe e equipamento próprio vão até o terreno e executam a sondagem em campo, seguindo a norma técnica correspondente.',
+      'Análise das informações e classificação dos pontos que precisam de regularização, atualização ou acompanhamento.',
+    state: 'Pendências identificadas',
   },
   {
-    number: '03',
-    title: 'Análise dos dados',
+    step: '03',
+    title: 'Organização e regularização',
     description:
-      'As amostras e os índices de resistência coletados em campo são organizados e interpretados pela equipe técnica.',
+      'Definição das ações necessárias e suporte na organização e na correção das pendências identificadas.',
+    state: 'Documentação organizada',
   },
   {
-    number: '04',
-    title: 'Entrega do laudo',
+    step: '04',
+    title: 'Acompanhamento',
     description:
-      'Laudo geotécnico assinado, pronto para instruir o projeto de fundação junto ao engenheiro ou arquiteto responsável.',
+      'Controle periódico de documentos, prazos e novas pendências, conforme o escopo definido para o atendimento.',
+    state: 'Controle contínuo',
   },
+] as const;
+
+/**
+ * Concrete items the engagement can cover. The word "pode" is deliberate and
+ * must survive any copy edit: the scope of each contract is defined case by
+ * case, and the site must not promise that everything here is always included.
+ */
+export const monitoredItems = [
+  { label: 'Documentação de Segurança do Trabalho', code: 'SST' },
+  { label: 'Documentos de empresas terceirizadas', code: 'TERC' },
+  { label: 'Treinamentos e respectivas validades', code: 'NR' },
+  { label: 'Exames ocupacionais e vencimentos', code: 'ASO' },
+  { label: 'Documentos dos profissionais mobilizados', code: 'MOB' },
+  { label: 'Pendências apontadas por contratantes', code: 'PEND' },
+  { label: 'Requisitos cadastrados em sistemas de gestão de terceiros', code: 'SG3' },
+  { label: 'Atualização e revisão de documentos de SST', code: 'REV' },
+] as const;
+
+/** Situations the consultancy can attend. Phrased as the client's problem. */
+export const audiences = [
+  'Prestam serviços dentro das instalações de clientes e precisam manter a documentação dos seus profissionais regularizada.',
+  'Utilizam empresas terceirizadas e precisam acompanhar documentos e requisitos de acesso.',
+  'Possuem pendências documentais que precisam ser identificadas e tratadas.',
+  'Utilizam o SG3 nos seus processos de gestão de terceiros.',
+  'Precisam acompanhar vencimentos de documentos, treinamentos e exames.',
+  'Necessitam revisar ou organizar documentos de Segurança do Trabalho.',
+] as const;
+
+/**
+ * Short, factual account of the professional. Kept deliberately free of
+ * "especialista", "referência" or any wording that could read as a
+ * certification the site cannot back up.
+ */
+export const owner = {
+  name: site.owner,
+  role: site.ownerRole,
+  // TODO: confirm with client — taken from the brief, not from a public
+  // profile. Confirm the institution and the wording before launch.
+  education: 'Formação técnica em Segurança do Trabalho — TECPUC / PUCPR',
+  paragraphs: [
+    'Profissional com atuação em Segurança do Trabalho e experiência em gestão documental, acompanhamento de terceiros, análise de procedimentos, treinamentos e organização de requisitos relacionados à SST.',
+    'Ao longo da trajetória profissional, atuou em ambientes corporativos e em contratos de prestação de serviços, com atividades relacionadas a controle documental, programas de segurança, gestão de riscos e acompanhamento de requisitos de saúde e segurança.',
+  ],
+  // Areas the professional has worked with. Factual list, no claims attached.
+  topics: ['PGR', 'LTCAT', 'PCA', 'PPR', 'CIPA', 'Controle de EPI', 'Treinamentos', 'SG3'],
+} as const;
+
+/**
+ * Subjects offered in the contact form. They double as lead qualification —
+ * the selected value is carried into the WhatsApp message, so the first reply
+ * already knows what the conversation is about.
+ */
+export const contactSubjects = [
+  'Diagnóstico documental',
+  'Gestão de terceiros',
+  'Suporte no SG3',
+  'Regularização de pendências',
+  'Documentos de SST',
+  'Outro assunto',
+] as const;
+
+/** Main navigation. Same list feeds the header, the footer and llms.txt. */
+export const navLinks = [
+  { href: '#atuacao', label: 'Atuação' },
+  { href: '#servicos', label: 'Serviços' },
+  { href: '#sg3', label: 'SG3' },
+  { href: '#como-funciona', label: 'Como funciona' },
+  { href: '#sobre', label: 'Sobre' },
+  { href: '#contato', label: 'Contato' },
 ] as const;
 
 export const whatsappUrl = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(
   site.whatsappMessage,
 )}`;
+
+/** Builds a WhatsApp link with a custom message (used by the contact form). */
+export function whatsappUrlWith(message: string) {
+  return `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(message)}`;
+}
+
+export const phoneUrl = `tel:${site.phoneLink}`;
+export const emailUrl = `mailto:${site.email}`;
+
+/**
+ * Indexable routes. One entry per real URL — anchors are not pages and must
+ * never be added here (the sitemap would be rejected). This same list feeds
+ * the sitemap; llms.txt links the anchors separately.
+ */
+export const pages = [
+  { path: '/', priority: 1 },
+  { path: '/privacidade', priority: 0.3 },
+] as const;

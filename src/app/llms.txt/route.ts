@@ -1,5 +1,13 @@
-import { site, services, whatsappUrl } from '@/config/site.config';
+import { monitoredItems, process, services, site, whatsappUrl } from '@/config/site.config';
 
+/**
+ * Serves /llms.txt (llmstxt.org). The format is Markdown, not prose: an H1, a
+ * blockquote summary, then `## ` sections made of `- [Name](url): description`
+ * links. A file of loose paragraphs compiles fine but fails the Lighthouse
+ * "agentic navigation" audit with "does not appear to contain links".
+ *
+ * Every anchor linked below must exist as an `id` in the rendered page.
+ */
 const { url } = site.seo;
 
 export function GET() {
@@ -8,28 +16,37 @@ export function GET() {
     '',
     `> ${site.seo.description}`,
     '',
-    `Área de atuação: ${site.areaServed}.`,
-    `Contato: [${site.phone} (WhatsApp)](${whatsappUrl})`,
+    `${site.tagline}. ${site.promise}`,
+    `Atendimento: ${site.areaServed}.`,
+    `Contato: [${site.phone} (WhatsApp)](${whatsappUrl}) · [${site.email}](mailto:${site.email})`,
     '',
     '## Serviços',
     '',
-    ...services.map(
-      (service) => `- [${service.title}](${url}/#servicos): ${service.description}`,
+    ...services.map((service) => `- [${service.title}](${url}/#servicos): ${service.description}`),
+    '',
+    '## Como funciona o atendimento',
+    '',
+    ...process.map(
+      (step) => `- [${step.step}. ${step.title}](${url}/#como-funciona): ${step.description}`,
     ),
+    '',
+    '## O que pode ser acompanhado',
+    '',
+    `- [Itens de acompanhamento](${url}/#acompanhamento): ${monitoredItems
+      .map((item) => item.label.toLowerCase())
+      .join('; ')}.`,
     '',
     '## Páginas',
     '',
-    `- [Página inicial](${url}/): apresentação da AlfaGeo Sondagens, serviços e área de atuação.`,
-    `- [Serviços](${url}/#servicos): sondagem SPT, rotativa, trado, poços de inspeção, percolação, ensaios de laboratório e laudo geotécnico.`,
-    `- [Como trabalhamos](${url}/#processo): etapas do contato inicial até a entrega do laudo assinado.`,
-    `- [Trabalhos](${url}/#trabalhos): registros de obras e sondagens executadas em campo.`,
-    `- [Sobre](${url}/#sobre): quem é a AlfaGeo e como a equipe atua.`,
-    `- [Contato](${url}/#contato): telefone, WhatsApp e formas de solicitar orçamento.`,
+    `- [Página inicial](${url}/): apresentação, serviços, SG3, etapas do atendimento e contato.`,
+    `- [Sistema SG3](${url}/#sg3): apoio às empresas que utilizam o SG3 na gestão de terceiros.`,
+    `- [Sobre ${site.owner}](${url}/#sobre): formação e experiência do profissional responsável.`,
+    `- [Contato](${url}/#contato): telefone, e-mail, WhatsApp e formulário de solicitação.`,
     '',
     '## Opcional',
     '',
-    `- [Instagram](${site.socialLinks.instagram}): fotos e vídeos das sondagens em campo.`,
-    `- [Sitemap](${url}/sitemap.xml): lista de páginas indexáveis do site.`,
+    `- [Política de privacidade](${url}/privacidade): tratamento de dados enviados pelo site.`,
+    `- [Sitemap](${url}/sitemap.xml): páginas indexáveis do site.`,
     '',
   ].join('\n');
 

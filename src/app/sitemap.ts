@@ -1,13 +1,18 @@
 import type { MetadataRoute } from 'next';
-import { site } from '@/config/site.config';
+import { pages, site } from '@/config/site.config';
 
+/**
+ * Serves /sitemap.xml. `lastModified` comes from site.seo.lastModified, not
+ * from `new Date()` — stamping the build date makes the site claim it changed
+ * on every deploy, and crawlers learn to ignore the field.
+ */
 export default function sitemap(): MetadataRoute.Sitemap {
-  return [
-    {
-      url: site.seo.url,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-  ];
+  const lastModified = new Date(site.seo.lastModified);
+
+  return pages.map((page) => ({
+    url: `${site.seo.url}${page.path === '/' ? '' : page.path}`,
+    lastModified,
+    changeFrequency: 'monthly' as const,
+    priority: page.priority,
+  }));
 }

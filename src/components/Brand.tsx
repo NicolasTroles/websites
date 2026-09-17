@@ -1,112 +1,77 @@
-/**
- * Site marks. LogoImage renders the client's actual logo (public/logo.jpg).
- * LogoMark is an SVG homage to the same survey-tripod motif, kept for
- * decorative uses (e.g. SectionDivider) where a raster icon doesn't fit.
+/*
+ * The mark, drawn in code.
+ *
+ * It reproduces the client's lockup: two overlapping angular "R"s, the back one
+ * emerald and the front one light, next to a wide-tracked wordmark. Keeping it
+ * as SVG means it stays crisp at every size, inherits the section's colours and
+ * costs no image request — which matters because it sits in the header on every
+ * screen.
+ *
+ * When the client's own artwork is approved, drop the file at public/logo.png
+ * and swap `<Monogram />` for a next/image — the surrounding layout already
+ * reserves the same square.
  */
 
-type IconProps = {
-  className?: string;
-};
-
-/** Real client logo (public/logo.png, transparent) — icon shown next to the Wordmark text. */
-export function LogoImage({ className }: IconProps) {
+/** One angular R. `evenodd` cuts the bowl's counter out of the solid shape. */
+function Letter({ className }: { className?: string }) {
   return (
-    <img
-      src="/logo.png"
-      alt="AlfaGeo"
-      className={`object-contain ${className ?? ''}`}
+    <path
+      className={className}
+      fillRule="evenodd"
+      d="M0 0 H23 A13 13 0 0 1 23 26 H14 L38 52 H24 L9 33 V52 H0 Z M9 8 H21 A5 5 0 0 1 21 18 H9 Z"
     />
   );
 }
 
-/** Survey-tripod mark — decorative use only (e.g. SectionDivider). Fixed brand colors. */
-export function LogoMark({ className }: IconProps) {
+export function Monogram({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" fill="none" className={className} aria-hidden="true" focusable="false">
-      <path d="M32 11 L53 49 H11 Z" stroke="#E86A12" strokeWidth="4" strokeLinejoin="round" />
-      <circle cx="32" cy="11" r="3.6" fill="#E86A12" />
-      <line
-        x1="19"
-        y1="49"
-        x2="45"
-        y2="49"
-        stroke="#3B62E8"
-        strokeWidth="4"
-        strokeLinecap="round"
-      />
+    <svg
+      viewBox="0 0 64 60"
+      role="img"
+      aria-label="Rodrigues Rangel Consultoria"
+      className={className}
+    >
+      {/* Back letter: the emerald half of the mark. */}
+      <g transform="translate(24 8) scale(0.78)">
+        <Letter className="fill-emerald" />
+      </g>
+      {/* Front letter, in the current text colour so it works on navy and on
+          paper without a second component. */}
+      <g transform="translate(0 4)">
+        <Letter className="fill-current" />
+      </g>
     </svg>
   );
 }
 
-/** Two-tone wordmark, matching the blue "alfa" / green "geo" of the real logo. */
-export function Wordmark({ className }: IconProps) {
+type BrandProps = {
+  /** `full` adds the wordmark; `mark` is the monogram alone (mobile bar, icons). */
+  variant?: 'full' | 'mark';
+  /** Renders the "Consultoria" line under the name. Off in the tight header. */
+  withSubtitle?: boolean;
+  className?: string;
+};
+
+export function Brand({ variant = 'full', withSubtitle = false, className }: BrandProps) {
+  if (variant === 'mark') {
+    return <Monogram className={className ?? 'h-8 w-8'} />;
+  }
+
   return (
-    <span className={`font-display font-semibold tracking-tight ${className ?? ''}`}>
-      <span className="text-blue">Alfa</span>
-      <span className="text-green">Geo</span>
+    <span className={`flex items-center gap-3 ${className ?? ''}`}>
+      <Monogram className="h-9 w-9 shrink-0" />
+      {/* The divider rule is part of the client's own lockup. */}
+      <span aria-hidden="true" className="h-8 w-px bg-current opacity-25" />
+      <span className="flex flex-col leading-none">
+        <span className="font-display text-[15px] font-semibold uppercase tracking-[0.12em] sm:text-base">
+          Rodrigues Rangel
+        </span>
+        {withSubtitle && (
+          <span className="mt-1.5 font-display text-[10px] uppercase tracking-label opacity-70">
+            Consultoria
+          </span>
+        )}
+      </span>
     </span>
-  );
-}
-
-/** Drill rig silhouette — decorative background element for parallax sections. */
-export function RigSilhouette({ className }: IconProps) {
-  return (
-    <svg viewBox="0 0 64 80" fill="none" className={className} aria-hidden="true" focusable="false">
-      {/* mast */}
-      <rect x="29" y="4" width="6" height="66" fill="currentColor" />
-      {/* A-frame legs */}
-      <path d="M32 10 6 74h6l22-56-2-8Z" fill="currentColor" />
-      <path d="M32 10 58 74h-6L30 18l2-8Z" fill="currentColor" />
-      {/* base plate */}
-      <rect x="14" y="74" width="36" height="5" fill="currentColor" />
-      {/* crossbar */}
-      <rect x="20" y="30" width="24" height="4" fill="currentColor" opacity="0.8" />
-    </svg>
-  );
-}
-
-/**
- * Minimal outline glyphs for social links. lucide-react dropped brand icons
- * (Instagram, Facebook) in its current major version, so these are drawn
- * directly — simple enough to keep in code instead of adding an icon
- * dependency just for two glyphs.
- */
-export function InstagramGlyph({ className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" focusable="false">
-      <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
-    </svg>
-  );
-}
-
-export function FacebookGlyph({ className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true" focusable="false">
-      <path
-        d="M14.5 21v-7.5h2.5l.4-3H14.5V8.4c0-.87.24-1.46 1.5-1.46h1.6V4.3c-.28-.04-1.22-.12-2.32-.12-2.3 0-3.88 1.4-3.88 3.98V10.5H9v3h2.4V21h3.1Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
-/** Section divider: rule + centered mark, instead of a plain straight line. */
-export function SectionDivider({
-  className,
-  tone = 'dark',
-}: IconProps & { tone?: 'light' | 'dark' }) {
-  const isLight = tone === 'light';
-  return (
-    <div className={`flex items-center justify-center gap-5 ${className ?? ''}`} aria-hidden="true">
-      <span
-        className={`h-px w-16 bg-gradient-to-r from-transparent sm:w-24 ${isLight ? 'to-stoneLine' : 'to-line'}`}
-      />
-      <LogoMark className="h-5 w-5" />
-      <span
-        className={`h-px w-16 bg-gradient-to-l from-transparent sm:w-24 ${isLight ? 'to-stoneLine' : 'to-line'}`}
-      />
-    </div>
   );
 }

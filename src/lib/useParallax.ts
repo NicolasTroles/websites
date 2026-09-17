@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-function prefersReducedMotion() {
+export function prefersReducedMotion() {
   if (typeof window === 'undefined') return false;
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
@@ -10,13 +10,15 @@ function prefersReducedMotion() {
 /**
  * Scroll-driven parallax via rAF.
  *
- * Only writes to `transform` (never top/height), so the browser resolves
- * everything on the GPU without triggering layout. Returns 0 when the user
- * asked for reduced motion, which freezes the element in its neutral position.
+ * Only writes `transform`, so the browser resolves it on the compositor
+ * without triggering layout. Returns 0 when the user asked for reduced
+ * motion, which freezes the element in its neutral position.
  *
- * @param speed fraction of scroll applied to the offset. 0.15 is subtle, 0.4 is strong.
+ * @param speed fraction of the scroll delta applied. 0.08 is barely there,
+ *              0.35 is strong. On this site the hero layers use 0.06-0.18:
+ *              the effect should read as depth, not as a ride.
  */
-export function useParallax<T extends HTMLElement>(speed = 0.2) {
+export function useParallax<T extends HTMLElement>(speed = 0.15) {
   const ref = useRef<T>(null);
   const [offset, setOffset] = useState(0);
 
@@ -30,18 +32,16 @@ export function useParallax<T extends HTMLElement>(speed = 0.2) {
     const update = () => {
       frame = 0;
       const rect = el.getBoundingClientRect();
-      // Distance from the element's center to the viewport's center.
       const fromCenter = rect.top + rect.height / 2 - window.innerHeight / 2;
       setOffset(fromCenter * speed * -1);
     };
 
     const onScroll = () => {
-      // One frame scheduled at a time: scroll events fire faster than 60fps.
+      // One frame in flight at a time: scroll fires faster than 60fps.
       if (!visible || frame) return;
       frame = requestAnimationFrame(update);
     };
 
-    // Only listen to scroll while the element is near the viewport.
     const observer = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
@@ -66,12 +66,11 @@ export function useParallax<T extends HTMLElement>(speed = 0.2) {
 }
 
 /**
- * Reveals the element while it's in the viewport, and retreats again once it
- * scrolls back out — either direction. That two-way motion (not a one-shot
- * fire-and-disconnect) is what makes the page feel alive on the way back up,
- * not just on first scroll-in.
+ * Reveals the element while it is in the viewport and retreats when it leaves,
+ * in either direction — so the page still animates on the way back up rather
+ * than being a one-shot on first scroll.
  */
-export function useReveal<T extends HTMLElement>(threshold = 0.15) {
+export function useReveal<T extends HTMLElement>(threshold = 0.12) {
   const ref = useRef<T>(null);
   const [shown, setShown] = useState(false);
 
@@ -96,22 +95,27 @@ export function useReveal<T extends HTMLElement>(threshold = 0.15) {
 }
 
 /**
- * Scroll progress of one element, 0 to 1: 0 while its top is still at the
- * bottom edge of the viewport, 1 once its bottom has scrolled past the top.
- * Drives scroll-linked drawing (e.g. an SVG chart line that extends as the
- * section scrolls by, and retracts again scrolling back up) instead of a
- * fire-once animation.
+ * Progress of a pinned section, 0 to 1, measured over the distance the element
+ * can travel under a `position: sticky` child: 0 when its top reaches the top
+ * of the viewport, 1 when its bottom does.
+ *
+ * This is what drives the WebGL compliance field. It reports through a ref
+ * callback instead of state on purpose — the shader reads the value every
+ * frame, and re-rendering React 60 times a second to move a uniform would be
+ * pure waste.
  */
-export function useScrollProgress<T extends HTMLElement>() {
+export function usePinProgress<T extends HTMLElement>(onProgress: (value: number) => void) {
   const ref = useRef<T>(null);
-  const [progress, setProgress] = useState(0);
+  const callback = useRef(onProgress);
+  callback.current = onProgress;
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
 
     if (prefersReducedMotion()) {
-      setProgress(1);
+      // Freeze at the resolved end state: organised and under control.
+      callback.current(1);
       return;
     }
 
@@ -121,9 +125,12 @@ export function useScrollProgress<T extends HTMLElement>() {
     const update = () => {
       frame = 0;
       const rect = el.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const raw = (vh - rect.top) / (vh + rect.height);
-      setProgress(Math.min(1, Math.max(0, raw)));
+      const travel = rect.height - window.innerHeight;
+      if (travel <= 0) {
+        callback.current(rect.top <= 0 ? 1 : 0);
+        return;
+      }
+      callback.current(Math.min(1, Math.max(0, -rect.top / travel)));
     };
 
     const onScroll = () => {
@@ -136,7 +143,7 @@ export function useScrollProgress<T extends HTMLElement>() {
         visible = entry.isIntersecting;
         if (visible) update();
       },
-      { rootMargin: '200px 0px' },
+      { rootMargin: '100px 0px' },
     );
     observer.observe(el);
 
@@ -152,5 +159,5 @@ export function useScrollProgress<T extends HTMLElement>() {
     };
   }, []);
 
-  return { ref, progress };
+  return ref;
 }

@@ -6,70 +6,78 @@ const config: Config = {
     extend: {
       colors: {
         /*
-         * Dark family: cool near-black navy, not warm charcoal — this is a
-         * survey/instrumentation mood (night rig lights, LED displays), not
-         * a construction-site earth tone.
+         * Dark family — lifted from the client's banner: a deep, slightly
+         * desaturated petroleum navy. It is the "documento arquivado" mood
+         * (dossier, capa dura), not a tech-startup blue-black. Sections that
+         * carry authority (hero, SG3, the compliance field) sit on it.
          */
-        ink: '#0A0F1C', // dark background
-        surface: '#111A2C', // cards on dark
-        elevated: '#182238',
-        line: '#28334A', // dividers on dark
-        silver: '#AAB4C6', // secondary text on dark
-        // Fine print on dark. Kept at AA (4.5:1) against both `ink` and the
-        // lighter `surface` it also sits on — #6C7890 read as 4.3:1 on ink and
-        // failed Lighthouse, so do not darken this back down.
-        muted: '#7E8AA3',
-        bone: '#F2F4F8', // primary text on dark (cool near-white)
-
-        /* Light family: carries most of the page. Clean and neutral-cool. */
-        stone: '#F4F6FA', // light background
-        stoneDeep: '#E4E9F1', // cards on light
-        stoneLine: '#D3DAE6', // dividers on light
-        graphite: '#131722', // primary text on light
-        graphiteSoft: '#4C5568', // secondary text on light
+        navy: '#0A1E2C',
+        navySoft: '#12293A', // cards / panels on navy
+        navyLift: '#1A3548', // hover state of those panels
+        navyLine: '#20394C', // hairlines on navy
+        slate: '#93A8B8', // secondary text on navy — 6.9:1
+        dim: '#7B8FA1', // fine print on navy — 5.1:1, do not darken
+        mist: '#E8EEF3', // primary text on navy — 14.5:1
 
         /*
-         * Three accents, lifted straight from the AlfaGeo mark: the orange
-         * survey-triangle, the blue "alfa" and the green "geo". Each has a
-         * light-background pair for AA text contrast (the bright value reads
-         * clearly on ink, ~7-8:1, but drops below AA on the light stone
-         * background, so light-background text always uses the Deep variant).
+         * Light family — carries most of the page, because the brief asked for
+         * more white space than the banner has. Cool paper, never warm cream.
          */
-        clay: '#E86A12', // orange — primary accent / CTA
-        clayDeep: '#A34F0E',
-        blue: '#3B62E8', // secondary accent
-        blueDeep: '#1D3B9E',
-        green: '#1FA968', // tertiary accent
-        greenDeep: '#0E7A48',
+        paper: '#F5F7F9',
+        paperDeep: '#EAEFF3', // cards on paper
+        paperLine: '#D6DFE6', // hairlines on paper
+        ink: '#0C1822', // primary text on paper — 16.6:1
+        inkSoft: '#46586A', // secondary text on paper — 6.8:1
+
+        /*
+         * Accent — the green of the "RR" monogram. Two values because the
+         * bright one reads at 5.9:1 on navy but fails on paper; any green text
+         * or icon on a light background uses the Deep variant (5.4:1).
+         */
+        emerald: '#3FA98A',
+        emeraldDeep: '#1E7358',
+
+        /*
+         * Status pair, used only where the site talks about document state
+         * (pending vs. regular): the WebGL compliance field, the diagnostic
+         * list, the status chips. Never decorative — amber on this site always
+         * means "pendência".
+         */
+        amber: '#E0A340', // 7.7:1 on navy
+        amberDeep: '#8F5F10', // 5.1:1 on paper
       },
       fontFamily: {
+        // Wide grotesque, echoing the squared wordmark of the logo.
         display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        // Public Sans was drawn for US federal documents — a regulatory voice
+        // for a site about regulatory paperwork.
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
+        // Document codes: NR-35, ASO, PGR, prazos.
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       letterSpacing: {
-        wide2: '0.28em',
+        label: '0.22em',
       },
       maxWidth: {
-        prose: '68ch',
+        prose: '66ch',
       },
       transitionTimingFunction: {
-        // Single easing curve for the whole site: smooth entrances, no bounce.
+        // One curve for the whole site. No bounce: this is a compliance site.
         smooth: 'cubic-bezier(0.22, 1, 0.36, 1)',
       },
       keyframes: {
-        'fade-up': {
-          from: { opacity: '0', transform: 'translate3d(0, 24px, 0)' },
-          to: { opacity: '1', transform: 'translate3d(0, 0, 0)' },
+        'sweep-x': {
+          from: { transform: 'translate3d(-100%, 0, 0)' },
+          to: { transform: 'translate3d(100%, 0, 0)' },
         },
-        'draw-line': {
-          from: { transform: 'scaleX(0)' },
-          to: { transform: 'scaleX(1)' },
+        'marquee': {
+          from: { transform: 'translate3d(0, 0, 0)' },
+          to: { transform: 'translate3d(-50%, 0, 0)' },
         },
       },
       animation: {
-        'fade-up': 'fade-up 700ms cubic-bezier(0.22, 1, 0.36, 1) both',
-        'draw-line': 'draw-line 900ms cubic-bezier(0.22, 1, 0.36, 1) both',
+        'sweep-x': 'sweep-x 2.6s cubic-bezier(0.22, 1, 0.36, 1) infinite',
+        marquee: 'marquee 38s linear infinite',
       },
     },
   },

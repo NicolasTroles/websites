@@ -1,29 +1,35 @@
 import type { Metadata, Viewport } from 'next';
-import { IBM_Plex_Mono, Inter, Space_Grotesk } from 'next/font/google';
+import { Archivo, JetBrains_Mono, Public_Sans } from 'next/font/google';
 import Script from 'next/script';
-import { areaServedStates, services, site } from '@/config/site.config';
+import { owner, services, site } from '@/config/site.config';
 import './globals.css';
 
-const GA_MEASUREMENT_ID = 'G-3RMN27XF9E';
+/**
+ * Set NEXT_PUBLIC_GA_ID in the Vercel project (and in .env.local for local
+ * runs) to switch analytics on. Left unset, no tag is injected at all — which
+ * is the right default while the site is still a preview.
+ */
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID;
 
-// display: 'swap' avoids invisible text while the font loads.
-const sans = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-const display = Space_Grotesk({
+// Wide grotesque for display, echoing the squared wordmark of the client's logo.
+const display = Archivo({
   subsets: ['latin'],
   weight: ['500', '600', '700'],
   variable: '--font-display',
   display: 'swap',
 });
 
-// Used for depth/technical readouts (the SPT chart, data labels) — a
-// monospace face reads as instrumentation, reinforcing the field-data angle.
-const mono = IBM_Plex_Mono({
+// Public Sans was drawn for US federal documents. On a site about regulatory
+// paperwork, that is the right voice for body copy.
+const sans = Public_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-sans',
+  display: 'swap',
+});
+
+// Reserved for document codes and status readouts (ASO, NR-35, 01/04).
+const mono = JetBrains_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],
   variable: '--font-mono',
@@ -35,12 +41,14 @@ export const metadata: Metadata = {
   title: site.seo.title,
   description: site.seo.description,
   keywords: [
-    'sondagem spt curitiba',
-    'sondagem geotecnica curitiba',
-    'sondagem rotativa',
-    'laudo geologico geotecnico',
-    'ensaio de percolacao do solo',
+    'consultoria segurança do trabalho',
+    'gestão de terceiros',
+    'sistema sg3',
+    'documentação sst',
+    'regularização de pendências documentais',
+    'controle de vencimentos sst',
   ],
+  authors: [{ name: site.brandFull }],
   alternates: { canonical: '/' },
   openGraph: {
     title: site.seo.title,
@@ -59,37 +67,43 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#0A0F1C',
+  themeColor: '#0A1E2C',
   width: 'device-width',
   initialScale: 1,
   // No maximumScale: blocking zoom breaks accessibility.
 };
 
 /**
- * Schema.org business markup. This is what lets Google surface phone number
- * and service area directly in search results.
+ * schema.org markup. `ProfessionalService` is the right type here — this is a
+ * consultancy, not a shop with a storefront, so no `address` with a street is
+ * claimed, only the area served.
  */
 const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'ProfessionalService',
   name: site.brandFull,
   description: site.seo.description,
-  telephone: site.phone,
   url: site.seo.url,
-  image: `${site.seo.url}/logo.png`,
-  // Crew travels the whole South region plus São Paulo, not just the home
-  // city — mirror site.areaServed here, not the office address below.
-  areaServed: areaServedStates.map((name) => ({ '@type': 'State', name })),
+  telephone: site.phone,
+  email: site.email,
+  areaServed: site.areaServed,
   address: {
     '@type': 'PostalAddress',
     addressLocality: site.city,
     addressRegion: site.state,
     addressCountry: 'BR',
   },
-  ...(site.socialLinks.instagram ? { sameAs: [site.socialLinks.instagram] } : {}),
+  founder: { '@type': 'Person', name: owner.name, jobTitle: owner.role },
+  knowsAbout: [
+    'Segurança do Trabalho',
+    'Gestão de terceiros',
+    'Gestão documental de SST',
+    'Sistema SG3',
+  ],
+  ...(site.socialLinks.linkedin ? { sameAs: [site.socialLinks.linkedin] } : {}),
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
-    name: 'Serviços de sondagem e investigação geotécnica',
+    name: 'Serviços de consultoria em Segurança do Trabalho e gestão de terceiros',
     itemListElement: services.map((service) => ({
       '@type': 'Offer',
       itemOffered: {
@@ -105,25 +119,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR" className={`${sans.variable} ${display.variable} ${mono.variable}`}>
       <body className="font-sans">
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}');
-          `}
-        </Script>
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}');
+              `}
+            </Script>
+          </>
+        )}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <a
-          href="#content"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-bone focus:px-5 focus:py-3 focus:text-sm focus:text-ink"
+          href="#conteudo"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-mist focus:px-5 focus:py-3 focus:text-sm focus:text-navy"
         >
           Pular para o conteúdo
         </a>

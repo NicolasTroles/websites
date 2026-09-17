@@ -2,32 +2,25 @@
 
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { whatsappUrl } from '@/config/site.config';
+import { Brand } from '@/components/Brand';
+import { navLinks, whatsappUrl } from '@/config/site.config';
 import { trackWhatsAppClick } from '@/lib/analytics';
-import { LogoImage } from './Brand';
-
-const LINKS = [
-  { href: '#sobre', label: 'Sobre' },
-  { href: '#servicos', label: 'Serviços' },
-  { href: '#processo', label: 'Como funciona' },
-  { href: '#trabalhos', label: 'Trabalhos' },
-  { href: '#contato', label: 'Contato' },
-];
 
 export function Header() {
+  // The header starts transparent over the navy hero and only paints a
+  // background once the page has moved — otherwise it cuts a hard band across
+  // the hero artwork on first paint.
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // Solid background only after leaving the hero, so the header never
-    // competes with the photo behind it.
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => setScrolled(window.scrollY > 24);
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Locks background scroll while the mobile menu is open.
+  // A drawer that scrolls the page behind it is disorienting on a phone.
   useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
     return () => {
@@ -35,75 +28,95 @@ export function Header() {
     };
   }, [open]);
 
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-smooth ${
-        scrolled ? 'bg-ink/92 border-b border-line backdrop-blur-md' : 'bg-transparent'
+      className={`fixed inset-x-0 top-0 z-40 text-mist transition-colors duration-300 ease-smooth ${
+        scrolled || open ? 'border-b border-navyLine bg-navy/95 backdrop-blur-md' : 'bg-transparent'
       }`}
     >
-      <nav
-        className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8"
-        aria-label="Navegação principal"
-      >
-        <a href="#top" className="flex items-center gap-2.5" aria-label="Início">
-          <LogoImage className="h-[54px] w-auto" />
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-6 px-5 sm:h-20 sm:px-8">
+        <a href="#topo" className="shrink-0" aria-label="Rodrigues Rangel Consultoria, ir ao topo">
+          <Brand />
         </a>
 
-        <ul className="hidden items-center gap-9 lg:flex">
-          {LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="text-[11px] uppercase tracking-wide2 text-silver transition-colors duration-200 hover:text-clay"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackWhatsAppClick('header_button')}
-          className="hidden min-h-11 items-center bg-clay px-6 text-[11px] uppercase tracking-wide2 text-ink transition-colors duration-200 hover:bg-clayDeep hover:text-bone lg:inline-flex"
-        >
-          Solicitar orçamento
-        </a>
-
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="grid h-11 w-11 place-items-center text-bone lg:hidden"
-          aria-label={open ? 'Fechar menu' : 'Abrir menu'}
-          aria-expanded={open}
-        >
-          {open ? (
-            <X className="h-6 w-6" strokeWidth={1.5} />
-          ) : (
-            <Menu className="h-6 w-6" strokeWidth={1.5} />
-          )}
-        </button>
-      </nav>
-
-      {open && (
-        <div className="border-t border-line bg-ink lg:hidden">
-          <ul className="mx-auto max-w-7xl px-5 py-4 sm:px-8">
-            {LINKS.map((link) => (
+        <nav aria-label="Principal" className="hidden lg:block">
+          <ul className="flex items-center gap-8">
+            {navLinks.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="flex min-h-12 items-center text-xs uppercase tracking-wide2 text-silver"
+                  className="relative py-2 text-sm text-slate transition-colors duration-200 hover:text-mist"
                 >
                   {link.label}
                 </a>
               </li>
             ))}
           </ul>
+        </nav>
+
+        <div className="flex items-center gap-2">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackWhatsAppClick('header')}
+            className="hidden min-h-11 items-center bg-emerald px-5 font-display text-[13px] font-semibold uppercase tracking-[0.08em] text-navy transition-colors duration-200 hover:bg-mist sm:inline-flex"
+          >
+            Falar no WhatsApp
+          </a>
+
+          <button
+            type="button"
+            onClick={() => setOpen((value) => !value)}
+            aria-expanded={open}
+            aria-controls="menu-mobile"
+            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+            className="-mr-2 grid h-11 w-11 cursor-pointer place-items-center text-mist lg:hidden"
+          >
+            {open ? (
+              <X className="h-6 w-6" strokeWidth={1.5} aria-hidden="true" />
+            ) : (
+              <Menu className="h-6 w-6" strokeWidth={1.5} aria-hidden="true" />
+            )}
+          </button>
         </div>
-      )}
+      </div>
+
+      {/*
+        Kept mounted and collapsed with max-height rather than unmounted, so the
+        navigation links are always in the markup for crawlers.
+      */}
+      <div
+        id="menu-mobile"
+        className={`overflow-hidden border-t border-navyLine bg-navy transition-[max-height] duration-400 ease-smooth lg:hidden ${
+          open ? 'max-h-[70vh]' : 'max-h-0 border-t-0'
+        }`}
+      >
+        <nav aria-label="Principal (móvel)" className="px-5 py-3">
+          <ul className="divide-y divide-navyLine">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className="flex min-h-14 items-center font-display text-lg text-mist"
+                  tabIndex={open ? undefined : -1}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
     </header>
   );
 }
