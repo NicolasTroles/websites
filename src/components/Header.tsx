@@ -2,111 +2,108 @@
 
 import { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { site, whatsappUrl } from '@/config/site.config';
-import { TopHat } from './Brand';
-
-const LINKS = [
-  { href: '#oficio', label: 'O ofício' },
-  { href: '#servicos', label: 'Serviços' },
-  { href: '#galeria', label: 'Trabalhos' },
-  { href: '#processo', label: 'Processo' },
-  { href: '#contato', label: 'Contato' },
-];
+import { navLinks, whatsappUrl } from '@/config/site.config';
+import { Brand } from './Brand';
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [aberto, setAberto] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    // Fundo sólido só depois de sair do hero, para o header não competir com a foto.
-    const onScroll = () => setScrolled(window.scrollY > 80);
-    onScroll();
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    // The browser may restore the scroll position after hydration without
+    // firing a scroll event, so check again on the next frame and on load.
+    const frame = requestAnimationFrame(onScroll);
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('load', onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('load', onScroll);
+    };
   }, []);
 
-  // Trava o scroll do fundo enquanto o menu mobile está aberto.
   useEffect(() => {
-    document.body.style.overflow = aberto ? 'hidden' : '';
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [aberto]);
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-smooth ${
-        scrolled ? 'border-b border-line bg-ink/92 backdrop-blur-md' : 'bg-transparent'
+      className={`fixed inset-x-0 top-0 z-50 transition-[background-color,box-shadow,padding] duration-500 ${
+        scrolled || open
+          ? 'bg-linen/92 py-3 shadow-[0_1px_0_rgb(23_63_66/0.08)] backdrop-blur-md'
+          : 'bg-transparent py-5'
       }`}
     >
-      <nav
-        className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 sm:px-8"
-        aria-label="Navegação principal"
-      >
-        <a href="#topo" className="flex items-center gap-3" aria-label="Início">
-          <TopHat className="h-7 w-7 text-brass" />
-          <span className="flex flex-col leading-none">
-            <span className="brand-caps text-[13px] text-bone">{site.nome}</span>
-            <span className="mt-1 font-sans text-[9px] uppercase tracking-[0.24em] text-muted">
-              Alfaiate
-            </span>
-          </span>
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-5 sm:px-8">
+        <a href="#topo" aria-label="Atelier Campestre — voltar ao início" className="shrink-0">
+          <Brand />
         </a>
 
-        <ul className="hidden items-center gap-9 lg:flex">
-          {LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="brand-caps text-[11px] text-silver transition-colors duration-200 hover:text-brass"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <a
-          href={whatsappUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hidden min-h-11 items-center bg-brass px-6 brand-caps text-[11px] text-ink transition-colors duration-200 hover:bg-brassDeep hover:text-bone lg:inline-flex"
-        >
-          Agendar prova
-        </a>
-
-        <button
-          type="button"
-          onClick={() => setAberto((v) => !v)}
-          className="grid h-11 w-11 place-items-center text-bone lg:hidden"
-          aria-label={aberto ? 'Fechar menu' : 'Abrir menu'}
-          aria-expanded={aberto}
-        >
-          {aberto ? (
-            <X className="h-6 w-6" strokeWidth={1.5} />
-          ) : (
-            <Menu className="h-6 w-6" strokeWidth={1.5} />
-          )}
-        </button>
-      </nav>
-
-      {aberto && (
-        <div className="border-t border-line bg-ink lg:hidden">
-          <ul className="mx-auto max-w-7xl px-5 py-4 sm:px-8">
-            {LINKS.map((link) => (
+        <nav aria-label="Principal" className="hidden lg:block">
+          <ul className="flex items-center gap-8">
+            {navLinks.map((link) => (
               <li key={link.href}>
                 <a
                   href={link.href}
-                  onClick={() => setAberto(false)}
-                  className="flex min-h-12 items-center brand-caps text-xs text-silver"
+                  className="eyebrow text-ink after:bg-rosewood relative py-2 text-[11px] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:origin-left after:scale-x-0 after:transition-transform after:duration-500 hover:after:scale-x-100"
                 >
                   {link.label}
                 </a>
               </li>
             ))}
           </ul>
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="eyebrow bg-rosewood text-linen hover:bg-rosewood-deep hidden min-h-11 items-center rounded-full px-6 text-[11px] transition-colors sm:inline-flex"
+          >
+            Agendar
+          </a>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="menu-mobile"
+            aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+            className="border-ink/20 text-ink inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border lg:hidden"
+          >
+            {open ? (
+              <X className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <Menu className="h-5 w-5" aria-hidden="true" />
+            )}
+          </button>
         </div>
-      )}
+      </div>
+
+      <nav
+        id="menu-mobile"
+        aria-label="Menu"
+        hidden={!open}
+        className="border-ink/10 border-t px-5 pt-2 pb-6 lg:hidden"
+      >
+        <ul>
+          {navLinks.map((link) => (
+            <li key={link.href}>
+              <a
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className="border-ink/10 font-display text-ink block border-b py-4 text-2xl italic"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </header>
   );
 }

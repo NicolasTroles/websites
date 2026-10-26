@@ -2,23 +2,23 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-function prefersReducedMotion() {
+export function prefersReducedMotion() {
   if (typeof window === 'undefined') return false;
   return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
 /**
- * Parallax preso ao scroll via rAF.
+ * Scroll-linked parallax driven by rAF.
  *
- * Só escreve em `transform` (nunca top/height), então o navegador resolve tudo
- * na GPU sem recalcular layout. Retorna 0 quando o usuário pediu menos
- * movimento, o que congela o elemento na posição neutra.
+ * Writes the offset straight into a CSS custom property (`--parallax`) instead
+ * of React state, so scrolling never re-renders the tree; the element moves
+ * with `transform` only (GPU, no layout). With reduced motion it stays at 0.
  *
- * @param speed fração do scroll aplicada ao deslocamento. 0.15 é sutil, 0.4 é forte.
+ * @param speed fraction of the distance to the viewport centre applied as
+ *   offset. 0.1 is subtle, 0.35 is strong; negative values move the other way.
  */
 export function useParallax<T extends HTMLElement>(speed = 0.2) {
   const ref = useRef<T>(null);
-  const [offset, setOffset] = useState(0);
 
   useEffect(() => {
     const el = ref.current;
@@ -30,18 +30,17 @@ export function useParallax<T extends HTMLElement>(speed = 0.2) {
     const update = () => {
       frame = 0;
       const rect = el.getBoundingClientRect();
-      // Distância do centro do elemento ao centro da viewport.
       const fromCenter = rect.top + rect.height / 2 - window.innerHeight / 2;
-      setOffset(fromCenter * speed * -1);
+      el.style.setProperty('--parallax', `${(fromCenter * -speed).toFixed(1)}px`);
     };
 
     const onScroll = () => {
-      // Um frame agendado por vez: eventos de scroll disparam mais rápido que 60fps.
+      // One frame at a time: scroll events fire faster than the display.
       if (!visible || frame) return;
       frame = requestAnimationFrame(update);
     };
 
-    // Só ouvimos o scroll enquanto o elemento está por perto da tela.
+    // Only listen while the element is near the viewport.
     const observer = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting;
@@ -62,25 +61,20 @@ export function useParallax<T extends HTMLElement>(speed = 0.2) {
     };
   }, [speed]);
 
-  return { ref, offset };
+  return ref;
 }
 
 /**
- * Revela o elemento quando ele entra na viewport.
- * Dispara uma vez só: reanimar a cada scroll incomoda mais do que encanta.
+ * Flips to `true` once when the element enters the viewport. Fires a single
+ * time: re-animating on every pass annoys more than it delights.
  */
-export function useReveal<T extends HTMLElement>(threshold = 0.15) {
+export function useReveal<T extends HTMLElement>(threshold = 0.2) {
   const ref = useRef<T>(null);
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
-    if (prefersReducedMotion()) {
-      setShown(true);
-      return;
-    }
 
     const observer = new IntersectionObserver(
       ([entry]) => {

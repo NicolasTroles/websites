@@ -1,99 +1,160 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-@layer base {
-  :root {
-    color-scheme: dark;
+/*
+ * Palette — "linen, teal ink and dried petals".
+ *
+ * The studio's own logo is a deep teal script with leaf-green leaves, so the
+ * ink of the whole site is that teal (not black) and green appears as the
+ * botanical accent. The light family is warm linen/paper, like the textured
+ * backgrounds inside the frames. Rosewood comes from the dried roses and is
+ * the only colour used for calls to action; antique gold echoes the laser-cut
+ * initials glued inside the frames and is used for hairlines and ornaments
+ * only (never for body text).
+ *
+ * Contrast (WCAG, measured): ink on linen 10.2:1 · ink-soft on linen 6.5:1 ·
+ * rosewood on linen 6.5:1 (and linen on rosewood) · moss on linen 5.5:1 ·
+ * linen on night 13.6:1 · blush on night 10.6:1 · gold-soft on night 8.9:1.
+ * Gold (#a67c3d) is decorative: 3.4:1 on linen, so it never carries text.
+ */
+@theme {
+  --color-linen: #f6f1e9;
+  --color-paper: #fbf8f3;
+  --color-mat: #efe7da;
+  --color-ink: #173f42;
+  --color-ink-soft: #3c5c5e;
+  --color-night: #10292b;
+  --color-moss: #3f6b4c;
+  --color-leaf: #6f9c6a;
+  --color-blush: #ead2ca;
+  --color-petal: #f3e2dc;
+  --color-rosewood: #8c3d4a;
+  --color-rosewood-deep: #6f2c38;
+  --color-gold: #a67c3d;
+  --color-gold-soft: #d9c39a;
+
+  --font-display: var(--font-cormorant), 'Cormorant Garamond', Georgia, serif;
+  --font-sans: var(--font-jost), 'Jost', system-ui, sans-serif;
+  --font-script: var(--font-pinyon), 'Pinyon Script', cursive;
+
+  --ease-petal: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background: var(--color-linen);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-blush);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-rosewood);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@layer components {
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
   }
 
-  html {
-    scroll-behavior: smooth;
-    /* Compensa o header fixo ao pular por âncora. */
-    scroll-padding-top: 5rem;
+  /* Paper grain: an inline SVG noise, so it costs no request. */
+  .grain {
+    position: relative;
+    isolation: isolate;
+  }
+  .grain::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .48 0 0 0 0 .4 0 0 0 .18 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  body {
-    /* O site abre e fecha escuro; as seções claras pintam o próprio fundo. */
-    @apply bg-ink text-bone antialiased;
-    /* Evita o scroll horizontal que o parallax pode causar em telas estreitas. */
-    overflow-x: hidden;
+  /* Arched window — the shape of a glass dome / chapel window. */
+  .arch {
+    border-radius: 999px 999px 0.375rem 0.375rem;
   }
 
   /*
-   * Foco visível para navegação por teclado.
-   * `outline` com currentColor funciona nos dois fundos sem precisar de
-   * variante por seção — o anel herda a cor do texto local.
+   * A real picture frame: moulding (border) + passe-partout (padding in the
+   * mat colour) + a soft inner shadow where the glass meets the mat.
    */
-  :focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 3px;
+  .frame {
+    background: var(--color-mat);
+    padding: clamp(0.6rem, 2.2vw, 1.15rem);
+    border: clamp(6px, 1vw, 10px) solid var(--color-paper);
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.8) inset,
+      0 0 0 1px rgb(23 63 66 / 0.08),
+      0 18px 40px -18px rgb(16 41 43 / 0.45),
+      0 4px 10px -4px rgb(16 41 43 / 0.2);
+  }
+  .frame > .frame-glass {
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 2px 6px rgb(16 41 43 / 0.35);
   }
 
-  ::selection {
-    @apply bg-brass text-ink;
+  /* Arch reveal: the clip opens from the bottom like a curtain over a window. */
+  .reveal-arch {
+    clip-path: inset(100% 0 0 0 round 999px 999px 0 0);
+    transition: clip-path 1.4s var(--ease-petal);
   }
-}
-
-@layer utilities {
-  /* Título de seção com o espaçamento largo do letreiro da fachada. */
-  .brand-caps {
-    @apply font-sans uppercase tracking-brand;
+  .reveal-arch[data-shown='true'] {
+    clip-path: inset(0 0 0 0 round 999px 999px 6px 6px);
   }
 
-  /* Textura de tecido em CSS puro. Variante para cada fundo. */
-  .weave {
-    background-image:
-      repeating-linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.018) 0px,
-        rgba(255, 255, 255, 0.018) 1px,
-        transparent 1px,
-        transparent 4px
-      ),
-      repeating-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 0.018) 0px,
-        rgba(255, 255, 255, 0.018) 1px,
-        transparent 1px,
-        transparent 4px
-      );
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 0.9s var(--ease-petal),
+      transform 0.9s var(--ease-petal);
   }
-
-  .weave-light {
-    background-image:
-      repeating-linear-gradient(
-        45deg,
-        rgba(42, 35, 32, 0.03) 0px,
-        rgba(42, 35, 32, 0.03) 1px,
-        transparent 1px,
-        transparent 4px
-      ),
-      repeating-linear-gradient(
-        -45deg,
-        rgba(42, 35, 32, 0.03) 0px,
-        rgba(42, 35, 32, 0.03) 1px,
-        transparent 1px,
-        transparent 4px
-      );
+  .reveal-up[data-shown='true'] {
+    opacity: 1;
+    transform: none;
   }
 }
 
-/*
- * Desliga todo o movimento quando o usuário pede menos animação.
- * O parallax também é desativado no JS; isto é a rede de segurança do CSS.
- */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
-
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  }
+  .reveal-arch {
+    clip-path: none;
+  }
+  .reveal-up {
+    opacity: 1;
+    transform: none;
   }
 }

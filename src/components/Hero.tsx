@@ -1,112 +1,123 @@
-'use client';
-
-import { ChevronDown } from 'lucide-react';
-import { site } from '@/config/site.config';
-import { useParallax } from '@/lib/useParallax';
-import { BotaoTelefone, BotaoWhatsApp } from './Acoes';
-import { Foto } from './Foto';
+import { ArrowDown, MessageCircle } from 'lucide-react';
+import { bouquetOffer, site, whatsappUrl } from '@/config/site.config';
+import { Parallax } from './Parallax';
+import { PetalsLayer } from './PetalsLayer';
+import { Photo } from './Photo';
 
 export function Hero() {
-  // A foto de fundo se move mais devagar que a página: é isso que cria a profundidade.
-  const fundo = useParallax<HTMLDivElement>(0.18);
-
   return (
     <section
       id="topo"
-      className="relative flex min-h-dvh items-center overflow-hidden"
+      aria-labelledby="hero-title"
+      className="grain relative min-h-[100svh] overflow-hidden pt-28 pb-16 sm:pt-32 lg:pb-24"
     >
-      {/* Camada 1: foto de fundo em parallax. Escala 110% para não revelar bordas. */}
+      {/* Soft blush glow behind the arch. */}
       <div
-        ref={fundo.ref}
-        className="absolute inset-0 scale-110 will-change-transform"
-        style={{ transform: `translate3d(0, ${fundo.offset}px, 0) scale(1.1)` }}
-      >
-        <Foto
-          // FOTO 1 — hero
-          src="/fotos/hero.jpg"
-          guia="Foto larga e escura: terno bem cortado em um homem, ou o Carlos ajustando uma lapela. Precisa ter área escura à esquerda para o texto ficar legível."
-          alt="Homem vestindo terno sob medida ajustando a gravata em um ateliê de alfaiataria"
-          aspect="paisagem"
-          priority
-          // Ancorado à direita: em telas estreitas o crop come a lateral
-          // esquerda (que é o vazio escuro) e nunca corta o homem de terno.
-          foco="direita"
-          sizes="100vw"
-          className="h-full w-full !aspect-auto"
-        />
-      </div>
-
-      {/*
-       * Camada 2: véu de contraste.
-       *
-       * Medido sobre a foto real: a média da metade esquerda é bem escura,
-       * mas o abajur aceso cai justamente na faixa do título e derruba o
-       * contraste do dourado para ~1.3:1. Por isso o véu é forte até 55% da
-       * largura (cobrindo o abajur) e só depois abre, preservando o homem
-       * de terno e a madeira do ateliê à direita.
-       */}
-      <div
-        className="absolute inset-0 bg-gradient-to-r from-ink via-ink/92 via-55% to-transparent"
         aria-hidden="true"
-      />
-      <div
-        className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/45"
-        aria-hidden="true"
+        className="absolute top-10 -right-40 h-[46rem] w-[46rem] rounded-full bg-[radial-gradient(closest-side,rgb(234_210_202/0.85),transparent)]"
       />
 
-      {/* Camada 3: conteúdo. */}
-      <div
-        id="conteudo"
-        className="relative mx-auto w-full max-w-7xl px-5 pb-28 pt-28 sm:px-8"
-      >
-        <div className="max-w-2xl">
-          <p className="brand-caps animate-fade-up text-[10px] text-silver sm:text-[11px]">
-            {site.marcaLoja} · {site.cidade}, {site.estado}
+      {/* Petals drift over the photo but under the text. */}
+      <PetalsLayer className="pointer-events-none absolute inset-0 z-10" />
+
+      <div className="relative mx-auto grid max-w-7xl items-center gap-14 px-5 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10">
+        <div className="relative z-20">
+          <p className="eyebrow text-moss flex items-center gap-3">
+            <span className="bg-gold h-px w-10" aria-hidden="true" />
+            {site.tagline}
           </p>
 
           <h1
-            className="mt-7 animate-fade-up font-display text-[clamp(2.6rem,8vw,5.2rem)] font-normal leading-[0.98] text-bone"
-            style={{ animationDelay: '120ms' }}
+            id="hero-title"
+            className="font-display text-ink mt-7 text-[clamp(2.75rem,5.6vw,5.25rem)] leading-[0.95] font-light tracking-[-0.01em]"
           >
-            O terno que
-            <br />
-            <span className="italic text-brass">veste você</span>
-            <br />
-            e mais ninguém.
+            Seu buquê vira quadro.
+            <span className="mt-2 block">
+              O sim continua{' '}
+              <em className="text-rosewood relative font-normal">
+                em flor
+                <svg
+                  viewBox="0 0 200 14"
+                  aria-hidden="true"
+                  className="text-gold absolute -bottom-2 left-0 w-full"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                >
+                  <path d="M2 9c40-6 92-8 196-3" />
+                </svg>
+              </em>
+              .
+            </span>
           </h1>
 
-          <div
-            className="mt-8 h-px w-24 origin-left animate-draw-line bg-brass"
-            style={{ animationDelay: '360ms' }}
-            aria-hidden="true"
-          />
-
-          <p
-            className="mt-8 max-w-prose animate-fade-up text-[17px] leading-relaxed text-silver"
-            style={{ animationDelay: '260ms' }}
-          >
-            Alfaiataria tradicional no centro de Curitiba. Ternos e camisas
-            cortados à mão sobre as suas medidas, com o cuidado de quem faz isso
-            há décadas.
+          <p className="text-ink-soft mt-9 max-w-xl text-lg leading-relaxed font-light sm:text-xl">
+            Desidratamos o seu buquê flor por flor e o remontamos em 3D, no desenho original, dentro
+            de uma moldura com as iniciais e a data do casamento.
           </p>
 
-          <div
-            className="mt-11 flex animate-fade-up flex-col gap-3 sm:flex-row"
-            style={{ animationDelay: '400ms' }}
-          >
-            <BotaoWhatsApp />
-            <BotaoTelefone className="hidden sm:inline-flex" />
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-5">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-rosewood text-linen hover:bg-rosewood-deep inline-flex min-h-14 items-center gap-3 rounded-full px-8 shadow-[0_14px_30px_-14px_rgb(140_61_74/0.8)] transition-[background-color,transform] duration-300 hover:-translate-y-0.5"
+            >
+              <MessageCircle className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />
+              <span className="eyebrow text-[12px]">Agendar pelo WhatsApp</span>
+            </a>
+            <a
+              href="#quadros"
+              className="group font-display text-ink inline-flex min-h-11 items-center gap-2 text-xl italic"
+            >
+              Ver quadros prontos
+              <ArrowDown
+                className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-1"
+                aria-hidden="true"
+              />
+            </a>
           </div>
+
+          <dl className="border-ink/15 mt-14 grid max-w-lg grid-cols-3 border-t pt-6">
+            {[
+              ['A partir de', bouquetOffer.price],
+              ['Prazo', bouquetOffer.deadline],
+              ['Ateliê', site.address.district],
+            ].map(([label, value]) => (
+              <div key={label}>
+                <dt className="eyebrow text-ink-soft text-[10px]">{label}</dt>
+                <dd className="font-display text-ink mt-1.5 text-2xl">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <div className="relative mx-auto w-full max-w-[30rem] lg:mx-0 lg:justify-self-end">
+          {/* Gold arch outline that drifts slower than the photo. */}
+          <Parallax speed={0.08} className="absolute -inset-4 translate-x-5 sm:-inset-5">
+            <div className="arch border-gold/70 h-full w-full border" aria-hidden="true" />
+          </Parallax>
+
+          <div className="arch bg-mat relative overflow-hidden shadow-[0_40px_80px_-40px_rgb(16_41_43/0.6)]">
+            <Photo
+              src="/photos/quadro-stef.jpg"
+              alt="Quadro branco com buquê de alstroemérias rosas e azuis, cravos e mosquitinhos preservados, iniciais douradas e a data do casamento"
+              aspect="aspect-[4/5]"
+              priority
+              sizes="(max-width: 1024px) 90vw, 480px"
+              imgClassName="object-cover object-[50%_40%]"
+            />
+          </div>
+
+          <p
+            aria-hidden="true"
+            className="font-script text-rosewood absolute -bottom-8 -left-4 -rotate-6 text-5xl sm:-left-12 sm:text-6xl"
+          >
+            desde o altar
+          </p>
         </div>
       </div>
-
-      <a
-        href="#oficio"
-        aria-label="Ver mais"
-        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-brass transition-colors hover:text-bone md:block"
-      >
-        <ChevronDown className="h-6 w-6 animate-bounce" strokeWidth={1.5} />
-      </a>
     </section>
   );
 }
