@@ -1,111 +1,121 @@
-'use client';
+import Image from 'next/image';
+import { ArrowDown } from 'lucide-react';
+import { mapsUrl, site, whatsappUrl } from '@/config/site.config';
+import { Stars, WhatsAppIcon } from './Brand';
+import { Parallax } from './Parallax';
 
-import { ChevronDown } from 'lucide-react';
-import { site } from '@/config/site.config';
-import { useParallax } from '@/lib/useParallax';
-import { BotaoTelefone, BotaoWhatsApp } from './Acoes';
-import { Foto } from './Foto';
-
+/**
+ * Asymmetric hero: oversized type on the left, the client's own artwork on
+ * the right. Three parallax layers drift at different speeds — the outlined
+ * "ANG" behind everything, the logo, and a loose neon ring in front.
+ * The h1 is plain text, so it paints first and is the LCP element.
+ */
 export function Hero() {
-  // A foto de fundo se move mais devagar que a página: é isso que cria a profundidade.
-  const fundo = useParallax<HTMLDivElement>(0.18);
-
   return (
     <section
       id="topo"
-      className="relative flex min-h-dvh items-center overflow-hidden"
+      aria-labelledby="hero-title"
+      className="relative isolate flex min-h-dvh flex-col overflow-hidden pt-18"
     >
-      {/* Camada 1: foto de fundo em parallax. Escala 110% para não revelar bordas. */}
+      {/* Ambient light pooling on the right, where the car sits. */}
       <div
-        ref={fundo.ref}
-        className="absolute inset-0 scale-110 will-change-transform"
-        style={{ transform: `translate3d(0, ${fundo.offset}px, 0) scale(1.1)` }}
-      >
-        <Foto
-          // FOTO 1 — hero
-          src="/fotos/hero.jpg"
-          guia="Foto larga e escura: terno bem cortado em um homem, ou o Carlos ajustando uma lapela. Precisa ter área escura à esquerda para o texto ficar legível."
-          alt="Homem vestindo terno sob medida ajustando a gravata em um ateliê de alfaiataria"
-          aspect="paisagem"
-          priority
-          // Ancorado à direita: em telas estreitas o crop come a lateral
-          // esquerda (que é o vazio escuro) e nunca corta o homem de terno.
-          foco="direita"
-          sizes="100vw"
-          className="h-full w-full !aspect-auto"
-        />
-      </div>
-
-      {/*
-       * Camada 2: véu de contraste.
-       *
-       * Medido sobre a foto real: a média da metade esquerda é bem escura,
-       * mas o abajur aceso cai justamente na faixa do título e derruba o
-       * contraste do dourado para ~1.3:1. Por isso o véu é forte até 55% da
-       * largura (cobrindo o abajur) e só depois abre, preservando o homem
-       * de terno e a madeira do ateliê à direita.
-       */}
-      <div
-        className="absolute inset-0 bg-gradient-to-r from-ink via-ink/92 via-55% to-transparent"
         aria-hidden="true"
-      />
-      <div
-        className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-ink/45"
-        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(60%_55%_at_78%_45%,rgb(106_222_219/0.13),transparent_70%)]"
       />
 
-      {/* Camada 3: conteúdo. */}
-      <div
-        id="conteudo"
-        className="relative mx-auto w-full max-w-7xl px-5 pb-28 pt-28 sm:px-8"
+      <Parallax
+        speed={0.14}
+        className="pointer-events-none absolute inset-x-0 bottom-[-14vw] -z-10"
       >
-        <div className="max-w-2xl">
-          <p className="brand-caps animate-fade-up text-[10px] text-silver sm:text-[11px]">
-            {site.marcaLoja} · {site.cidade}, {site.estado}
+        <p className="font-display text-outline text-center text-[38vw] leading-none font-bold tracking-tighter select-none">
+          ANG
+        </p>
+      </Parallax>
+
+      <div className="mx-auto grid w-full max-w-7xl flex-1 items-center gap-12 px-4 py-14 sm:px-8 lg:grid-cols-12 lg:gap-8 lg:py-20">
+        <div className="lg:col-span-7">
+          <p className="eyebrow text-neon flex items-center gap-3">
+            <span className="bg-neon glow inline-block h-1.5 w-1.5 shrink-0 rounded-full" />
+            Estética automotiva ·{' '}
+            <span className="hidden sm:inline">{site.address.district}, </span>
+            {site.address.city}
           </p>
 
           <h1
-            className="mt-7 animate-fade-up font-display text-[clamp(2.6rem,8vw,5.2rem)] font-normal leading-[0.98] text-bone"
-            style={{ animationDelay: '120ms' }}
+            id="hero-title"
+            className="font-display mt-6 text-[clamp(2.35rem,6.4vw,5.25rem)] leading-[1.02] font-semibold tracking-tight text-balance"
           >
-            O terno que
-            <br />
-            <span className="italic text-brass">veste você</span>
-            <br />
-            e mais ninguém.
+            Brilho de <span className="text-neon">vitrine</span>, do motor ao farol.
           </h1>
 
-          <div
-            className="mt-8 h-px w-24 origin-left animate-draw-line bg-brass"
-            style={{ animationDelay: '360ms' }}
-            aria-hidden="true"
-          />
-
-          <p
-            className="mt-8 max-w-prose animate-fade-up text-[17px] leading-relaxed text-silver"
-            style={{ animationDelay: '260ms' }}
-          >
-            Alfaiataria tradicional no centro de Curitiba. Ternos e camisas
-            cortados à mão sobre as suas medidas, com o cuidado de quem faz isso
-            há décadas.
+          <p className="text-haze mt-7 max-w-xl text-lg leading-relaxed text-pretty">
+            Lavagem detalhada, higienização interna, vitrificação e restauração de faróis. Mande o
+            modelo e o ano do seu carro e receba o orçamento pelo WhatsApp.
           </p>
 
-          <div
-            className="mt-11 flex animate-fade-up flex-col gap-3 sm:flex-row"
-            style={{ animationDelay: '400ms' }}
-          >
-            <BotaoWhatsApp />
-            <BotaoTelefone className="hidden sm:inline-flex" />
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-neon text-neon-ink glow hover:bg-neon-soft inline-flex min-h-13 items-center justify-center gap-2.5 rounded-full px-7 font-semibold transition-colors"
+            >
+              <WhatsAppIcon />
+              Pedir orçamento
+              <span className="sr-only"> no WhatsApp (abre em nova aba)</span>
+            </a>
+            <a
+              href="#servicos"
+              className="border-line-bright text-frost hover:border-frost inline-flex min-h-13 items-center justify-center rounded-full border px-7 font-medium transition-colors"
+            >
+              Ver serviços
+            </a>
           </div>
+
+          <a
+            href={mapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group text-haze hover:text-frost mt-10 inline-flex min-h-11 items-center gap-3 text-sm transition-colors"
+          >
+            <Stars className="text-neon" />
+            <span>
+              <strong className="text-frost font-semibold">{site.rating.value}</strong> no Google ·{' '}
+              {site.rating.count} avaliações
+              <span className="sr-only"> (abre o Google Maps em nova aba)</span>
+            </span>
+          </a>
+        </div>
+
+        <div className="relative mx-auto w-full max-w-[22rem] sm:max-w-md lg:col-span-5 lg:max-w-none">
+          <Parallax speed={-0.04} decorative={false}>
+            <Image
+              src="/brand/ang-logo.webp"
+              alt="Arte da ANG Estética Automotiva: silhueta de um carro escuro com faróis acesos em ciano, dentro de um anel de neon"
+              width={1060}
+              height={1060}
+              priority
+              sizes="(max-width: 640px) 22rem, (max-width: 1024px) 28rem, 40vw"
+              // The artwork sits on pure black; the radial mask melts its square
+              // edge into the page so only the ring and the car remain.
+              className="aspect-square w-full [mask-image:radial-gradient(closest-side,#000_95%,transparent_100%)]"
+            />
+          </Parallax>
+          <Parallax
+            speed={0.07}
+            className="border-neon/20 pointer-events-none absolute inset-[-6%] rounded-full border"
+          >
+            <span className="bg-neon glow absolute top-[14%] left-[8%] h-2 w-2 rounded-full" />
+          </Parallax>
         </div>
       </div>
 
       <a
-        href="#oficio"
-        aria-label="Ver mais"
-        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-brass transition-colors hover:text-bone md:block"
+        href="#servicos"
+        className="eyebrow text-haze hover:text-neon mx-auto mb-6 inline-flex min-h-11 items-center gap-2 transition-colors"
       >
-        <ChevronDown className="h-6 w-6 animate-bounce" strokeWidth={1.5} />
+        Role para ver
+        <ArrowDown className="h-4 w-4" aria-hidden="true" />
       </a>
     </section>
   );

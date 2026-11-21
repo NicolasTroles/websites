@@ -1,106 +1,112 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
-import { site } from '@/config/site.config';
+import { Instrument_Sans, Unbounded } from 'next/font/google';
+import { mapsUrl, services, site } from '@/config/site.config';
 import './globals.css';
 
-// display: 'swap' evita texto invisível enquanto a fonte carrega.
-const sans = Inter({
+// Wide geometric display face — echoes the "ANG" lettering of the logo.
+const unbounded = Unbounded({
+  variable: '--font-unbounded',
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
-  variable: '--font-sans',
+  weight: ['400', '500', '600', '700'],
   display: 'swap',
 });
 
-const display = Playfair_Display({
+const instrument = Instrument_Sans({
+  variable: '--font-instrument',
   subsets: ['latin'],
   weight: ['400', '500', '600'],
-  variable: '--font-display',
   display: 'swap',
 });
+
+export const viewport: Viewport = {
+  themeColor: '#05090b',
+  colorScheme: 'dark',
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.seo.url),
-  title: site.seo.titulo,
-  description: site.seo.descricao,
-  keywords: [
-    'alfaiate curitiba',
-    'terno sob medida curitiba',
-    'camisa sob medida curitiba',
-    'alfaiataria centro curitiba',
-    'ajuste de terno curitiba',
-  ],
+  title: site.seo.title,
+  description: site.seo.description,
+  keywords: [...site.seo.keywords],
+  applicationName: site.brandFull,
+  alternates: { canonical: '/' },
   openGraph: {
-    title: site.seo.titulo,
-    description: site.seo.descricao,
-    url: site.seo.url,
-    siteName: `${site.nome} ${site.sobrenomeMarca}`,
-    locale: 'pt_BR',
     type: 'website',
+    locale: site.seo.locale,
+    url: '/',
+    siteName: site.brandFull,
+    title: site.seo.title,
+    description: site.seo.description,
+    images: [
+      {
+        url: '/brand/og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Logo da ANG Estética Automotiva: um carro escuro com faróis em ciano dentro de um anel de neon',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: site.seo.title,
+    description: site.seo.description,
+    images: ['/brand/og.jpg'],
   },
   robots: { index: true, follow: true },
+  formatDetection: { telephone: false },
 };
 
-export const viewport: Viewport = {
-  themeColor: '#0A0A0A',
-  width: 'device-width',
-  initialScale: 1,
-  // Sem maximumScale: bloquear zoom quebra a acessibilidade.
-};
-
-/**
- * Schema.org de negócio local. É o que faz o Google exibir endereço, telefone
- * e horário direto no resultado de busca.
- */
+// AutoWash matches the Google Business category ("Lavagem de automóveis").
+// No aggregateRating on purpose: Google treats ratings a business publishes
+// about itself as self-serving and ignores them for rich results.
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'ClothingStore',
-  name: `${site.nome} ${site.sobrenomeMarca}`,
-  description: site.seo.descricao,
-  telephone: site.telefone,
+  '@type': 'AutoWash',
+  '@id': `${site.seo.url}/#business`,
+  name: site.brandFull,
+  description: site.seo.description,
   url: site.seo.url,
+  telephone: `+${site.whatsapp}`,
+  image: `${site.seo.url}/brand/og.jpg`,
+  logo: `${site.seo.url}/brand/ang-logo.webp`,
+  hasMap: mapsUrl,
+  areaServed: site.areaServed,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: site.endereco.logradouro,
-    addressLocality: site.endereco.cidade,
-    addressRegion: site.endereco.estado,
-    postalCode: site.endereco.cep,
-    addressCountry: 'BR',
+    streetAddress: `${site.address.street}, ${site.address.complement}`,
+    addressLocality: site.address.city,
+    addressRegion: site.address.state,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
   },
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:00',
-      closes: '18:00',
-    },
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: 'Saturday',
-      opens: '09:00',
-      closes: '13:00',
-    },
-  ],
+  sameAs: [site.socialLinks.instagram],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Serviços de estética automotiva',
+    itemListElement: services.map((service) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: service.title, description: service.description },
+    })),
+  },
+  slogan: site.tagline,
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="pt-BR" className={`${sans.variable} ${display.variable}`}>
-      <body className="font-sans">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+    <html lang="pt-BR" className={`${unbounded.variable} ${instrument.variable} antialiased`}>
+      <body className="min-h-dvh">
         <a
           href="#conteudo"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:bg-bone focus:px-5 focus:py-3 focus:text-sm focus:text-ink"
+          className="bg-neon text-neon-ink sr-only z-100 rounded-full px-5 py-3 font-semibold focus:not-sr-only focus:fixed focus:top-4 focus:left-4"
         >
           Pular para o conteúdo
         </a>
         {children}
+        <script
+          type="application/ld+json"
+          // JSON-LD built from our own config — no user input reaches it.
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
+        />
       </body>
     </html>
   );

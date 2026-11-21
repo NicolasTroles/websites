@@ -1,99 +1,146 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+/*
+ * ANG — "garagem à noite".
+ *
+ * Monochrome dark palette with ONE accent, lifted straight from the client's
+ * logo: the neon ring and the angel-eye headlights (#6ADEDB, sampled from the
+ * artwork). Detailing is judged under a single inspection light in a dark
+ * bay, so the site works the same way: near-black surfaces, cool white text,
+ * and cyan only where the eye should land (CTAs, active states, the scene).
+ * No light theme on purpose — the brand only exists on black.
+ *
+ * Contrast (WCAG 2.x), measured against night / carbon / carbon-lift:
+ *   frost  #E6F2F1  17.5 / 16.4 / 15.1   primary text
+ *   haze   #93A9AB   8.1 /  7.6 /  7.0   secondary text
+ *   dim    #7E9497   6.3 /  5.9 /  5.4   fine print — do not darken
+ *   neon   #6ADEDB  12.5 / 11.7 / 10.8   accent text, icons
+ *   neon-ink on neon                11.7   text inside neon buttons
+ */
+@theme {
+  --color-night: #05090b;
+  --color-carbon: #0b1316;
+  --color-carbon-lift: #111c20;
+  --color-line: #1c2a2f;
+  --color-line-bright: #2a3d43;
+
+  --color-frost: #e6f2f1;
+  --color-haze: #93a9ab;
+  --color-dim: #7e9497;
+
+  --color-neon: #6adedb;
+  --color-neon-soft: #a9f2ee;
+  --color-neon-ink: #031415;
+
+  --font-display: var(--font-unbounded), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-instrument), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-polish: cubic-bezier(0.65, 0, 0.2, 1);
+}
 
 @layer base {
-  :root {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
     color-scheme: dark;
   }
 
-  html {
-    scroll-behavior: smooth;
-    /* Compensa o header fixo ao pular por âncora. */
-    scroll-padding-top: 5rem;
-  }
-
   body {
-    /* O site abre e fecha escuro; as seções claras pintam o próprio fundo. */
-    @apply bg-ink text-bone antialiased;
-    /* Evita o scroll horizontal que o parallax pode causar em telas estreitas. */
-    overflow-x: hidden;
-  }
-
-  /*
-   * Foco visível para navegação por teclado.
-   * `outline` com currentColor funciona nos dois fundos sem precisar de
-   * variante por seção — o anel herda a cor do texto local.
-   */
-  :focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 3px;
+    background: var(--color-night);
+    color: var(--color-frost);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    @apply bg-brass text-ink;
+    background: var(--color-neon);
+    color: var(--color-neon-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-neon);
+    outline-offset: 3px;
+    border-radius: 4px;
   }
 }
 
-@layer utilities {
-  /* Título de seção com o espaçamento largo do letreiro da fachada. */
-  .brand-caps {
-    @apply font-sans uppercase tracking-brand;
+@layer components {
+  .eyebrow {
+    font-family: var(--font-display);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
   }
 
-  /* Textura de tecido em CSS puro. Variante para cada fundo. */
-  .weave {
-    background-image:
-      repeating-linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.018) 0px,
-        rgba(255, 255, 255, 0.018) 1px,
-        transparent 1px,
-        transparent 4px
-      ),
-      repeating-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 0.018) 0px,
-        rgba(255, 255, 255, 0.018) 1px,
-        transparent 1px,
-        transparent 4px
-      );
+  /* Soft neon halo — used sparingly (logo ring, primary CTA, active marks). */
+  .glow {
+    box-shadow:
+      0 0 0 1px color-mix(in oklab, var(--color-neon) 55%, transparent),
+      0 0 24px -4px color-mix(in oklab, var(--color-neon) 45%, transparent);
   }
 
-  .weave-light {
-    background-image:
-      repeating-linear-gradient(
-        45deg,
-        rgba(42, 35, 32, 0.03) 0px,
-        rgba(42, 35, 32, 0.03) 1px,
-        transparent 1px,
-        transparent 4px
-      ),
-      repeating-linear-gradient(
-        -45deg,
-        rgba(42, 35, 32, 0.03) 0px,
-        rgba(42, 35, 32, 0.03) 1px,
-        transparent 1px,
-        transparent 4px
-      );
+  .text-outline {
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in oklab, var(--color-neon) 13%, transparent);
   }
 }
 
-/*
- * Desliga todo o movimento quando o usuário pede menos animação.
- * O parallax também é desativado no JS; isto é a rede de segurança do CSS.
- */
+/* ---------------------------------------------------------------------------
+ * Scroll reveal: a "polish pass". Content wipes in left to right, like the
+ * inspection light crossing a panel. Content is in the HTML from the start;
+ * only the clip waits for the observer (see Reveal.tsx).
+ * ------------------------------------------------------------------------- */
+/* The clip goes on the children, never on the observed element itself:
+ * a fully clipped target never reports as intersecting. */
+.reveal-wipe > * {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 900ms var(--ease-polish);
+}
+.reveal-wipe[data-shown='true'] > * {
+  clip-path: inset(0 0 0 0);
+}
+
+.reveal-up {
+  opacity: 0;
+  translate: 0 1.25rem;
+  transition:
+    opacity 700ms ease-out,
+    translate 700ms var(--ease-polish);
+}
+.reveal-up[data-shown='true'] {
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* Parallax layers read the offset written by useParallax. */
+.parallax {
+  transform: translate3d(0, var(--parallax, 0px), 0);
+  will-change: transform;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+  .reveal-wipe > *,
+  .reveal-up {
+    clip-path: none;
+    opacity: 1;
+    translate: none;
+    transition: none;
+  }
+  .parallax {
+    transform: none;
+  }
+}
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+/* Without JS the observer never fires — show everything. */
+@media (scripting: none) {
+  .reveal-wipe > *,
+  .reveal-up {
+    clip-path: none;
+    opacity: 1;
+    translate: none;
   }
 }
