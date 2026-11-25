@@ -9,8 +9,8 @@ import type { Metadata } from 'next';
  * this notice while the site is down.
  */
 export const metadata: Metadata = {
-  title: 'Site temporariamente suspenso',
-  description: 'Este site encontra-se temporariamente suspenso.',
+  title: 'Site temporariamente indisponível',
+  description: 'Este site está temporariamente indisponível.',
   robots: { index: false, follow: false },
 };
 
@@ -22,14 +22,13 @@ export default function Home() {
     >
       <div className="max-w-xl text-center">
         <h1 className="text-2xl font-semibold text-neutral-900 sm:text-3xl">
-          Site temporariamente suspenso
+          Site temporariamente indisponível
         </h1>
         <p className="mt-6 text-base leading-relaxed text-neutral-600">
-          Este site está fora do ar em razão de pendência financeira referente ao contrato de
-          desenvolvimento e manutenção firmado com o prestador do serviço.
+          Estamos fora do ar no momento.
         </p>
         <p className="mt-4 text-base leading-relaxed text-neutral-600">
-          O acesso será restabelecido assim que a situação for regularizada.
+          Agradecemos a compreensão. Em breve o acesso será restabelecido.
         </p>
       </div>
     </main>
