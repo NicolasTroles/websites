@@ -1,22 +1,23 @@
 import type { Metadata, Viewport } from 'next';
-import { Archivo, Manrope } from 'next/font/google';
+import localFont from 'next/font/local';
 import { faqs, mapsUrl, services, site } from '@/config/site.config';
 import './globals.css';
 
+// Self-hosted variable fonts (Google Fonts "latin" subset, which already
+// includes the Portuguese accented letters in U+00C0-00FF). Self-hosting
+// avoids next/font/google fetching at build time, which broke when Google
+// started serving extension-less font URLs that Next 14 can't parse.
 // display: 'swap' avoids invisible text while the font loads.
-const sans = Manrope({
-  // latin-ext covers the Portuguese accented capitals (Ê, Ã, Ç...) that plain
-  // 'latin' can render inconsistently, especially combined with uppercase
-  // display text.
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '600', '700'],
+const sans = localFont({
+  src: './fonts/manrope.woff2',
+  weight: '200 800',
   variable: '--font-sans',
   display: 'swap',
 });
 
-const display = Archivo({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['600', '700', '800'],
+const display = localFont({
+  src: './fonts/archivo.woff2',
+  weight: '100 900',
   variable: '--font-display',
   display: 'swap',
 });
